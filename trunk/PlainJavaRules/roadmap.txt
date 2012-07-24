@@ -1,0 +1,17 @@
+
+
+
+
+24-07-2012
+***********
+GUI to Add new Sub and assign to Rules
+GUI to Add new/Assign Operators to Sub Rules
+
+
+
+Changes in pipe line
+********************
+
+- Rest Interface to interact with the rules engine
+- Version support at the Sub Rule level
+
