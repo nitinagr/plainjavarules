@@ -1,6 +1,0 @@
-6,1,1,1,"TechnicianId equals ALL ","technicianId == '' || true "
-7,1,2,1,"AppointmentType equals AppointmentType-Install ","appointmentType == 'install' "
-8,1,4,1,"Region equals 10 ","region == 10 "
-9,1,5,1,"CustomerType Equals ALL ","customerType == '' || true "
-10,1,3,1,"AppointmentNo LessThanOrEqual 2 ","appointmentNo <= 2 "
-11,2,1,1,"TechnicianId equals ALL ","technicianId == '' || true "
