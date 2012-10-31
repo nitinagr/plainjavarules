@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="view_all_subrules" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View All Sub-rules" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/view_all_subrules.jsp" />
+    </definition>
+    
+    <definition name="view_subrule" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View Subrule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/view_subrule.jsp" />
+    </definition>    
+    
+    <definition name="edit_subrule" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Edit Subrule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/edit_subrule.jsp" />
+    </definition>
+    <definition name="create_subrule_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Create Subrule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/subrule/create_subrule_definition.jsp" />
+    </definition>
+    <definition name="assign_subrule_view" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Assign Subrule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/subrule/assign_subrules_torule.jsp" />
+    </definition>
+       <definition name="delete_subrule_status" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Delete Subrule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/subrule/delete_subrule_status.jsp" />
+    </definition>
+</tiles-definitions>

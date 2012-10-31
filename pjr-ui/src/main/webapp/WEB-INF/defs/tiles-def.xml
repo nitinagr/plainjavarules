@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="base.definition"
+        template="/WEB-INF/jsp/table-theme/layout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/jsp/table-theme/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/table-theme/menu.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/table-theme/footer.jsp" />
+    </definition>
+    
+    <definition name="error" extends="base.definition">
+        <put-attribute name="title" value="Error" />
+        <put-attribute name="flowname" value="Something seriously went wrong , please report." />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/error/error.jsp" />
+    </definition>
+    
+     <definition name="notfound" extends="base.definition">
+        <put-attribute name="title" value="Error" />
+        <put-attribute name="flowname" value="Sorry we couldn't find anything matching the URL.Are you sure the URL is correct ?" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/error/error.jsp" />
+    </definition>   
+    
+     <definition name="access_denied" extends="base.definition">
+        <put-attribute name="title" value="Error" />
+        <put-attribute name="flowname" value="Sorry you dont have access to this functionality." />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/error/error.jsp" />
+    </definition>         
+ 
+     <definition name="login" extends="base.definition">
+        <put-attribute name="title" value="Login" />        
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/login.jsp" />
+    </definition>  
+ 
+</tiles-definitions>
