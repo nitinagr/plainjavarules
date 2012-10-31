@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+<definition name="create_attribute_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Create attribute" />
+		<put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/attribute/create_attribute_definition.jsp" />
+	</definition>
+	
+	<definition name="edit_attribute_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Edit attribute" />
+		<put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/attribute/edit_attribute_definition.jsp" />
+	</definition>
+	
+	<definition name="view_attribute_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="View attribute" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/attribute/view_attribute_definition.jsp" />
+	</definition>
+	
+	<definition name="viewall_attribute_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="View All attributes" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/attribute/viewall_attribute_definition.jsp" />
+	</definition>
+	<definition name="assign_attributes_subrule_view" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Assign attributes" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/attribute/assign_attributes_subrule.jsp" />
+	</definition>	
+	<definition name="delete_attribute_status_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Delete Success attributes" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/attribute/delete_attribute_status_definition.jsp" />
+	</definition>
+</tiles-definitions>

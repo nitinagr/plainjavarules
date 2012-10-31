@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+
+    <definition name="create_condition_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View All Conditions" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/create_conditiondefinition.jsp" />
+    </definition>
+    
+ 
+    
+    <definition name="edit_condition_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View All Conditions" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/edit_conditiondefinition.jsp" />
+    </definition>
+    
+        
+    <definition name="view_condition_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View Condition" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/view_conditiondefinition.jsp" />
+    </definition>   
+            
+      <definition name="viewall_condition_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View Condition" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/viewall_conditiondefinition.jsp" />
+    </definition>       
+    
+    
+     <definition name="create_operator_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View Condition" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/create_operator_object_definition.jsp" />
+    </definition>      
+    
+     <definition name="viewall_operator_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View Condition" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/viewall_operator_object_definition.jsp" />
+    </definition>  
+        
+</tiles-definitions>

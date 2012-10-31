@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="create_operator_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Create operator" />
+		<put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/create_operator_definition.jsp" />
+	</definition>
+	
+	<definition name="edit_operator_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Edit operator" />
+		<put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/edit_operator_definition.jsp" />
+	</definition>
+	
+	<definition name="view_operator_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="View operator" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/view_operator_definition.jsp" />
+	</definition>
+	
+	<definition name="viewall_operator_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="View All operators" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/viewall_operator_definition.jsp" />
+	</definition>
+	
+	<definition name="assign_operators_view" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Assign operators" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/assign_operators.jsp" />
+	</definition>	
+	<definition name="assign_operators_subrule_view" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Assign operators" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/assign_operators_subrule.jsp" />
+	</definition>	
+	<definition name="delete_operator_status_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Delete Status Operators" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/operator/delete_operator_status_definition.jsp" />
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <definition name="view_all_rules" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View All Rules" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/view_all_rules.jsp" />
+    </definition>
+    
+    <definition name="view_rule" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="View Rule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/view_rule.jsp" />
+    </definition> 
+    
+    <definition name="edit_rule" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Edit Rule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/edit_rule.jsp" />
+    </definition>   
+    
+    
+    <definition name="create_rule_definition" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Create Rule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/rule/create_rule_definition.jsp" />
+    </definition> 
+    
+    <definition name="duplicate_rule" extends="base.definition">
+        <put-attribute name="title" value="Plain Java Rules Engine" />
+        <put-attribute name="flowname" value="Duplicate Rule" />
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/rule/duplicate_rule_definition.jsp" />
+    </definition>             
+ 
+</tiles-definitions>
