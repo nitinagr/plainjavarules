@@ -4,10 +4,10 @@ Here is a list of rules engines evaluated before creating the PlainJavaRules
 ==Drools==
  Drools is from Jboss.
 
-Pros:
-Supports most features.
-It is pretty Stable.
-Decent forum support.
+*Pros:*
+ * Supports most features.
+ * It is pretty Stable.
+ * Decent forum support.
 
 *Cons:*
 *Heavy weight
