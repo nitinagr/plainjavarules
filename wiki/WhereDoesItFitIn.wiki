@@ -49,13 +49,13 @@ Same as Jboss , supports most features and its one of the flagship product from 
 ==Jrule Engine ==
 .
 *Pros:*
- *xml based
- *Simple and easy to learn 
- *Suitable for developers as the logic is similar to writing a Java Program.(http://jruleengine.sourceforge.net/xmlcontent.html)
+ * xml based
+ * Simple and easy to learn 
+ * Suitable for developers as the logic is similar to writing a Java Program.(http://jruleengine.sourceforge.net/xmlcontent.html)
 
 *Cons*
- *No GUI support                             
- *Not suitable for business users
+ * No GUI support                             
+ * Not suitable for business users
 
 *Reference:*
 http://jruleengine.sourceforge.net/  
@@ -65,17 +65,17 @@ http://jruleengine.sourceforge.net/
 ==OpenL Tablets==
 
 *Pros:*
- *Rules are created in Excel
- *GUI support for business
- *Load the rule changes on the fly
- *LGPL license                    
- *Powerfull feature: Ability to  import Java Classes to the excel sheet and use the variables directly in the Tablets
- *Our Java Business Object Model as basis for the OpenL business Vocabulary 
+ * Rules are created in Excel
+ * GUI support for business
+ * Load the rule changes on the fly
+ * LGPL license                    
+ * Powerfull feature: Ability to  import Java Classes to the excel sheet and use the variables directly in the Tablets
+ * Our Java Business Object Model as basis for the OpenL business Vocabulary 
 
 *Cons:*
- *Not much user base
- *Lacks of documentation on many features
- *Not all logic could be expressed as decision tables
+ * Not much user base
+ * Lacks of documentation on many features
+ * Not all logic could be expressed as decision tables
 
 *Reference:*
 http://openl-tablets.sourceforge.net   
