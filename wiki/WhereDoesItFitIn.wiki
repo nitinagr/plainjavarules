@@ -1,6 +1,5 @@
 #labels Featured
 
-
 Here is a list of rules engines evaluated before creating the PlainJavaRules.
 
 ==Jboss - Drools==
@@ -35,8 +34,8 @@ Please refer the exhaustive presentation on the pros http://publib.boulder.ibm.c
 
 
 
-==JruleEngine==
-
+==Jrule Engine ==
+.
 *Pros:*
 - xml based
 - Simple and easy to learn 
