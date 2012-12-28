@@ -1,8 +1,8 @@
 #labels Featured
-Here is a list of rules engines evaluated before creating the PlainJavaRule
+Here is a list of rules engines evaluated before creating the PlainJavaRules
 
 
-==Drools==
+ ==Drools==
  Drools is from Jboss.
 
 *Pros:*
