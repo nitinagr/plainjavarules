@@ -1,4 +1,14 @@
 #labels Featured
+==Where does plainjavarules fit in ?==
+
+ *Simple UI to create/manage rules
+ *Easy to customizable , as entire implementation is in Java  
+ *Add new functionalities/override existing functionality
+ *No commercial obligation
+ *No DSL language used   
+ *Ability to administer and define custom DSL
+
+
 Here is a list of rules engines evaluated before creating the *plainjavarules*
 
 
