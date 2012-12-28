@@ -1,11 +1,9 @@
 #labels Featured
 
 
-
-
 Here is a list of rules engines evaluated before creating the PlainJavaRules.
 
-==Jboss - Drools  (http://www.jboss.org/drools/documentation)==
+==Jboss - Drools==
 *Pros:*
 - supports most features.
 - Stable.
@@ -24,6 +22,7 @@ Here is a list of rules engines evaluated before creating the PlainJavaRules.
 http://onjava.com/pub/a/onjava/2005/08/24/drools.html?page=4 
 https://wiki.kuali.org/display/KULRICE/Kuali+Rice+-+Business+Rule+Management+System+%28BRMS%29+Evaluation#KualiRice-BusinessRuleManagementSystem%28BRMS%29Evaluation-DisadvantagesofDrools 
 
+
 ==Ibm Jrules==
 Same as Jboss , supports most features and its one of the flagship product from IBM
 
@@ -35,7 +34,8 @@ Please refer the exhaustive presentation on the pros http://publib.boulder.ibm.c
     - Expertise needed in setup and integration
 
 
-==JruleEngine:==
+
+==JruleEngine==
 
 *Pros:*
 - xml based
@@ -48,6 +48,7 @@ Please refer the exhaustive presentation on the pros http://publib.boulder.ibm.c
 
 *Reference:*
 http://jruleengine.sourceforge.net/  
+
 
 
 ==OpenL Tablets==
