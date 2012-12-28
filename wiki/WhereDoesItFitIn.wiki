@@ -1,11 +1,12 @@
 #labels Featured
-Here is a list of rules engines evaluated before creating the PlainJavaRules.
+Here is a list of rules engines evaluated before creating the PlainJavaRules
 
 ==Jboss *Drools==
 *Pros:*
-*supports most features.
-*Stable.
-*Decent forum support.
+
+#supports most features.
+#Stable.
+#Decent forum support.
 
 *Cons:*
 *Heavy weight
