@@ -1,10 +1,11 @@
-#summary One-sentence summary of this page.
 #labels Featured
+#lets get it started
 
 = Introduction =
 
-Add your content here.
-
+==What is plainjavarules?==
+A simple customizable component to externalize Application business logic.
+For more details visit [WhereDoesItFitIn]
 
 = Architecture =
 https://plainjavarules.googlecode.com/svn/wiki/rulesengine.png
