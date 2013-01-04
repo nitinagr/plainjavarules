@@ -17,13 +17,14 @@
         <property name="driverClassName" value="${rules.db.client.driver}"/>
         <property name="url" value="${rules.db.url}"/>
         <property name="username" value="${rules.db.username}"/>
-        <property name="password" value="${rules.db.password}"/>
-        <property name="defaultAutoCommit" value="false" />
+        <property name="password" value="${rules.db.password}"/>  
+        <property name="defaultAutoCommit" value="false" />      
 	</bean> 		
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="ruleDatasource" />
 	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="pjrJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="ruleDatasource"></property>
@@ -36,6 +37,6 @@
 		<property name="properties" ref="configurationProperties" />
 	</bean>
 	<!-- Loads the Db Queries -->
-	<util:properties id="configurationProperties" location="classpath:configuration.properties"/>
+	<util:properties id="configurationProperties" location="classpath:sql_queries.properties"/>
 	 
     </beans>
