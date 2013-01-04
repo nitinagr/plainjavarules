@@ -70,9 +70,13 @@ public class PlainJavaRulesAuthenticationProvider implements AuthenticationProvi
             //throw new BadCredentialsException("Empty Password");
             throw new BadCredentialsException(messageSource.getMessage("login.password.empty",null,new Locale("en")));
         }
+        
+        boolean isLoginValid = false;
 
         try {
-			loginProcessor.validateLogin(username, password);
+        	isLoginValid = loginProcessor.validateLogin(username, password);
+        	if(!isLoginValid) throw new BadCredentialsException("Username / Password is wrong");
+        	
 		} catch (Exception e) {
 			logger.error("Login Failed ",e);
             logger.debug("Rejecting empty password for user " + username);

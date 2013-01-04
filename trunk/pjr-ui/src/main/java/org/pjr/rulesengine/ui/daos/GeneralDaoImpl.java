@@ -47,6 +47,7 @@ public class GeneralDaoImpl implements GeneralDao {
 					user.setEnableDate(rs.getDate("ENABLE_DATE"));
 					user.setDisableDate(rs.getDate("DISABLE_DATE"));
 					user.setAdmin(rs.getBoolean("ISADMIN"));
+					user.setPassword(rs.getString("PASSWORD"));
 				}
 
 				return user;
