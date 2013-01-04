@@ -19,9 +19,10 @@ public class RulesEngineTest {
 	@Resource(name="rulesEngine")
 	private RulesEngine rulesEngine;
 
-	@Test
+/*	@Test
 	public void printAllRulesInMvelFormat() throws TechnicalException{
-		/*Map<Rule,Serializable > expressions = rulesEngine.getCompiledExpressions();
+
+		Map<Rule,Serializable > expressions = rulesEngine.getCompiledExpressions();
 		log.debug("Testing mvel fetch .....");
 		Iterator<Rule> iterate = expressions.keySet().iterator();
 		while(iterate.hasNext()){
@@ -30,7 +31,13 @@ public class RulesEngineTest {
 			Serializable compileExpr = expressions.get(tempRule);		   	
 			log.debug("1- compileExpr for RuleId:"+ruleId+"  is :"+compileExpr.toString());
  
-		}*/
+		}
 	
+	}*/
+	
+	
+	@Test
+	public void testExecution(){
+		System.out.println("  this is great");
 	}
 }
