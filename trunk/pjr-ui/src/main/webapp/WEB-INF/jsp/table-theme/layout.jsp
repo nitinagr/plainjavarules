@@ -11,7 +11,7 @@
 
 <style>
 a {
-color: #151B54;
+color: blue;
 }
 .tooltip {
 	display:none;
@@ -156,7 +156,7 @@ textarea {
 		  				<table width=1000px>
 		   					<tr>
 								<td valign=top style='background:grey;'>
-								<p><img width=63 id="_x0000_i1027"	src="<c:url value="/static/images/1template_left.jpg"/>"></p>
+								<p></p>
 								</td>
 								<!-- Menu,Username,Logout Starts -->
 								<td width=850 colspan="3" align="left">
