@@ -207,7 +207,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>SpringMVC</finalName>
+		<finalName>plainjavarules</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
