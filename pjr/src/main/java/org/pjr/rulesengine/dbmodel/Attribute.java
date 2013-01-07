@@ -10,8 +10,15 @@ public class Attribute {
 	private String id;
 	private String name;
 	private String value;
+	private String modelId;
 
 
+	public String getModelId() {
+		return modelId;
+	}
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
 	public String getId() {
 		return id;
 	}
@@ -39,6 +46,8 @@ public class Attribute {
 		builder.append(name);
 		builder.append(", value=");
 		builder.append(value);
+		builder.append(", modelId=");
+		builder.append(modelId);		
 		builder.append("]");
 		return builder.toString();
 	}

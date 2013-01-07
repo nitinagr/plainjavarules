@@ -14,6 +14,7 @@ public class Subrule {
 	private String description;
 	private boolean defaultValue;
 	private boolean active;
+	private String modelId;
 
 	//Only for fetching
 	private List<SubruleLogic> logic = new ArrayList<SubruleLogic>();
@@ -71,6 +72,15 @@ public class Subrule {
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
 	}
 
 	/* (non-Javadoc)

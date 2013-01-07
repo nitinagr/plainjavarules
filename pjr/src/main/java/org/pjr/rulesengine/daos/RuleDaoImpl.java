@@ -129,7 +129,7 @@ public class RuleDaoImpl implements RuleDao{
 						ps.setInt(3, active);
 						ps.setInt(4, ruleObj.getExecutionOrder());
 						ps.setString(5, ruleObj.getReturnValue());
-
+						ps.setString(6, ruleObj.getModelId());
 					}
 				});
 
@@ -260,6 +260,7 @@ public class RuleDaoImpl implements RuleDao{
 						rule.setActive(rs.getBoolean("ACTIVE"));
 						rule.setReturnValue(rs.getString("RETURN_VALUE"));
 						rule.setExecutionOrder(rs.getInt("EXE_ORDER"));
+						rule.setModelId(rs.getString("MODEL_ID"));
 						ruleList.add(rule);
 					}
 
@@ -333,6 +334,7 @@ public class RuleDaoImpl implements RuleDao{
 						r.setActive(rs.getBoolean("ACTIVE"));
 						r.setReturnValue(rs.getString("RETURN_VALUE"));
 						r.setExecutionOrder(rs.getInt("EXE_ORDER"));
+						r.setModelId(rs.getString("MODEL_ID"));
 					}
 					return r;
 				}
@@ -504,6 +506,7 @@ public class RuleDaoImpl implements RuleDao{
 						r.setActive(rs.getBoolean("ACTIVE"));
 						r.setReturnValue(rs.getString("RETURN_VALUE"));
 						r.setExecutionOrder(rs.getInt("EXE_ORDER"));
+						r.setModelId(rs.getString("MODEL_ID"));
 					}
 					return r;
 				}
