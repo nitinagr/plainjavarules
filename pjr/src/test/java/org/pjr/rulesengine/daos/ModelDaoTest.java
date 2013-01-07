@@ -95,4 +95,13 @@ public class ModelDaoTest {
 			log.error("",e);
 		}
 	}
+	@Test
+	public void fetchByNameTest(){
+		try {
+			Model md=modelDao.isModelNameAlreadyExists("org.me.jvmTest");
+			log.info(md);
+		} catch (DataLayerException e) {
+			log.error("",e);
+		}
+	}
 }
