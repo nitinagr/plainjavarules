@@ -43,6 +43,19 @@ public class Rule {
 	Set<RuleLogic> logic = new TreeSet<RuleLogic>();
 
 
+	private String modelId;
+	
+	
+
+	public String getModelId() {
+		return modelId;
+	}
+
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+
 
 	/**
 	 * Gets the id.

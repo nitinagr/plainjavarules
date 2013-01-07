@@ -52,6 +52,8 @@ public interface SubruleDao {
 		 * @author  Sudhakar (pjr.org)
 		 */
 	public List<Subrule> fetchAllSubrules() throws DataLayerException;
+	
+	public List<Subrule> fetchAllSubrulesbyModelId(String modelId) throws DataLayerException;
 
 	/**
 	 * Method to fetch single row of PAC_RE_SUBRULE table.

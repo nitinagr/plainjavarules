@@ -143,6 +143,7 @@ public class SubruleDaoImpl implements SubruleDao{
 						ps.setString(2, subrule.getDescription());
 						ps.setInt(3, def);
 						ps.setInt(4, active);
+						ps.setString(5, subrule.getModelId());
 
 					}
 
@@ -279,6 +280,7 @@ public class SubruleDaoImpl implements SubruleDao{
 						subrule.setDescription(rs.getString("SUBRULE_DESCRIPTION"));
 						subrule.setDefaultValue(rs.getBoolean("DEFAULT_VALUE"));
 						subrule.setActive(rs.getBoolean("ACTIVE"));
+						subrule.setModelId(rs.getString("MODEL_ID"));
 
 						subrules.add(subrule);
 					}
@@ -319,6 +321,7 @@ public class SubruleDaoImpl implements SubruleDao{
 						subrule.setDescription(rs.getString("SUBRULE_DESCRIPTION"));
 						subrule.setDefaultValue(rs.getBoolean("DEFAULT_VALUE"));
 						subrule.setActive(rs.getBoolean("ACTIVE"));
+						subrule.setModelId(rs.getString("MODEL_ID"));
 					}
 					return subrule;
 				}
@@ -639,6 +642,44 @@ public class SubruleDaoImpl implements SubruleDao{
 			}
 		});
 
+	}
+
+	@Override
+	public List<Subrule> fetchAllSubrulesbyModelId(String modelId) throws DataLayerException {
+
+		//log.debug("Entered fetchAllSubrules method");
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLSUBRULES_MODEL_ID);
+		//String sql="SELECT SUBRULE_ID,SUBRULE_NAME,SUBRULE_DESCRIPTION,DEFAULT_VALUE,ACTIVE FROM FSMMGR.PAC_RE_SUBRULE order by SUBRULE_NAME";
+		List<Subrule> subrules;
+		try{
+			subrules=jdbcTemplate.query(sql, new ResultSetExtractor<List<Subrule>>(){
+
+				@Override
+				public List<Subrule> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<Subrule> subrules=new ArrayList<Subrule>();
+					while(rs.next()){
+						Subrule subrule=new Subrule();
+
+						subrule.setId(rs.getString("SUBRULE_ID"));
+						subrule.setName(rs.getString("SUBRULE_NAME"));
+						subrule.setDescription(rs.getString("SUBRULE_DESCRIPTION"));
+						subrule.setDefaultValue(rs.getBoolean("DEFAULT_VALUE"));
+						subrule.setActive(rs.getBoolean("ACTIVE"));
+
+						subrules.add(subrule);
+					}
+					return subrules;
+				}
+
+			});
+			//log.debug("fetched subrules:"+subrules.size());
+		}catch(Exception e) {
+        	log.error("Error in fetchAllSubrules",e);
+        	throw new DataLayerException(e);
+        }
+		//log.debug("Exiting fetchAllSubrules method");
+		return subrules;
+			
 	}
 
 
