@@ -9,9 +9,17 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.daos.ModelClassDao;
 import org.pjr.rulesengine.daos.SubruleDao;
 import org.pjr.rulesengine.dbmodel.Subrule;
 import org.pjr.rulesengine.processor.RulesEngine;
+import org.pjr.rulesengine.ui.controller.validator.EditSubruleValidator;
+import org.pjr.rulesengine.ui.controller.validator.SubruleValidator;
+import org.pjr.rulesengine.ui.processor.SubruleProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
+import org.pjr.rulesengine.ui.uidto.SubRuleLogicItem;
+import org.pjr.rulesengine.ui.uidto.SubruleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -24,12 +32,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.pjr.rulesengine.ui.controller.validator.EditSubruleValidator;
-import org.pjr.rulesengine.ui.controller.validator.SubruleValidator;
-import org.pjr.rulesengine.ui.processor.SubruleProcessor;
-import org.pjr.rulesengine.ui.uidto.SubRuleLogicItem;
-import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
 /**
  * @author Anubhab(Infosys)
@@ -57,6 +59,10 @@ public class SubruleController {
 
 	@Autowired
 	private SubruleDao subruleDao;
+	
+
+	@Autowired
+	private ModelAdminProcessor modelAdminProcessor;
 
 
 	@RequestMapping (value="/view/all" , method=RequestMethod.GET)
@@ -83,6 +89,9 @@ public class SubruleController {
 			return "error";
 		}
 
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		model.addAttribute("subrule", subruleDto);
 		view="view_subrule";
 		log.info("Exiting controller:viewSubRule");
@@ -105,7 +114,10 @@ public class SubruleController {
 
 
 		List<SubRuleLogicItem> srlItems = subruleProcessor.getAllSubRuleLogicItems(id);
+		
 
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
 		model.addAttribute("subrulename", subruleDto.getName());
 		model.addAttribute("subrule", subruleDto);
 		model.addAttribute("srlItems", srlItems);

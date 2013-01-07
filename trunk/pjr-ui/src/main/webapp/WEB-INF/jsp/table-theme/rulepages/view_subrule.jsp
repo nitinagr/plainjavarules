@@ -62,6 +62,24 @@
 		</td>
 	</tr>
 	<tr>
+		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
+		</td>
+		<td class="ruletabletd">		
+			<select name="modelId" >					
+				<c:forEach items="${modelClasses}" var="modelClass" >
+					<c:choose>
+						<c:when test="${modelClass.model_id == subrule.modelId }">
+							<option id="${modelClass.model_id}" value="${modelClass.model_class_name }" selected="selected">${modelClass.model_class_name }</option>							
+						</c:when>
+						<c:otherwise>
+							<option id="${modelClass.model_id}" value="${modelClass.model_class_name }">${modelClass.model_class_name }</option>
+						</c:otherwise>
+					</c:choose>					
+				</c:forEach>
+			</select>
+		</td>		
+	</tr>				
+	<tr>
 		<td class="ruletabletd"><b>Current Logic in DB</b></td>
 		<td class="ruletabletd">
 			<textarea rows="20" columns="40"  disabled="disabled"><c:out value="${subrule.logicText}"/></textarea>

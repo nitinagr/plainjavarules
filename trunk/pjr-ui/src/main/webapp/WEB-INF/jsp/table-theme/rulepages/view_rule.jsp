@@ -98,7 +98,19 @@ $(document).ready(function() {
 		<td class="ruletabletd"><b>Execution Order</b></td>		
 		<td class="ruletabletd"><c:out value="${rule.executionOrder}" /></td>
 	</tr>		
-	
+		<tr>
+			<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
+			</td>
+			<td class="ruletabletd">
+					<c:forEach items="${modelClasses}" var="modelClass" >
+						<c:choose>
+							<c:when test="${modelClass.model_id == rule.modelId }">
+								${modelClass.model_class_name }
+							</c:when>
+						</c:choose>					
+					</c:forEach>
+			</td>		
+		</tr>
 	<tr>
 		<td class="ruletabletd"><b>Current Logic in DB</b></td>
 		<td class="ruletabletd">

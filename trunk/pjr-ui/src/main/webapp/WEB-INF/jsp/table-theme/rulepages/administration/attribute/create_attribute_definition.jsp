@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"   pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
 <b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Create Attribute Definition</b>
@@ -48,10 +49,29 @@ $(document).ready(function(){
 		<td class="ruletabletd"><b>Mvel / Object value: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
-			<input type="text" name="value" id="value" value="${attribute.value}"></input>
-			<!--<form:errors path="value" cssClass="error" />
-		--></td>		
+			<input type="text" name="value" id="value" value="${attribute.value}"></input>	
+		</td>		
 	</tr>
+	<tr>
+		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
+		</td>
+		<td class="ruletabletd">		
+			<select name="modelId" >
+			<option id="" value=""></option>				
+				<c:forEach items="${modelClasses}" var="modelClass" >
+					<c:choose>
+						<c:when test="${modelClass.model_id == attribute.modelId }">
+							<option id="${modelClass.model_id}" value="${modelClass.model_id }" selected="selected">${modelClass.model_class_name }</option>							
+						</c:when>
+						<c:otherwise>
+							<option id="${modelClass.model_id}" value="${modelClass.model_id }">${modelClass.model_class_name }</option>
+						</c:otherwise>
+					</c:choose>					
+				</c:forEach>
+			</select>
+		</td>		
+	</tr>	
+	
 </table>
 <center>
 <div  id="loadingmsg" class="loadingmsg">

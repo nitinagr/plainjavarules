@@ -64,6 +64,7 @@ public class DataTransformer {
 			attribute.setId(attributeDto.getAttributeId());
 			attribute.setName(attributeDto.getAttributeName());
 			attribute.setValue(attributeDto.getValue());
+			attribute.setModelId(attributeDto.getModelId());
 		}
 		return attribute;
 	}
@@ -105,6 +106,7 @@ public class DataTransformer {
 			subrule.setDescription(subruleDto.getDescription());
 			subrule.setDefaultValue(subruleDto.isDefaultValue());
 			subrule.setActive(subruleDto.isActive());
+			subrule.setModelId(subruleDto.getModelId());
 		}
 		return subrule;
 	}
@@ -117,7 +119,7 @@ public class DataTransformer {
 			subruleDto.setDescription(subrule.getDescription());
 			subruleDto.setDefaultValue(subrule.isDefaultValue());
 			subruleDto.setActive(subrule.isActive());
-
+			subruleDto.setModelId(subrule.getModelId());
 			List<SubruleLogic>   subRuleLogic = subrule.getLogic();
 
 			List<SubRuleLogicItem> subRuleLogicItems = new ArrayList<SubRuleLogicItem>();
@@ -164,6 +166,7 @@ public class DataTransformer {
 			ruleDto.setRuleDes(rule.getRuleDescription());
 			ruleDto.setActive(rule.isActive());
 			ruleDto.setReturnValue(rule.getReturnValue());
+			ruleDto.setModelId(rule.getModelId());
 			ruleDto.setExecutionOrder(String.valueOf(rule.getExecutionOrder()) );
 			List<org.pjr.rulesengine.ui.uidto.RuleLogicUi> uiLogic = new ArrayList<org.pjr.rulesengine.ui.uidto.RuleLogicUi>();
 			Set<RuleLogic> logic = rule.getLogic();
@@ -203,6 +206,7 @@ public class DataTransformer {
 			rule.setActive(ruleDto.isActive());
 			rule.setReturnValue(ruleDto.getReturnValue());
 			rule.setExecutionOrder(Integer.parseInt(ruleDto.getExecutionOrder()) );
+			rule.setModelId(ruleDto.getModelId());
 		}
 		return rule;
 	}

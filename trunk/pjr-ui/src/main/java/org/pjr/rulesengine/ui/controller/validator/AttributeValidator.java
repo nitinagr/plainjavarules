@@ -56,6 +56,7 @@ public class AttributeValidator implements Validator{
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors,"attributeName","login.attributeName.empty",messageSource.getMessage("login.attributeName.empty",null,new Locale("en")));
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors,"value","login.value.empty",messageSource.getMessage("login.value.empty",null,new Locale("en")));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors,"modelId","modelname.empty",messageSource.getMessage("modelname.empty",null,new Locale("en")));
 
 		AttributeDto attributeDto=(AttributeDto)target;
 

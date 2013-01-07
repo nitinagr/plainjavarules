@@ -64,6 +64,20 @@
 			<form:errors path="attributeName" cssClass="error" />
 			</td>
 		</tr>		
+		
+	<tr>
+		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
+		</td>
+		<td class="ruletabletd">
+				<c:forEach items="${modelClasses}" var="modelClass" >
+					<c:choose>
+						<c:when test="${modelClass.model_id == attribute.modelId }">
+							${modelClass.model_class_name }
+						</c:when>
+					</c:choose>					
+				</c:forEach>
+		</td>		
+	</tr>		
 </table>
 
 <center>

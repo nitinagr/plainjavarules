@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.ui.controller.validator.AttributeValidator;
+import org.pjr.rulesengine.ui.controller.validator.EditAttributeValidator;
+import org.pjr.rulesengine.ui.processor.SubruleProcessor;
+import org.pjr.rulesengine.ui.processor.admin.AttributeAdminProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.AttributeDto;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
+import org.pjr.rulesengine.ui.uidto.SubruleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -23,13 +31,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import org.pjr.rulesengine.ui.controller.validator.AttributeValidator;
-import org.pjr.rulesengine.ui.controller.validator.EditAttributeValidator;
-import org.pjr.rulesengine.ui.processor.SubruleProcessor;
-import org.pjr.rulesengine.ui.processor.admin.AttributeAdminProcessor;
-import org.pjr.rulesengine.ui.uidto.AttributeDto;
-import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
 /**
  * @author Anubhab(Infosys)
@@ -55,11 +56,20 @@ public class AttributeAdminController {
 	@Autowired
 	private EditAttributeValidator editAttributeValidator;
 
+
+	@Autowired
+	private ModelAdminProcessor modelAdminProcessor;
+	
 	@RequestMapping(value="create" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String create( Model model){
+	public String create( Model model) throws TechnicalException{
 		String view = null;
 		view = "create_attribute_definition";
+	
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();
+		model.addAttribute("modelClasses",modelClasses);
+		
 		return view;
 	}
 
@@ -74,6 +84,10 @@ public class AttributeAdminController {
 			log.debug("Attribute Create form has errors");
 			model.addAttribute("errors",errors.getFieldErrors());
 			model.addAttribute("attribute",attribute);
+			
+
+			List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+			model.addAttribute("modelClasses", modelClasses);			
 			view = "create_attribute_definition";
 			return view;
 		}
@@ -85,9 +99,14 @@ public class AttributeAdminController {
 		if(rows==attrDtoList.size()){
 			log.info("Successfully added attributes to DB..");
 			List<AttributeDto> attributeList = new ArrayList<AttributeDto>();
-			attributeList=attributeAdminProcessor.fetchAllAttributes();
+			attributeList=attributeAdminProcessor.fetchAllAttributes(attribute.getModelId());
 			model.addAttribute("attributes",attributeList);
 			model.addAttribute("message","New attribute added successfully");
+			
+
+			List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+			model.addAttribute("modelClasses", modelClasses);
+			
 			view="viewall_attribute_definition";
 		}
 		return view;
@@ -108,6 +127,11 @@ public class AttributeAdminController {
 		log.debug("attribute :"+ attribute);
 
 		model.addAttribute("attribute", attribute);
+
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		log.info("exiting edit controller");
 		view="edit_attribute_definition";
 		return view;
@@ -119,6 +143,9 @@ public class AttributeAdminController {
 		String view = null;
 		AttributeDto currentAttr=attributeAdminProcessor.fetchAttribute(attribute.getAttributeId());
 
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		if(null!= currentAttr){
 			//Setting the old values before validation
 			editAttributeValidator.setOldName(currentAttr.getAttributeName());
@@ -192,6 +219,10 @@ public class AttributeAdminController {
 		AttributeDto attribute=null;
 		attribute=attributeAdminProcessor.fetchAttribute(attributeId);
 
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		if(null == attribute) {
 			model.addAttribute("message","Attribute doesnt exist. Please check the Attribute Id in the URL");
 			return "error";
@@ -212,6 +243,9 @@ public class AttributeAdminController {
 		List<AttributeDto> attributeList = new ArrayList<AttributeDto>();
 		attributeList=attributeAdminProcessor.fetchAllAttributes();
 		model.addAttribute("attributes",attributeList);
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
 		view="viewall_attribute_definition";
 		return view;
 	}
@@ -229,7 +263,7 @@ public class AttributeAdminController {
 		List<AttributeDto>  attributeDtos = attributeAdminProcessor.fetchAttributesAssignedToSubrule(subruleid);
 		model.addAttribute("attributesAssigned", attributeDtos);
 
-		List<AttributeDto>  allattributeDtos =attributeAdminProcessor.fetchAllAttributes();
+		List<AttributeDto>  allattributeDtos =attributeAdminProcessor.fetchAllAttributes(subruleDto.getModelId());
 
 		model.addAttribute("subrule", subruleDto);
 		model.addAttribute("attributes", allattributeDtos);
@@ -255,7 +289,7 @@ public class AttributeAdminController {
 		}
 
 		//fetch all attributes
-		List<AttributeDto>  allattributeDtos =attributeAdminProcessor.fetchAllAttributes();
+		List<AttributeDto>  allattributeDtos =attributeAdminProcessor.fetchAllAttributes(subruleDto.getModelId());
 		model.addAttribute("attributes", allattributeDtos);
 
 		//get the previously assigned attributes

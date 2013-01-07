@@ -40,11 +40,13 @@ public interface AttributeAdminProcessor {
 	 */
 	public int deleteAttribute(String attributeId) throws TechnicalException;
 
+	
+	public List<AttributeDto> fetchAllAttributes()  throws TechnicalException;
 	/**
 	 * @return
 	 * @throws DataLayerException
 	 */
-	public List<AttributeDto> fetchAllAttributes() throws TechnicalException;
+	public List<AttributeDto> fetchAllAttributes(String modelId) throws TechnicalException;
 
 	/**
 	 * @param attributeId

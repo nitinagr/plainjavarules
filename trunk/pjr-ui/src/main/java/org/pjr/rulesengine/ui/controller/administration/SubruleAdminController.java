@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.pjr.rulesengine.daos.ModelClassDao;
 import org.pjr.rulesengine.ui.controller.validator.SubruleValidator;
 import org.pjr.rulesengine.ui.processor.RulesProcessor;
 import org.pjr.rulesengine.ui.processor.SubruleProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
 import org.pjr.rulesengine.ui.processor.admin.SubruleAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
 import org.pjr.rulesengine.ui.uidto.RuleDto;
 import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
@@ -46,6 +49,10 @@ public class SubruleAdminController {
 
 	@Autowired
 	private RulesProcessor rulesProcessor;
+	
+
+	@Autowired
+	private ModelAdminProcessor modelAdminProcessor;
 
 	@Autowired
 	private SubruleValidator validator;
@@ -76,13 +83,16 @@ public class SubruleAdminController {
 
 	@RequestMapping(value="create" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String create( Model model){
+	public String create( Model model) throws TechnicalException{
 		log.info("Entered subrule create controller");
 		String view = null;
 		SubruleDto subruleDto=new SubruleDto();
 		model.addAttribute("subrule",subruleDto);
 		view = "create_subrule_definition";
 		log.info("Exiting subrule create operator");
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses",modelClasses);
+		
 		return view;
 	}
 	@RequestMapping(value="create" , method=RequestMethod.POST)
@@ -92,7 +102,9 @@ public class SubruleAdminController {
 		String view = null;
 
 		validator.validate(subruleDto, errors);
-
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses",modelClasses);
+		
 		if(errors.hasFieldErrors()){
 			model.addAttribute("errors",errors.getFieldErrors());
 			model.addAttribute("subrule",subruleDto);
@@ -103,9 +115,10 @@ public class SubruleAdminController {
 		List<SubruleDto> subruleDtoList=new ArrayList<SubruleDto>();
 		subruleDtoList.add(subruleDto);
 		int i=subruleAdminProcessor.createsubruleDefinition(subruleDtoList);
+		
 		if(i>0){
 			model.addAttribute("message","New Subrule Saved Successfully");
-			List<SubruleDto> subruleList=subruleProcessor.fetchAllSubrules();
+			List<SubruleDto> subruleList=subruleProcessor.fetchAllSubrulesbyModelId(subruleDto.getModelId());
 			model.addAttribute("subrules",subruleList);
 			view="view_all_subrules";
 		}
@@ -141,7 +154,7 @@ public class SubruleAdminController {
 			//view="redirect:/subrule/view/all";
 		}
 
-		model.addAttribute("subrule",subruleDto);
+		model.addAttribute("subrule",subruleDto);		
 		view="delete_subrule_status";
 		log.debug("Exiting deleteSubrule controller");
 		return view;
@@ -161,7 +174,7 @@ public class SubruleAdminController {
 
 		List<SubruleDto> assignedSubRules = subruleProcessor.fetchAllSubrules(ruleId);
 
-		List<SubruleDto>  subRules = subruleProcessor.fetchAllSubrules();
+		List<SubruleDto>  subRules = subruleProcessor.fetchAllSubrulesbyModelId(rule.getModelId());
 
 		model.addAttribute("assignedSubRules", assignedSubRules);
 		model.addAttribute("subRules", subRules);
@@ -233,7 +246,7 @@ public class SubruleAdminController {
 
 			model.addAttribute("rule", rule);
 			List<SubruleDto> assignedSubRules = subruleProcessor.fetchAllSubrules(ruleId);
-			List<SubruleDto>  subRules = subruleProcessor.fetchAllSubrules();
+			List<SubruleDto>  subRules = subruleProcessor.fetchAllSubrulesbyModelId(rule.getModelId());
 			model.addAttribute("assignedSubRules", assignedSubRules);
 			model.addAttribute("subRules", subRules);
 			model.addAttribute("subRulesReferred", subRulesStillUsedInLogic);
@@ -248,7 +261,7 @@ public class SubruleAdminController {
 
 		//Populating the view
 		List<SubruleDto> assignedSubRules = subruleProcessor.fetchAllSubrules(ruleId);
-		List<SubruleDto>  subRules = subruleProcessor.fetchAllSubrules();
+		List<SubruleDto>  subRules = subruleProcessor.fetchAllSubrulesbyModelId(rule.getModelId());
 		model.addAttribute("assignedSubRules", assignedSubRules);
 		model.addAttribute("subRules", subRules);
 

@@ -36,6 +36,8 @@ public class RuleDto {
 	private String updatedLogicText;
 
 	private String mappingLogicTextFromDB;
+	
+	private String modelId;
 
 	private List<RuleLogicUi> logic = new ArrayList<RuleLogicUi>();
 
@@ -62,6 +64,14 @@ public class RuleDto {
 
 	public String getRuleDes() {
 		return ruleDes;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
 	}
 
 	public void setRuleDes(String ruleDes) {

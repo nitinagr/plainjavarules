@@ -36,12 +36,15 @@ public interface AttributeDao {
 	 */
 	public int[] deleteAttribute(List<String> attributeIds) throws DataLayerException;
 
+	
+	public List<Attribute> fetchAllAttributes() throws DataLayerException;
+	
 	/**
 	 * Method to fetch all rows of PAC_RE_OBJECT_ATTR table.
 	 * @return
 	 * @throws DataLayerException
 	 */
-	public List<Attribute> fetchAllAttributes() throws DataLayerException;
+	public List<Attribute> fetchAllAttributes(String modelId) throws DataLayerException;
 
 	/**
 	 * Method to fetch a row of PAC_RE_OBJECT_ATTR table.

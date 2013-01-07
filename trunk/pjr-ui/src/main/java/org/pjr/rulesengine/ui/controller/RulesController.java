@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.pjr.rulesengine.daos.ModelClassDao;
 import org.pjr.rulesengine.ui.controller.validator.EditRuleValidator;
 import org.pjr.rulesengine.ui.processor.RulesProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
 import org.pjr.rulesengine.ui.uidto.RuleDto;
 import org.pjr.rulesengine.ui.uidto.RuleLogicUi;
 
@@ -42,6 +45,8 @@ public class RulesController {
 	@Autowired
 	private RulesProcessor rulesProcessor;
 
+	@Autowired
+	private ModelAdminProcessor modelAdminProcessor;
 
 	@Autowired
 	@Qualifier("editRuleValidator")
@@ -63,6 +68,10 @@ public class RulesController {
 		List<RuleDto> ruleList = rulesProcessor.fetchAllRules();
 		model.addAttribute("rules",ruleList);
 
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		return "view_all_rules";
 	}
 
@@ -85,6 +94,10 @@ public class RulesController {
 			return "error";
 		}
 
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);		
+		
 		log.info("Rule Fetched :"+ rule);
 		model.addAttribute("rule",rule);
 		return "view_rule";
@@ -114,6 +127,10 @@ public class RulesController {
 		List<RuleLogicUi> rlItems = rulesProcessor.getAllRuleLogicItems(ruleId);
 		log.info("Rule Fetched :"+ rule);
 
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		model.addAttribute("rule",rule);
 		model.addAttribute("rlItems",rlItems);
 		return "edit_rule";
@@ -170,6 +187,11 @@ public class RulesController {
 
 		rulesProcessor.updateRule(ruleDto);
 		RuleDto rule = rulesProcessor.fetchRule(ruleDto.getRuleId());
+		
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		//Updated
 		model.addAttribute("rule",rule);
 		model.addAttribute("message","Successfully Saved");

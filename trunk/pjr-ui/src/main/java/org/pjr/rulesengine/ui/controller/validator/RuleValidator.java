@@ -50,6 +50,7 @@ public class RuleValidator implements Validator{
 		if(null != ruleDb)  errors.rejectValue( "ruleName","login.rule.name.alreadyexists", messageSource.getMessage("login.rule.name.alreadyexists",null,new Locale("en")));
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "returnValue","login.returnValue.empty", messageSource.getMessage("login.returnValue.empty",null,new Locale("en")));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "modelId","modelname.empty", messageSource.getMessage("modelname.empty",null,new Locale("en")));
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "executionOrder","login.executionOrder.empty", messageSource.getMessage("login.executionOrder.empty",null,new Locale("en")));
 
 		boolean isNumberValid = true;

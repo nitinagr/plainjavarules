@@ -53,7 +53,8 @@ public class SubruleValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name","login.subrule.name.empty", messageSource.getMessage("login.subrule.name.empty",null,new Locale("en")));
-
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "modelId","modelname.empty", messageSource.getMessage("modelname.empty",null,new Locale("en")));
+		
 		SubruleDto subDto = (SubruleDto)target;
 
 		if (StringUtils.isNotBlank(subDto.getName())) {
