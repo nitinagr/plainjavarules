@@ -62,7 +62,7 @@ public class OperatorValidator implements Validator{
 		boolean valueExists=false;
 
 		try {
-			if (!errors.hasFieldErrors("attributeName")) {
+			if (!errors.hasFieldErrors("operatorName")) {
 				log.info("Operator name was not empty");
 				nameExists = operatorDao.isOperatorNameExists(operatorDto.getOperatorName());
 				if(nameExists) errors.rejectValue("operatorName","login.operatorName.alreadyexists", messageSource.getMessage("login.operatorName.alreadyexists",null,new Locale("en")));
