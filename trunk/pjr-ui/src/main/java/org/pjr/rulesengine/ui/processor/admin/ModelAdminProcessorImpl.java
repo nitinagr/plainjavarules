@@ -7,6 +7,7 @@ package org.pjr.rulesengine.ui.processor.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
@@ -39,6 +40,7 @@ public class ModelAdminProcessorImpl implements ModelAdminProcessor {
 	 */
 	@Override
 	public int insertModel(List<ModelDto> modelDtoList) throws TechnicalException {
+		log.debug("Entered insertModel processor");
 		List<Model> models=new ArrayList<Model>();
 		if(null!=modelDtoList && !modelDtoList.isEmpty()){
 			for(ModelDto temp:modelDtoList){
@@ -61,8 +63,18 @@ public class ModelAdminProcessorImpl implements ModelAdminProcessor {
 	 */
 	@Override
 	public boolean updateModel(List<ModelDto> modelDtoList) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return false;
+		log.debug("Entered updateModel processor");
+		boolean result=false;
+		if(null!=modelDtoList && !modelDtoList.isEmpty()){
+			List<Model> models=new ArrayList<Model>();
+			
+			for(ModelDto temp:modelDtoList){
+				Model model=ViewDtoTransformer.convertFromUI(temp);
+				models.add(model);
+			}
+			result=modelDao.updateModels(models);
+		}
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +82,17 @@ public class ModelAdminProcessorImpl implements ModelAdminProcessor {
 	 */
 	@Override
 	public int deleteModel(String modelId) throws TechnicalException {
-		// TODO Auto-generated method stub
+		log.debug("Entered deleteModel processor");
+		if(!StringUtils.isBlank(modelId)){
+			List<String> modelIds=new ArrayList<String>();
+			modelIds.add(modelId);
+			int j=0;
+			int[] i=modelDao.deleteFromModel(modelIds);
+			if(null!=i && i.length!=0){
+				j=i.length;
+			}
+			return j;
+		}
 		return 0;
 	}
 
@@ -79,6 +101,7 @@ public class ModelAdminProcessorImpl implements ModelAdminProcessor {
 	 */
 	@Override
 	public List<ModelDto> fetchAllModels() throws TechnicalException {
+		log.debug("Entered fetchAllModels processor");
 		List<Model> listt=modelDao.fetchAllModels();
 		List<ModelDto> returningList=new ArrayList<ModelDto>();
 		for(Model temp:listt){
@@ -93,14 +116,24 @@ public class ModelAdminProcessorImpl implements ModelAdminProcessor {
 	 */
 	@Override
 	public ModelDto fetchModel(String string) throws TechnicalException {
-		// TODO Auto-generated method stub
+		log.debug("Entered fetchModel processor");
+		if(!StringUtils.isEmpty(string)){
+			Model db=modelDao.fetchModel(string);
+			ModelDto dto=ViewDtoTransformer.convertToUI(db);
+			return dto;
+		}
 		return null;
 	}
 
 	@Override
-	public boolean isModelAlreadyExists(String name) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return false;
+	public ModelDto isModelAlreadyExists(String name) throws TechnicalException {
+		log.debug("Entered isModelAlreadyExists processor");
+		if(!StringUtils.isEmpty(name)){
+			Model db=modelDao.isModelNameAlreadyExists(name);
+			ModelDto dto=ViewDtoTransformer.convertToUI(db);
+			return dto;
+		}
+		return null;
 	}
 
 }

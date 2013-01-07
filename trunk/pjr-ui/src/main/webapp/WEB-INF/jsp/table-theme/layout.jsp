@@ -216,6 +216,17 @@ textarea {
 													</li>
 												</ul>		
 												</li>	
+												<li>
+													<a href="#a">Model</a>
+												<ul>												
+													<li>
+														<a href="<c:url value="/admin/model/create"/>">Create</a>
+													</li>			
+													<li>
+														<a href="<c:url value="/admin/model/view/all"/>">ViewAll/Manage</a>
+													</li>
+												</ul>		
+												</li>	
 											</sec:authorize>						
 												</ul>									
 											</td>
