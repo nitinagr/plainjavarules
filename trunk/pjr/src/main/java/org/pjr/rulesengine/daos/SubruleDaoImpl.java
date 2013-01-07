@@ -652,7 +652,7 @@ public class SubruleDaoImpl implements SubruleDao{
 		//String sql="SELECT SUBRULE_ID,SUBRULE_NAME,SUBRULE_DESCRIPTION,DEFAULT_VALUE,ACTIVE FROM FSMMGR.PAC_RE_SUBRULE order by SUBRULE_NAME";
 		List<Subrule> subrules;
 		try{
-			subrules=jdbcTemplate.query(sql, new ResultSetExtractor<List<Subrule>>(){
+			subrules=jdbcTemplate.query(sql,new Object[]{modelId}, new ResultSetExtractor<List<Subrule>>(){
 
 				@Override
 				public List<Subrule> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -665,6 +665,7 @@ public class SubruleDaoImpl implements SubruleDao{
 						subrule.setDescription(rs.getString("SUBRULE_DESCRIPTION"));
 						subrule.setDefaultValue(rs.getBoolean("DEFAULT_VALUE"));
 						subrule.setActive(rs.getBoolean("ACTIVE"));
+						subrule.setModelId(rs.getString("MODEL_ID"));
 
 						subrules.add(subrule);
 					}
