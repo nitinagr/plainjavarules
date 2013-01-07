@@ -19,6 +19,7 @@ public class SubruleDto {
 	private String description;
 	private boolean defaultValue;
 	private boolean active;
+	private String modelId;
 
 
 
@@ -34,6 +35,14 @@ public class SubruleDto {
 
 
 
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
 
 	public String getMappingLogicTextFromDB() {
 		return mappingLogicTextFromDB;
@@ -143,6 +152,8 @@ public class SubruleDto {
 		builder.append(defaultValue);
 		builder.append(", active=");
 		builder.append(active);
+		builder.append(", modelId=");
+		builder.append(modelId);		
 		builder.append(", logicText=");
 		builder.append(logicText);
 		builder.append(", updatedLogicText=");

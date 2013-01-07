@@ -65,6 +65,7 @@ public class AttributeDaoImpl implements AttributeDao {
 						//Setting the values to the prepared statement
 						ps.setString(1, attributeList.get(count).getName());
 						ps.setString(2, attributeList.get(count).getValue());
+						ps.setString(3, attributeList.get(count).getModelId());
 
 					}
 
@@ -111,7 +112,7 @@ public class AttributeDaoImpl implements AttributeDao {
 					//Setting the values to the prepared statement
 					ps.setString(1, attributeList.get(count).getName());
 					ps.setString(2, attributeList.get(count).getValue());
-					ps.setString(3,String.valueOf(attributeList.get(count).getId()));
+					ps.setString(3,String.valueOf(attributeList.get(count).getId()));					
 
 				}
 
@@ -173,6 +174,34 @@ public class AttributeDaoImpl implements AttributeDao {
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLATTRIBUTES_SELECT);
 		try{
 			attributeList=jdbcTemplate.query(sql,new RowMapper(){
+				public Object mapRow(ResultSet rs, int count) throws SQLException{
+					Attribute temp=new Attribute();
+					temp.setId(rs.getString("ATTR_ID"));
+					temp.setName(rs.getString("ATTR_NAME"));
+					temp.setValue(rs.getString("ATTR_VALUE"));
+					return temp;
+				}
+			});
+			if(null==attributeList) throw new DataLayerException("Some error while fetching attribute details");
+			log.info("Successfully fetched attribute details.");
+		}catch(Exception e) {
+			log.error("Error in fetchAllAttribute",e);
+			throw new DataLayerException(e);
+		}
+		log.info("Exit: fetchAllAttribute");
+		return attributeList;
+	}
+	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public List<Attribute> fetchAllAttributes(String modelId) throws DataLayerException {
+		log.debug("Entering fetchAllAttribute..");
+
+		List<Attribute> attributeList=null;
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLATTRIBUTES_MODEL_ID_SELECT);
+		try{
+			attributeList=jdbcTemplate.query(sql,new Object[]{modelId} ,new RowMapper(){
 				public Object mapRow(ResultSet rs, int count) throws SQLException{
 					Attribute temp=new Attribute();
 					temp.setId(rs.getString("ATTR_ID"));

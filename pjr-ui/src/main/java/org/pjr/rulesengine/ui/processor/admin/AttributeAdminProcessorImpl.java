@@ -108,6 +108,24 @@ public class AttributeAdminProcessorImpl implements AttributeAdminProcessor {
 		}
 		return opToList;
 	}
+	
+	@Override
+	public List<AttributeDto> fetchAllAttributes(String modelId) throws TechnicalException {
+		log.debug("Entering processor's fetchAllAttributes..");
+		List<AttributeDto> opToList=new ArrayList<AttributeDto>();
+		List<Attribute> opList=null;
+		try{
+			opList = attributeDao.fetchAllAttributes(modelId);
+			if(null!=opList && opList.size()>0) {
+				for(Attribute temp:opList){
+					opToList.add(DataTransformer.convertToUI(temp));
+				}
+			}
+		}catch(Exception e){
+			throw new TechnicalException(e);
+		}
+		return opToList;
+	}
 	@Override
 	public AttributeDto fetchAttribute(String attributeId) throws TechnicalException {
 		log.debug("Entering processor's fetchAllAttributes..");

@@ -225,4 +225,23 @@ public class SubruleProcessorImpl implements SubruleProcessor {
 		return ruleNames;
 	}
 
+	@Override
+	public List<SubruleDto> fetchAllSubrulesbyModelId(String modelId) throws TechnicalException {
+
+		log.info("Entered subrule processor:fetchAllSubrules");
+		List<SubruleDto> subruleDtos=new ArrayList<SubruleDto>();
+
+		try{
+			List<Subrule> subrules=subruleDao.fetchAllSubrulesbyModelId(modelId);
+			for(Subrule temp:subrules){
+				subruleDtos.add(DataTransformer.convertToUI(temp));
+			}
+		} catch(Exception e) {
+			throw new TechnicalException(e);
+		}
+		log.info("Entered subrule processor:fetchAllSubrules");
+		return subruleDtos;
+	
+	}
+
 }

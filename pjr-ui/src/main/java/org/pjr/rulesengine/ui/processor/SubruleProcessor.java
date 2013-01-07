@@ -35,6 +35,8 @@ public interface SubruleProcessor {
 	 * @author  Sudhakar (Infosys)
 	 */
 	public List<SubruleDto> fetchAllSubrules() throws TechnicalException;
+	
+	public List<SubruleDto> fetchAllSubrulesbyModelId(String modelId) throws TechnicalException;
 
 	/**
 	 * Fetch subrule by subruleid.

@@ -1,5 +1,7 @@
 package org.pjr.rulesengine.ui.controller.administration;
 
+import java.util.List;
+
 import org.pjr.rulesengine.NonTechnicalException;
 import org.pjr.rulesengine.TechnicalException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.pjr.rulesengine.daos.ModelClassDao;
 import org.pjr.rulesengine.ui.RuleAlreadyExistException;
 import org.pjr.rulesengine.ui.controller.validator.RuleValidator;
 import org.pjr.rulesengine.ui.processor.RulesProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
 import org.pjr.rulesengine.ui.uidto.RuleDto;
 
 /**
@@ -37,6 +42,10 @@ public class RuleAdminController {
 	@Autowired
 	@Qualifier("ruleValidator")
 	private RuleValidator ruleValidator;
+	
+
+	@Autowired
+	private ModelAdminProcessor modelAdminProcessor;
 
 	@RequestMapping(value="duplicate" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
@@ -72,6 +81,10 @@ public class RuleAdminController {
 		}
 
 		RuleDto ruleDtoSaved = rulesProcessor.fetchRuleByRuleName(rule.getRuleName());
+		
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);		
 		model.addAttribute("rule", ruleDtoSaved);
 		view = "view_rule";
 		return view;
@@ -87,12 +100,17 @@ public class RuleAdminController {
 	 */
 	@RequestMapping(value="create" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=TechnicalException.class)
-	public String create( Model model){
+	public String create( Model model) throws TechnicalException{
 		String view = null;
 		RuleDto rule = new RuleDto();
 
 		model.addAttribute("rule", rule);
 		view = "create_rule_definition";
+
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		return view;
 	}
 
@@ -131,6 +149,10 @@ public class RuleAdminController {
 
 		RuleDto ruleDtoSaved = rulesProcessor.fetchRuleByRuleName(rule.getRuleName());
 		model.addAttribute("rule", ruleDtoSaved);
+		
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);		
 		view = "view_rule";
 		return view;
 	}

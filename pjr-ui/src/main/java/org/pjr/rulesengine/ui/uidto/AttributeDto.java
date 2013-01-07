@@ -11,6 +11,7 @@ public class AttributeDto {
 	private String attributeId;
 	private String attributeName;
 	private String value;
+	private String modelId;
 
 
 	public String getAttributeId() {
@@ -43,14 +44,26 @@ public class AttributeDto {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
+	
+	public String getModelId() {
+		return modelId;
+	}
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AttributeDto [attributeId=").append(attributeId).append(", attributeName=").append(attributeName).append(", value=")
-				.append(value).append("]");
+		builder.append("AttributeDto [attributeId=");
+		builder.append(attributeId);
+		builder.append(", attributeName=");
+		builder.append(attributeName);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", modelId=");
+		builder.append(modelId);
+		builder.append("]");
 		return builder.toString();
 	}
 

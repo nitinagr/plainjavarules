@@ -24,6 +24,20 @@
 		<td class="ruletabletd"><b><c:out value="${attribute.value }"/></b></td>
 		<input type="hidden" name="value" id="value" value="${attribute.value }"></input>		
 	</tr>
+	
+	<tr>
+		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
+		</td>
+		<td class="ruletabletd">
+				<c:forEach items="${modelClasses}" var="modelClass" >
+					<c:choose>
+						<c:when test="${modelClass.model_id == attribute.modelId }">
+							${modelClass.model_class_name }
+						</c:when>
+					</c:choose>					
+				</c:forEach>
+		</td>		
+	</tr>		
 </table>
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
