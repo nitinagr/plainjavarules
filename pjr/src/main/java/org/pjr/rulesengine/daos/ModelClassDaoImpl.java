@@ -217,4 +217,31 @@ public class ModelClassDaoImpl implements ModelClassDao {
 		return model;
 	}
 
+	@Override
+	public Model isModelNameAlreadyExists(String name) throws DataLayerException {
+		log.debug("Entering isModelNameAlreadyExists..");
+		
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCH_MODEL_BYNAME);
+		Model stub=null;
+		try{
+			stub=jdbcTemplate.query(sql, new Object[]{name},new ResultSetExtractor<Model>() {
+
+				@Override
+				public Model extractData(ResultSet rs) throws SQLException, DataAccessException {
+					Model model=null;
+					while(rs.next()){
+						model=new Model();
+						model.setModel_id(rs.getString("MODEL_ID"));
+						model.setModel_class_name(rs.getString("MODEL_CLASS_NAME"));
+					}
+					return model;
+				}
+			});
+		}catch(Exception e) {
+			log.error("Error in fetchModel",e);
+			throw new DataLayerException(e);
+		}
+		return stub;
+	}
+
 }
