@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="create_model_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Create model" />
+		<put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/model/create_model_definition.jsp" />
+	</definition>
+	
+	<definition name="edit_model_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Edit model" />
+		<put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/administration/model/edit_model_definition.jsp" />
+	</definition>
+	
+	<definition name="view_model_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="View model" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/model/view_model_definition.jsp" />
+	</definition>
+	
+	<definition name="viewall_model_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="View All models" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/model/viewall_model_definition.jsp" />
+	</definition>
+
+	<definition name="delete_model_status_definition" extends="base.definition">
+		<put-attribute name="title" value="Plain Java Rules Engine" />
+		<put-attribute name="flowname" value="Delete Status models" />
+		<put-attribute name="body"	value="/WEB-INF/jsp/table-theme/rulepages/administration/model/delete_model_status_definition.jsp" />
+	</definition>
+</tiles-definitions>

@@ -66,5 +66,5 @@ public interface ModelAdminProcessor {
 	 */
 	public ModelDto fetchModel(String string) throws TechnicalException;
 
-	public boolean isModelAlreadyExists(String name) throws TechnicalException;
+	public ModelDto isModelAlreadyExists(String name) throws TechnicalException;
 }

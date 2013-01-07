@@ -6,8 +6,6 @@ package org.pjr.rulesengine.ui.controller.administration;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
@@ -22,18 +20,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import org.pjr.rulesengine.ui.controller.validator.EditModelValidator;
-import org.pjr.rulesengine.ui.controller.validator.EditOperatorValidator;
+
 import org.pjr.rulesengine.ui.controller.validator.ModelValidator;
-import org.pjr.rulesengine.ui.controller.validator.OperatorValidator;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
+
 import org.pjr.rulesengine.ui.processor.RulesProcessor;
 import org.pjr.rulesengine.ui.processor.SubruleProcessor;
 import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
 import org.pjr.rulesengine.ui.processor.admin.OperatorAdminProcessor;
-import org.pjr.rulesengine.ui.uidto.ModelDto;
-import org.pjr.rulesengine.ui.uidto.OperatorDto;
 import org.pjr.rulesengine.ui.uidto.RuleDto;
 import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
@@ -46,9 +42,6 @@ import org.pjr.rulesengine.ui.uidto.SubruleDto;
 public class ModelAdminController {
 	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(ModelAdminController.class);
-
-	@Autowired
-	private RulesProcessor rulesProcessor;
 
 	@Autowired
 	private ModelAdminProcessor modelAdminProcessor;
@@ -70,15 +63,15 @@ public class ModelAdminController {
 
 	@RequestMapping(value="create" , method=RequestMethod.POST)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=TechnicalException.class)
-	public String createOperator( Model model , @ModelAttribute ModelDto modelDto,Errors errors) throws TechnicalException{
-		log.debug("inside createOperator method");
+	public String createModel( Model model , @ModelAttribute ModelDto modelDto,Errors errors) throws TechnicalException{
+		log.debug("inside createModel method");
 		String view=null;
 
 		
 		modelValidator.validate(modelDto, errors);
 
 		if(errors.hasFieldErrors()){
-			log.debug("Operator Create page has errors");
+			log.debug("Model Create page has errors");
 			model.addAttribute("model",modelDto);
 			model.addAttribute("errors",errors.getFieldErrors());
 			view="create_model_definition";
@@ -103,85 +96,80 @@ public class ModelAdminController {
 		return view;
 	}
 
-	@RequestMapping(value="edit/{operatorId}" , method=RequestMethod.GET)
+	@RequestMapping(value="edit/{modelId}" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String editOperator(@PathVariable String operatorId,Model model) throws TechnicalException{
+	public String editModel(@PathVariable String modelId,Model model) throws TechnicalException{
 		String view = null;
-		OperatorDto operator=null;
 		log.info("inside edit controller");
-		//operator=operatorAdminProcessor.fetchOperator(operatorId);
-
-		if(null == operator) {
-			model.addAttribute("message","Operator doesnt exist. Please check the Operator Id in the URL");
+		ModelDto dto = modelAdminProcessor.fetchModel(modelId);
+		
+		if(null == dto) {
+			model.addAttribute("message","Model doesnt exist. Please check the Model Id in the URL");
 			return "error";
 		}
 
-		view="edit_operator_definition";
-		model.addAttribute("operator", operator);
+		view="edit_model_definition";
+		model.addAttribute("modelDto", dto);
 		log.info("exiting edit controller");
 		return view;
 	}
 
 	@RequestMapping(value="edit/save" , method=RequestMethod.POST)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=TechnicalException.class)
-	public String editOperator( Model model , @ModelAttribute OperatorDto operator,Errors errors) throws TechnicalException{
-		log.info("Saving operator:"+operator.toString());
+	public String editModel( Model model , @ModelAttribute ModelDto modelDto,Errors errors) throws TechnicalException{
+		log.info("Saving Model:"+modelDto.toString());
 		String view = null;
-		//OperatorDto currenOp=operatorAdminProcessor.fetchOperator(operator.getOperatorId());
-		OperatorDto currenOp=null;
-		if(null!=currenOp){
+		ModelDto currentModelInDb=null;
+		currentModelInDb=modelAdminProcessor.fetchModel(modelDto.getModel_id());
+		if(null!=currentModelInDb){
 			//Set the old values before validating
-		//	editOperatorValidator.setOldName(currenOp.getOperatorName());
-		//	editOperatorValidator.setOldValue(currenOp.getValue());
-		//	editOperatorValidator.validate(operator, errors);
+			editModelValidator.setOldName(currentModelInDb.getModel_class_name());
+			editModelValidator.validate(modelDto, errors);
 		} else {
-			model.addAttribute("message","Operator doesnt exist. Someone might have Deleted the operator");
+			model.addAttribute("message","Model doesnt exist. Please check the Model Id in the URL");
 			return "error";
 		}
 
 		if(errors.hasFieldErrors()){
 			log.debug("Operator Edit page has errors");
-			model.addAttribute("operator",operator);
+			model.addAttribute("modelDto", modelDto);
 			model.addAttribute("errors",errors.getFieldErrors());
-			view="edit_operator_definition";
+			view="edit_model_definition";
 			return view;
 		}
-		//if(OperatorAdminValidator.validateInput(operator)){
-			List<OperatorDto> opList=new ArrayList<OperatorDto>();
-			opList.add(operator);
+		
+			List<ModelDto> modelDtoList=new ArrayList<ModelDto>();
+			modelDtoList.add(modelDto);
 			//save it into DB
-			boolean result = false;
-		//	boolean result=operatorAdminProcessor.updateOperator(opList);
+			boolean result=modelAdminProcessor.updateModel(modelDtoList);
 			if(result) {
-				model.addAttribute("message", "Operator Saved Successfully");
-				model.addAttribute("operator",operator);
-				view="view_operator_definition";
+				model.addAttribute("message", "Model Saved Successfully");
+				model.addAttribute("modelDto", modelDto);
+				view="view_model_definition";
 			} else {
-				model.addAttribute("error", "Operator edition failed");
-				model.addAttribute("operator",operator);
-				view="edit_operator_definition";
+				model.addAttribute("error", "Model edition failed");
+				model.addAttribute("modelDto", modelDto);
+				view="edit_model_definition";
 			}
-		/*} else {
-			model.addAttribute("error", "One or more required fields are empty");
-			model.addAttribute("operator",operator);
-			view="edit_operator_definition";
-		}*/
 		return view;
 	}
 
-	@RequestMapping(value="delete/{operatorId}" , method=RequestMethod.GET)
+	@RequestMapping(value="delete/{modelId}" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=TechnicalException.class)
-	public String deleteOperator(@PathVariable String operatorId,Model model) throws TechnicalException{
+	public String deleteModel(@PathVariable String modelId,Model model) throws TechnicalException{
 		String view = null;
-		log.info("inside delete operator");
+		log.info("inside delete deleteModel");
 
 		//OperatorDto opr=operatorAdminProcessor.fetchOperator(operatorId);
-		OperatorDto opr=null;
-		if(null == opr) {
-			model.addAttribute("message","Operator doesnt exist. Please check the Operator Id in the URL");
+		ModelDto dto = modelAdminProcessor.fetchModel(modelId);
+		
+		if(null == dto) {
+			model.addAttribute("message","Model doesnt exist. Please check the Model Id in the URL");
 			return "error";
 		}
-
+		
+		//TODO: checking refrnce of attribute to model
+		
 		//Check whether it is refrenced in rule/subrule mapping
 		List<String> rulesReferred=new ArrayList<String>();
 		List<String> subrulesReferred=new ArrayList<String>();
@@ -192,41 +180,39 @@ public class ModelAdminController {
 			log.debug("Could not delete operator");
 			model.addAttribute("rulesReferred",rulesReferred);
 			model.addAttribute("subrulesReferred",subrulesReferred);
-			model.addAttribute("error","Operator Could not be deleted Successfully");
+			model.addAttribute("error","Model Could not be deleted Successfully");
 		} else {
-			//delete the operator detail using operator ID
-			//int i=operatorAdminProcessor.deleteOperator(operatorId);
-int i=0;
+			//delete the Model detail using modelId 
+			int i=modelAdminProcessor.deleteModel(modelId);
 			if(i==1){
-				model.addAttribute("message","Operator Deleted Successfully");
+				model.addAttribute("message","Model Deleted Successfully");
 			} else {
-				model.addAttribute("error","Operator Could not be deleted Successfully");
+				model.addAttribute("error","Model Could not be deleted Successfully");
 			}
 		}
-		//model.addAttribute("operator", opr);
-		view="delete_operator_status_definition";
+		model.addAttribute("modelDto", dto);
+		view="delete_model_status_definition";
 		return view;
 	}
 
-	@RequestMapping(value="view/{operatorId}" , method=RequestMethod.GET)
+	@RequestMapping(value="view/{modelId}" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String viewOperator(@PathVariable String operatorId,Model model) throws TechnicalException{
-		log.info("entering view operator");
+	public String viewModel(@PathVariable String modelId,Model model) throws TechnicalException{
+		log.info("entering view Model");
 		String view = null;
-		//OperatorDto operator=operatorAdminProcessor.fetchOperator(operatorId);
-		OperatorDto operator=null;
-
-		if(null == operator) {
-			model.addAttribute("message","Operator doesnt exist. Please check the Operator Id in the URL");
+		ModelDto dto=null;
+		dto=modelAdminProcessor.fetchModel(modelId);
+		
+		if(null == dto) {
+			model.addAttribute("message","Model doesnt exist. Please check the Model Id in the URL");
 			return "error";
-
 		}
 
-		if(null!=operator){
-			view="view_operator_definition";
-			model.addAttribute("operator", operator);
+		if(null!=dto){
+			view="view_model_definition";
+			model.addAttribute("modelDto", dto);
 		}
-		log.info("exitinging view operator");
+		log.info("exitinging view Model");
 		return view;
 	}
 

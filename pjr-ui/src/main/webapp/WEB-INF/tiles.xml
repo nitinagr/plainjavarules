@@ -17,6 +17,7 @@
 				<value>/WEB-INF/defs/table-theme/rule-views.xml</value>
 				<value>/WEB-INF/defs/table-theme/operator-views.xml</value>
 				<value>/WEB-INF/defs/table-theme/attribute-views.xml</value>
+				<value>/WEB-INF/defs/table-theme/model-views.xml</value>
 			</list>
 		</property>
 	</bean>
