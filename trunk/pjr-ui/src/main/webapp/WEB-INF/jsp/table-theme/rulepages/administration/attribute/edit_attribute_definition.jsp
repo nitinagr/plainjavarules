@@ -68,7 +68,8 @@
 	<tr>
 		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
 		</td>
-		<td class="ruletabletd">
+		<td class="ruletabletd"><b><c:out value="${attribute.modelId }"/></b></td>
+		<!--<td class="ruletabletd">
 				<c:forEach items="${modelClasses}" var="modelClass" >
 					<c:choose>
 						<c:when test="${modelClass.model_id == attribute.modelId }">
@@ -76,7 +77,7 @@
 						</c:when>
 					</c:choose>					
 				</c:forEach>
-		</td>		
+		</td>	 -->			
 	</tr>		
 </table>
 

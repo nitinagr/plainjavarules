@@ -136,15 +136,17 @@ var isGenerateButtonClicked = true;
 			
 			$("#loadingmsg").hide();
 			$("#logicErrorDiv").hide();
+			$("#disableSubRuleDiv").hide();
 			
 			//Form submit actions
 			$("#submitButton").click(function(){
-				
+				var logicText=document.getElementById('updatedLogicText').value;//contains the value of the logic
 				var frstVal=$("select:first option:selected").text();
 				var lastVal=$("select:last option:selected").text();
 				var braceError=true;
 				var generateError=true;
-
+				var formSubmit=false;
+				
 				$("#logicError").show();
 				$("#notgenerateError").show();
 				
@@ -156,21 +158,53 @@ var isGenerateButtonClicked = true;
 					$("#notgenerateError").hide();
 					generateError=false;
 				}
-				if(braceError || generateError){
-					//show the dialog
-					$("#logicErrorDiv").dialog({
-	 						resizable: false,
+				
+				//This if block checks whether rule logic is blank or not
+				if(logicText==null || logicText==''){
+					var isEnabled=$('input:checkbox[id=enableCheck]').is(':checked');//This boolean represntsthe value of the "active" checkbox
+					if(isEnabled){
+						//Show error to disable the subrule
+						$("#disableSubRuleDiv").dialog({
+							resizable: false,
 	 						draggable: false,
 	 						modal: true,
 	 						show: {effect: 'fade', duration: 500},
 	 						hide: {effect: 'fade', duration: 500},
 	 						buttons: {
-	 							"Ok": function() {
+	 							"OK": function() {
 	 								$(this).dialog("close");
+	 							}	
 	 						}
-	 					}
-	 				}); //dialog ends logicError
-				} else {
+						});//disableSubRuleDiv dialog ends
+					}else{
+						//Submit the form
+						formSubmit=true;
+					}
+				}else {
+					//SubRule has logic
+					//Check other validations
+					if(braceError || generateError){
+						//show the dialog
+						$("#logicErrorDiv").dialog({
+		 						resizable: false,
+		 						draggable: false,
+		 						modal: true,
+		 						show: {effect: 'fade', duration: 500},
+		 						hide: {effect: 'fade', duration: 500},
+		 						buttons: {
+		 							"Ok": function() {
+		 								$(this).dialog("close");
+		 						}
+		 					}
+		 				}); //dialog ends logicError
+					} else {
+						//Submit the form
+						formSubmit=true;
+					}
+				}
+
+				//Code to actually submitting the form
+				if(formSubmit){
 					$('#loadingmsg').show();
 					//This code is to retain the loading image for 500ms
 					setTimeout(function(){
@@ -355,7 +389,7 @@ var isGenerateButtonClicked = true;
 	<tr>
 		<td class="ruletabletd"><b>Subrule Status</b>
 		</td>
-		<td class="ruletabletd"><form:checkbox path="active" value="${subrule.active}" />Enabled</td>
+		<td class="ruletabletd"><form:checkbox id="enableCheck" path="active" value="${subrule.active}" />Enabled</td>
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Subrule Default value</b></td>
@@ -496,6 +530,9 @@ var isGenerateButtonClicked = true;
 			</c:otherwise> 
 		 </c:choose>		
 		<div class="button" id="submitButton" href="#" >Save</div>
+		<div id="disableSubRuleDiv" title="Logic Empty Warning" align="left">
+			The Subrule does not have any logic please <b>"Disable"</b> the Subrule and then save.
+		</div>
 		<div id="logicErrorDiv" title="Logic Formation Error(s)" align="left">
 			<ul >
 				<li id="logicError">The logic should always start with "(" and end with a ")".</li>
