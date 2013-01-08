@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
@@ -238,7 +239,31 @@ public class AttributeAdminController {
 
 	@RequestMapping (value="view/all" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String viewAllAttributes(Model model) throws TechnicalException{
+	public String viewAllAttributes(Model model,HttpServletRequest request) throws TechnicalException{
+		log.debug("Entered viewAllAttributes method");
+		log.debug("Selected value for modelID:"+request.getParameter("modelId"));
+		
+		String modelId=request.getParameter("modelId");
+		String view=null;
+		List<AttributeDto> attributeList = new ArrayList<AttributeDto>();
+		
+		if(StringUtils.isEmpty(modelId)){
+			attributeList=attributeAdminProcessor.fetchAllAttributes();
+		} else {
+			model.addAttribute("model",modelId);
+			attributeList=attributeAdminProcessor.fetchAllAttributes(modelId);
+		}
+		
+		model.addAttribute("attributes",attributeList);
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		view="viewall_attribute_definition";
+		return view;
+	}
+	/*@RequestMapping (value="view/all" , method=RequestMethod.POST)
+	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
+	public String viewAllAttributesPost(Model model) throws TechnicalException{
 		String view=null;
 		List<AttributeDto> attributeList = new ArrayList<AttributeDto>();
 		attributeList=attributeAdminProcessor.fetchAllAttributes();
@@ -248,7 +273,7 @@ public class AttributeAdminController {
 		model.addAttribute("modelClasses", modelClasses);
 		view="viewall_attribute_definition";
 		return view;
-	}
+	}*/
 	@RequestMapping (value="view/subrule/{subruleid}" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
 	public String assignAttributesToSubrule(@PathVariable String subruleid , Model model,@ModelAttribute AttributeDto attribute, Errors errors)throws TechnicalException{

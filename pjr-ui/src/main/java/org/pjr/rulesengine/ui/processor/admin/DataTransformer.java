@@ -75,6 +75,7 @@ public class DataTransformer {
 			attributeDto.setAttributeId(attribute.getId());
 			attributeDto.setAttributeName(attribute.getName());
 			attributeDto.setValue(attribute.getValue());
+			attributeDto.setModelId(attribute.getModelId());
 		}
 		return  attributeDto;
 	}

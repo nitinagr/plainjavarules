@@ -238,6 +238,7 @@ public class AttributeDaoImpl implements AttributeDao {
 						temp.setId(rs.getString("ATTR_ID"));
 						temp.setName(rs.getString("ATTR_NAME"));
 						temp.setValue(rs.getString("ATTR_VALUE"));
+						temp.setModelId(rs.getString("MODEL_CLASS_NAME"));
 					}
 					return temp;
 				}

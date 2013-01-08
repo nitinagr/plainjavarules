@@ -33,9 +33,34 @@ $(document).ready(function() {
     
 });
 </script>
-
-<b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; All Attribute/Object Definitions</b>
-<br/>
+<form:form commandName="attribute" name="viewAllForm" id="viewAllForm" acceptCharset="UTF-8" method="get" action="all">
+	<table cellspacing="0" width="100%">
+		<tr>
+		<td>
+			<b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt;
+				All Attribute/Object Definitions</b>
+		</td>
+		<td>
+			<right> <b>Filter Based on Model:</b> 
+			<select name="modelId" onchange="this.form.submit()">
+				<option id="" value="">Show All</option>
+				<c:forEach items="${modelClasses}" var="modelClass">
+					<c:choose>
+						<c:when test="${modelClass.model_id == model }">
+							<option id="${modelClass.model_id}"
+								value="${modelClass.model_id }" selected="selected">${modelClass.model_class_name}</option>
+						</c:when>
+						<c:otherwise>
+							<option id="${modelClass.model_id}"
+								value="${modelClass.model_id }">${modelClass.model_class_name}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select> </right>
+			</td>
+		</tr>
+	</table>
+	<br/>
 <table cellspacing="0" width="100%" class="ruletable">
 	<tr>
 		<!-- <th>Attribute / Object Id</th>-->
@@ -75,5 +100,5 @@ $(document).ready(function() {
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
 	<br/><br/>
 </center>
-
+</form:form>
 
