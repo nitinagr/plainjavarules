@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.ui.controller.validator.SubruleValidator;
+import org.pjr.rulesengine.ui.processor.RulesProcessor;
+import org.pjr.rulesengine.ui.processor.SubruleProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.processor.admin.SubruleAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
+import org.pjr.rulesengine.ui.uidto.RuleDto;
+import org.pjr.rulesengine.ui.uidto.SubruleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,16 +29,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.pjr.rulesengine.daos.ModelClassDao;
-import org.pjr.rulesengine.ui.controller.validator.SubruleValidator;
-import org.pjr.rulesengine.ui.processor.RulesProcessor;
-import org.pjr.rulesengine.ui.processor.SubruleProcessor;
-import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
-import org.pjr.rulesengine.ui.processor.admin.SubruleAdminProcessor;
-import org.pjr.rulesengine.ui.uidto.ModelDto;
-import org.pjr.rulesengine.ui.uidto.RuleDto;
-import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
 /**
  * @author Anubhab(Infosys)
@@ -118,7 +116,7 @@ public class SubruleAdminController {
 		
 		if(i>0){
 			model.addAttribute("message","New Subrule Saved Successfully");
-			List<SubruleDto> subruleList=subruleProcessor.fetchAllSubrulesbyModelId(subruleDto.getModelId());
+			List<SubruleDto> subruleList=subruleProcessor.fetchAllSubrules();
 			model.addAttribute("subrules",subruleList);
 			view="view_all_subrules";
 		}

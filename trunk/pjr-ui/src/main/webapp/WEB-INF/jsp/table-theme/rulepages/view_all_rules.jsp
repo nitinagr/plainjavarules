@@ -64,22 +64,53 @@ $(document).ready(function() {
 });
 </script>
 
+<c:url value="/admin/attribute/view/all" var="submitUrl"/>
+<form:form commandName="attribute" name="viewAllForm1" id="viewAllForm1" acceptCharset="UTF-8" method="get" action="${submitUrl }" >
+	<table cellspacing="0" width="100%" class="ruletable">
+		<tr>
+		<td>
+			<font color="#151B54">
+			<b><a href="#">Home</a></b>
+			</font>
+		</td>
+		<td align="right">
+			<b>Filter Based on Model:</b> 
+			<select name="modelId" onchange="this.form.submit()">
+				<option id="" value="">Show All</option>
+				<c:forEach items="${modelClasses}" var="modelClass">
+					<c:choose>
+						<c:when test="${modelClass.model_id == model }">
+							<option id="${modelClass.model_id}"
+								value="${modelClass.model_id }" selected="selected">${modelClass.model_class_name}</option>
+						</c:when>
+						<c:otherwise>
+							<option id="${modelClass.model_id}"
+								value="${modelClass.model_id }">${modelClass.model_class_name}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select>
+			</td>
+		</tr>
+	</table>
+</form:form>
 
 
-<b><a href="#">Home</a></b>
 <br/>
 <table cellspacing="0" width="100%" class="ruletable">
 	<tr>
+
 		<!-- <th align="left">Rule Id</th> -->
-		<th align="left" class=ruletableth style="width:300px;">Rule Name</th>
-		<th align="left" class=ruletableth style="width:100px;">Execution Order</th>
-		<th align="left" class=ruletableth style="width:50px;">Status</th>
-		<th align="left" class=ruletableth style="width:50px;"></th>
-		<th align="left" class=ruletableth style="width:40px;"></th>
-		<th align="left" class=ruletableth style="width:75px;"></th>
-		<th align="left" class=ruletableth style="width:75px;"></th>
-		<th align="left" class=ruletableth style="width:60px;"></th>
-		<th align="left" class=ruletableth style="width:80px;"></th>
+		<th align="left" class=ruletableth style="width:23%;">Rule Name</th>
+		<th align="left" class=ruletableth style="width:10%;">Execution Order</th>
+		<th align="left" class=ruletableth style="width:5%;">Status</th>
+		<th align="left" class=ruletableth style="width:23%;">Model Class</th>
+		<th align="left" class=ruletableth style="width:5%;"></th>
+		<th align="left" class=ruletableth style="width:5%;"></th>
+		<th align="left" class=ruletableth style="width:8%;"></th>
+		<th align="left" class=ruletableth style="width:8%;"></th>
+		<th align="left" class=ruletableth style="width:6%;"></th>
+		<th align="left" class=ruletableth style="width:8%;"></th>
 	</tr>	
 	<c:forEach items="${rules}" var="rule">
 		<tr>
@@ -95,7 +126,15 @@ $(document).ready(function() {
 				<c:otherwise><img src="<c:url value="/static/images/disabled.png"/>" height="24" width="24" class="masterTooltip" tip="Rule is Disabled" /></c:otherwise>
 			</c:choose>
 			</td>							
-			
+			<td class="ruletabletd">
+				<c:forEach items="${modelClasses}" var="modelClass">
+					<c:choose>
+						<c:when test="${modelClass.model_id == rule.modelId }">
+							${modelClass.model_class_name}
+						</c:when>						
+					</c:choose>
+				</c:forEach>	
+			</td>				
 			<td class="ruletabletd"><A href="<c:url value="/rule/view/${rule.ruleId}"/>" >View</A></td>
 			<td class="ruletabletd"><A href="<c:url value="/rule/edit/${rule.ruleId}"/>" >Edit</A></td>
 			

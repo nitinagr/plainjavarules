@@ -33,7 +33,8 @@ $(document).ready(function() {
     
 });
 </script>
-<form:form commandName="attribute" name="viewAllForm" id="viewAllForm" acceptCharset="UTF-8" method="get" action="all">
+<c:url value="/admin/attribute/view/all" var="submitUrl"/>
+<form:form commandName="attribute" name="viewAllForm1" id="viewAllForm1" acceptCharset="UTF-8" method="get" action="${submitUrl}" >
 	<table cellspacing="0" width="100%">
 		<tr>
 		<td>
@@ -60,15 +61,19 @@ $(document).ready(function() {
 			</td>
 		</tr>
 	</table>
+</form:form>
 	<br/>
+	
+<form:form commandName="attribute" name="viewAllForm" id="viewAllForm" acceptCharset="UTF-8" method="get" action="all">
 <table cellspacing="0" width="100%" class="ruletable">
 	<tr>
 		<!-- <th>Attribute / Object Id</th>-->
-		<th align="left" class=ruletableth style="width:250px;">Attribute Name / Object Name</th>
-		<th align="left" class=ruletableth style="width:250px;">Mvel / Object value</th>
-		<th align="left" class=ruletableth  style="width:100px;"></th>
-		<th align="left" class=ruletableth style="width:100px;"></th>
-		<th align="left"class=ruletableth style="width:100px;"></th>
+		<th align="left" class=ruletableth style="width:25%;">Attribute Name / Object Name</th>
+		<th align="left" class=ruletableth style="width:25%;">Mvel / Object value</th>
+		<th align="left" class=ruletableth style="width:25%;">Model Class</th>
+		<th align="left" class=ruletableth  style="width:10%;"></th>
+		<th align="left" class=ruletableth style="width:10%;"></th>
+		<th align="left"class=ruletableth style="width:10%;"></th>
 	</tr>
 
 
@@ -83,6 +88,16 @@ $(document).ready(function() {
 			<td class="ruletabletd">
 				<c:out value="${attribute.value}"/>
 			</td>	
+			<td class="ruletabletd">
+			${attribute.modelId }  
+				<c:forEach items="${modelClasses}" var="modelClass">
+					<c:choose>
+						<c:when test="${modelClass.model_id == attribute.modelId }">
+							${modelClass.model_class_name}
+						</c:when>						
+					</c:choose>
+				</c:forEach>	
+			</td>				
 			<td class="ruletabletd">
 				<a href="<c:url value="/admin/attribute/view/${attribute.attributeId}" />" >View</a>
 			</td>
