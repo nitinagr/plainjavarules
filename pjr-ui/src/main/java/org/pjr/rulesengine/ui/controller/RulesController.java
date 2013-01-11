@@ -6,9 +6,18 @@ package org.pjr.rulesengine.ui.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.ui.controller.validator.EditRuleValidator;
+import org.pjr.rulesengine.ui.processor.RulesProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
+import org.pjr.rulesengine.ui.uidto.RuleDto;
+import org.pjr.rulesengine.ui.uidto.RuleLogicUi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,14 +29,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.pjr.rulesengine.daos.ModelClassDao;
-import org.pjr.rulesengine.ui.controller.validator.EditRuleValidator;
-import org.pjr.rulesengine.ui.processor.RulesProcessor;
-import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
-import org.pjr.rulesengine.ui.uidto.ModelDto;
-import org.pjr.rulesengine.ui.uidto.RuleDto;
-import org.pjr.rulesengine.ui.uidto.RuleLogicUi;
 
 /**
  * The Class RulesController.
@@ -64,11 +65,18 @@ public class RulesController {
 	 */
 	@RequestMapping (value="/view/all" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String viewAllRules(Model model) throws TechnicalException{
-		List<RuleDto> ruleList = rulesProcessor.fetchAllRules();
+	public String viewAllRules(Model model,HttpServletRequest request) throws TechnicalException{
+
+		String modelId=request.getParameter("modelId");
+		List<RuleDto> ruleList = null;
+		
+		if(StringUtils.isEmpty(modelId)){
+			ruleList = rulesProcessor.fetchAllRules();
+		} else {
+			model.addAttribute("model",modelId);
+			ruleList = rulesProcessor.fetchAllRules();
+		}
 		model.addAttribute("rules",ruleList);
-
-
 		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
 		model.addAttribute("modelClasses", modelClasses);
 		

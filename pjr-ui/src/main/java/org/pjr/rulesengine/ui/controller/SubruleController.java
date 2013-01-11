@@ -6,10 +6,12 @@ package org.pjr.rulesengine.ui.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
-import org.pjr.rulesengine.daos.ModelClassDao;
 import org.pjr.rulesengine.daos.SubruleDao;
 import org.pjr.rulesengine.dbmodel.Subrule;
 import org.pjr.rulesengine.processor.RulesEngine;
@@ -67,10 +69,23 @@ public class SubruleController {
 
 	@RequestMapping (value="/view/all" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String viewAllSubRules(Model model) throws TechnicalException{
+	public String viewAllSubRules(Model model,HttpServletRequest request) throws TechnicalException{
 		log.info("Entered controller:viewAllSubRules");
+		String modelId=request.getParameter("modelId");
 		String view=null;
-		List<SubruleDto> subruleList=subruleProcessor.fetchAllSubrules();
+		List<SubruleDto> subruleList= null;
+		
+		if(StringUtils.isEmpty(modelId)){
+			subruleList=subruleProcessor.fetchAllSubrules();
+		} else {
+			model.addAttribute("model",modelId);
+			subruleList=subruleProcessor.fetchAllSubrulesbyModelId(modelId);
+		}		
+		
+		//Setting models
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		model.addAttribute("subrules",subruleList);
 		view="view_all_subrules";
 		log.info("Exiting controller:viewAllSubRules");

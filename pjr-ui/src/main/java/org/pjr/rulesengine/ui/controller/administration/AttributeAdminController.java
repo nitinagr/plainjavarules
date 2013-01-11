@@ -109,6 +109,7 @@ public class AttributeAdminController {
 			model.addAttribute("modelClasses", modelClasses);
 			
 			view="viewall_attribute_definition";
+			//view="redirect:view/all";
 		}
 		return view;
 	}

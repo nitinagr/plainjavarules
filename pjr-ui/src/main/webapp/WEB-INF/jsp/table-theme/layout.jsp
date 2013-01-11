@@ -49,7 +49,7 @@ color: blue;
 	cursor: pointer; 
 }
 .ruletable {
-	width:800px;
+	width:99%;
 	border-spacing:0;
 	MARGIN: 10px; 
 	border-collapse:collapse;
@@ -153,177 +153,180 @@ textarea {
 		 	<tr>
 		  		<td valign="top" align="center" style='background:white;'>
 		  			
-		  				<table width=1000px>
+		  				<table width="80%">
 		   					<tr>
-								<td valign=top style='background:grey;'>
-								<p></p>
-								</td>
+								
+			
 								<!-- Menu,Username,Logout Starts -->
-								<td width=850 colspan="3" align="left">
-								<c:choose>
-								<c:when test="${empty  logicerrors}">			
-								<sec:authorize access="hasRole('ROLE_USER')">		
-									<table>
-										<tr>
-											<td>
-												<ul class="sf-menu">
-												<li class="current">
-													<a href="#a">Rule</a>
-														<ul>
-														<sec:authorize access="hasRole('ROLE_ADMIN')">
-														<li>
-															<a href="<c:url value="/admin/rule/create"/>">Create</a>
-														</li>
-														</sec:authorize>
-														<li>
-															<a href="<c:url value="/rule/view/all"/>">ViewAll/Manage</a>
-														</li>
-														</ul>				
-												</li>
-												<li>
-												<a href="#a">Sub Rule</a>
-													<ul>
-														<sec:authorize access="hasRole('ROLE_ADMIN')">
-														<li>
-															<a href="<c:url value="/admin/subrule/create"/>">Create</a>
-														</li>
-														</sec:authorize>
-														<li>
-														<a href="<c:url value="/subrule/view/all"/>">ViewAll/Manage</a>
-														</li>
-													</ul>								
-												</li>
-												<sec:authorize access="hasRole('ROLE_ADMIN')">
-												<li>
-													<a href="#a">Attribute</a>
-												<ul>
-													<li>
-														<a href="<c:url value="/admin/attribute/create"/>">Create</a>
-													</li>			
-													<li>
-														<a href="<c:url value="/admin/attribute/view/all"/>">ViewAll/Manage</a>
-													</li>		
-												</ul>		
-												</li>
-												<li>
-													<a href="#a">Operator</a>
-												<ul>												
-													<li>
-														<a href="<c:url value="/admin/operator/create"/>">Create</a>
-													</li>			
-													<li>
-														<a href="<c:url value="/admin/operator/view/all"/>">ViewAll/Manage</a>
-													</li>
-												</ul>		
-												</li>	
-												<li>
-													<a href="#a">Model</a>
-												<ul>												
-													<li>
-														<a href="<c:url value="/admin/model/create"/>">Create</a>
-													</li>			
-													<li>
-														<a href="<c:url value="/admin/model/view/all"/>">ViewAll/Manage</a>
-													</li>
-												</ul>		
-												</li>	
-											</sec:authorize>						
-												</ul>									
-											</td>
-										</tr>
-									</table>
-								</sec:authorize>
-						</c:when>
-						<c:otherwise>
-							<sec:authorize access="hasRole('ROLE_USER')">
-								<table>
-									<tr>
-										<td>
-											<ul class="sf-menu">
-											<li class="current">
-												<a href="#a">Rule</a>
-											<ul>
-												<sec:authorize access="hasRole('ROLE_ADMIN')">
-													<li>
-														<a href="#">Create</a>
-													</li>
+								<td width="95%" colspan="3" align="left">
+									
+										<div style="border:1px solid grey;">
+												
+												<c:choose>
+												<c:when test="${empty  logicerrors}">			
+												<sec:authorize access="hasRole('ROLE_USER')">		
+													<table>
+														<tr>
+															<td>
+																<ul class="sf-menu">
+																<li class="current">
+																	<a href="#a">Rule</a>
+																		<ul>
+																		<sec:authorize access="hasRole('ROLE_ADMIN')">
+																		<li>
+																			<a href="<c:url value="/admin/rule/create"/>">Create</a>
+																		</li>
+																		</sec:authorize>
+																		<li>
+																			<a href="<c:url value="/rule/view/all"/>">ViewAll/Manage</a>
+																		</li>
+																		</ul>				
+																</li>
+																<li>
+																<a href="#a">Sub Rule</a>
+																	<ul>
+																		<sec:authorize access="hasRole('ROLE_ADMIN')">
+																		<li>
+																			<a href="<c:url value="/admin/subrule/create"/>">Create</a>
+																		</li>
+																		</sec:authorize>
+																		<li>
+																		<a href="<c:url value="/subrule/view/all"/>">ViewAll/Manage</a>
+																		</li>
+																	</ul>								
+																</li>
+																<sec:authorize access="hasRole('ROLE_ADMIN')">
+																<li>
+																	<a href="#a">Attribute</a>
+																<ul>
+																	<li>
+																		<a href="<c:url value="/admin/attribute/create"/>">Create</a>
+																	</li>			
+																	<li>
+																		<a href="<c:url value="/admin/attribute/view/all"/>">ViewAll/Manage</a>
+																	</li>		
+																</ul>		
+																</li>
+																<li>
+																	<a href="#a">Operator</a>
+																<ul>												
+																	<li>
+																		<a href="<c:url value="/admin/operator/create"/>">Create</a>
+																	</li>			
+																	<li>
+																		<a href="<c:url value="/admin/operator/view/all"/>">ViewAll/Manage</a>
+																	</li>
+																</ul>		
+																</li>	
+																<li>
+																	<a href="#a">Model</a>
+																<ul>												
+																	<li>
+																		<a href="<c:url value="/admin/model/create"/>">Create</a>
+																	</li>			
+																	<li>
+																		<a href="<c:url value="/admin/model/view/all"/>">ViewAll/Manage</a>
+																	</li>
+																</ul>		
+																</li>	
+															</sec:authorize>						
+																</ul>									
+															</td>
+														</tr>
+													</table>
 												</sec:authorize>
-													<li>
-														<a href="#">ViewAll/Manage</a>
-													</li>
-											</ul>				
-											</li>
-											<li>
-												<a href="#a">Sub Rule</a>
-											<ul>
-												<sec:authorize access="hasRole('ROLE_ADMIN')">
-													<li>
-														<a href="#">Create</a>
-													</li>
+										</c:when>
+										<c:otherwise>
+											<sec:authorize access="hasRole('ROLE_USER')">
+												<table>
+													<tr>
+														<td>
+															<ul class="sf-menu">
+															<li class="current">
+																<a href="#a">Rule</a>
+															<ul>
+																<sec:authorize access="hasRole('ROLE_ADMIN')">
+																	<li>
+																		<a href="#">Create</a>
+																	</li>
+																</sec:authorize>
+																	<li>
+																		<a href="#">ViewAll/Manage</a>
+																	</li>
+															</ul>				
+															</li>
+															<li>
+																<a href="#a">Sub Rule</a>
+															<ul>
+																<sec:authorize access="hasRole('ROLE_ADMIN')">
+																	<li>
+																		<a href="#">Create</a>
+																	</li>
+																</sec:authorize>
+																	<li>
+																		<a href="#">ViewAll/Manage</a>
+																	</li>
+															</ul>								
+															</li>
+															<li>
+																<a href="#a">Attribute</a>
+															<ul>
+																<sec:authorize access="hasRole('ROLE_ADMIN')">
+																	<li>
+																		<a href="#">Create</a>
+																	</li>
+																</sec:authorize>
+																	<li>
+																		<a href="#">ViewAll/Manage</a>
+																	</li>		
+															</ul>		
+															</li>
+															<li>
+																<a href="#a">Operator</a>
+															<ul>
+																<sec:authorize access="hasRole('ROLE_ADMIN')">
+																	<li>
+																		<a href="#">Create</a>
+																	</li>
+																</sec:authorize>
+																	<li>
+																		<a href="#">ViewAll/Manage</a>
+																	</li>
+															</ul>		
+															</li>							
+														</ul>									
+													</td>
+												</tr>
+											</table>
+									</sec:authorize>
+									</c:otherwise>
+								</c:choose>		
+												<sec:authorize access="hasRole('ROLE_USER')">							
+												<div style="float: right;padding-right:10px">
+												<c:set var="username">
+												<sec:authentication property="principal.username" /> 
+												</c:set>
+													<font style="color: black;font-weight:bold;text-transform:lowercase;"> <c:out value="${username}"/></font>
+												<br/><br/>
+												<c:choose>
+												<c:when test="${empty  logicerrors}">
+													<a 	href="<c:url value="/j_spring_security_logout" />"> Logout</a>	
+												</c:when>
+												<c:otherwise>
+													<a 	href="#"> Logout</a>	
+												</c:otherwise> 
+												</c:choose>				
+												</div>
 												</sec:authorize>
-													<li>
-														<a href="#">ViewAll/Manage</a>
-													</li>
-											</ul>								
-											</li>
-											<li>
-												<a href="#a">Attribute</a>
-											<ul>
-												<sec:authorize access="hasRole('ROLE_ADMIN')">
-													<li>
-														<a href="#">Create</a>
-													</li>
-												</sec:authorize>
-													<li>
-														<a href="#">ViewAll/Manage</a>
-													</li>		
-											</ul>		
-											</li>
-											<li>
-												<a href="#a">Operator</a>
-											<ul>
-												<sec:authorize access="hasRole('ROLE_ADMIN')">
-													<li>
-														<a href="#">Create</a>
-													</li>
-												</sec:authorize>
-													<li>
-														<a href="#">ViewAll/Manage</a>
-													</li>
-											</ul>		
-											</li>							
-										</ul>									
-									</td>
-								</tr>
-							</table>
-					</sec:authorize>
-					</c:otherwise>
-				</c:choose>		
-								<sec:authorize access="hasRole('ROLE_USER')">							
-								<div style="float: right;padding-right:10px">
-								<c:set var="username">
-								<sec:authentication property="principal.username" /> 
-								</c:set>
-									<font style="color: black;font-weight:bold;text-transform:lowercase;"> <c:out value="${username}"/></font>
-								<br/><br/>
-								<c:choose>
-								<c:when test="${empty  logicerrors}">
-									<a 	href="<c:url value="/j_spring_security_logout" />"> Logout</a>	
-								</c:when>
-								<c:otherwise>
-									<a 	href="#"> Logout</a>	
-								</c:otherwise> 
-								</c:choose>				
-								</div>
-								</sec:authorize>
-								<h3 align="center"><tiles:insertAttribute name="flowname" ignore="true" /></h3>
-								<br/>				
-									<tiles:insertAttribute name="body" />
-									<div class="emptyLine" />
-								</td>
-								<!-- Menu,Username,Logout Ends -->
-								<td valign=top style='background:grey;'>								
-								</td>
+												<h3 align="center"><tiles:insertAttribute name="flowname" ignore="true" /></h3>
+												<br/>				
+												<div>
+													<tiles:insertAttribute name="body" />
+													<div class="emptyLine" />
+												</div>
+												</td>
+												<!-- Menu,Username,Logout Ends -->
+										</div>		
 		   					</tr>
 		 				 </table>		  				  		
 		  		</td>

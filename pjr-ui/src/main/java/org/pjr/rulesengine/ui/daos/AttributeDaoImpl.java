@@ -179,6 +179,7 @@ public class AttributeDaoImpl implements AttributeDao {
 					temp.setId(rs.getString("ATTR_ID"));
 					temp.setName(rs.getString("ATTR_NAME"));
 					temp.setValue(rs.getString("ATTR_VALUE"));
+					temp.setModelId(rs.getString("MODEL_ID"));
 					return temp;
 				}
 			});
@@ -207,6 +208,7 @@ public class AttributeDaoImpl implements AttributeDao {
 					temp.setId(rs.getString("ATTR_ID"));
 					temp.setName(rs.getString("ATTR_NAME"));
 					temp.setValue(rs.getString("ATTR_VALUE"));
+					temp.setModelId(rs.getString("MODEL_ID"));
 					return temp;
 				}
 			});
@@ -282,6 +284,7 @@ public class AttributeDaoImpl implements AttributeDao {
 					o.setId(rs.getString("ATTR_ID"));
 					o.setName(rs.getString("ATTR_NAME"));
 					o.setValue(rs.getString("ATTR_VALUE"));
+					o.setModelId(rs.getString("MODEL_ID"));
 
 					attributeList.add(o);
 				}
