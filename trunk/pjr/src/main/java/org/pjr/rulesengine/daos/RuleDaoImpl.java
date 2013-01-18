@@ -700,6 +700,42 @@ public class RuleDaoImpl implements RuleDao{
 		}
 	}
 
+	@Override
+	public List<Rule> fetchAllRulesByModel(String modelId) throws DataLayerException {
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLRULES_BYMODEL_SELECT);
+		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.PAC_RE_RULES order by EXE_ORDER";
+
+		List<Rule> ruleList;
+		try {
+			ruleList = jdbcTemplate.query(sql,new Object[]{modelId}, new ResultSetExtractor<List<Rule>>() {
+
+				@Override
+				public List<Rule> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<Rule> ruleList = new ArrayList<Rule>();
+
+					while(rs.next()){
+						Rule rule = new Rule();
+
+						rule.setId(rs.getString("RULE_ID"));
+						rule.setRuleName(rs.getString("RULE_NAME"));
+						rule.setRuleDescription(rs.getString("RULE_DESCRIPTION"));
+						rule.setActive(rs.getBoolean("ACTIVE"));
+						rule.setReturnValue(rs.getString("RETURN_VALUE"));
+						rule.setExecutionOrder(rs.getInt("EXE_ORDER"));
+						rule.setModelId(rs.getString("MODEL_ID"));
+						ruleList.add(rule);
+					}
+
+					return ruleList;
+				}
+			});
+		} catch (Exception e) {
+			throw new DataLayerException(e);
+		}
+
+		return ruleList;
+	}
+
 }
 
 
