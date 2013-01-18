@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <script type="text/javascript">
 
@@ -8,7 +9,16 @@
 jQuery(function(){
 	jQuery('ul.sf-menu').superfish();
 });
-
+function submitForm(formId){
+	var oForm = document.getElementById(formId);
+	alert(formId);
+	if (oForm) {
+        oForm.submit(); 
+    }
+    else {
+        alert("DEBUG - could not find element " + formId);
+    }
+}
 </script>
 
 <style type="text/css" >
@@ -64,8 +74,8 @@ $(document).ready(function() {
 });
 </script>
 
-<c:url value="/admin/attribute/view/all" var="submitUrl"/>
-<form:form commandName="attribute" name="viewAllForm1" id="viewAllForm1" acceptCharset="UTF-8" method="get" action="${submitUrl }" >
+<c:url value="/rule/view/all" var="submitUrl"/>
+<form:form commandName="rule" name="viewAllRule" id="viewAllRule" acceptCharset="UTF-8" method="get" action="${submitUrl }" >
 	<table cellspacing="0" width="100%" class="ruletable">
 		<tr>
 		<td>

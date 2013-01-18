@@ -10,7 +10,7 @@
 <br><br>
 <c:choose>
 	<c:when test="${not empty  rulesReferred}">
-	<div class="error" >Following Rule(s) still use this Operator.Unassign the operator from following Rule(s) before you Delete.			
+	<div class="error" >Following Rule(s) still use this Model.Delete the Rule(s) before you Delete the Model.			
 			<ul>
 			<c:forEach items="${rulesReferred }" var="rr">
 			    <li>${rr}</li>	
@@ -21,10 +21,21 @@
 </c:choose>
 <c:choose>
 	<c:when test="${not empty  subrulesReferred}">
-	<div class="error" >Following Subrule(s) still use this Operator.Unassign the operator from following Subrule(s) before you Delete.			
+	<div class="error" >Following Subrule(s) still use this Model.Delete the Subrule(s) before you Delete the Model.				
 			<ul>
 			<c:forEach items="${subrulesReferred }" var="sr">
 			    <li>${sr}</li>	
+			</c:forEach>
+			</ul>
+	</div>	
+	</c:when>
+</c:choose>
+<c:choose>
+	<c:when test="${not empty  attributesReferred}">
+	<div class="error" >Following Attribute(s) still use this Model.Delete the Attribute before you Delete the Model.				
+			<ul>
+			<c:forEach items="${attributesReferred }" var="at">
+			    <li>${at}</li>	
 			</c:forEach>
 			</ul>
 	</div>	

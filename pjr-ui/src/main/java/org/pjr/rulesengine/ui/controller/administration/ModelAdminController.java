@@ -28,8 +28,9 @@ import org.pjr.rulesengine.ui.uidto.ModelDto;
 
 import org.pjr.rulesengine.ui.processor.RulesProcessor;
 import org.pjr.rulesengine.ui.processor.SubruleProcessor;
+import org.pjr.rulesengine.ui.processor.admin.AttributeAdminProcessor;
 import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
-import org.pjr.rulesengine.ui.processor.admin.OperatorAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.AttributeDto;
 import org.pjr.rulesengine.ui.uidto.RuleDto;
 import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
@@ -53,6 +54,14 @@ public class ModelAdminController {
 	@Autowired
 	@Qualifier("editModelValidator")
 	private EditModelValidator editModelValidator;
+	
+	@Autowired
+	private AttributeAdminProcessor attributeAdminProcessor;
+	@Autowired
+	private RulesProcessor rulesProcessor;
+	@Autowired
+	private SubruleProcessor subruleProcessor;
+
 
 	@RequestMapping(value="create" , method=RequestMethod.GET)
 	public String create( Model model){
@@ -168,16 +177,15 @@ public class ModelAdminController {
 			return "error";
 		}
 		
-		//TODO: checking refrnce of attribute to model
+		//TODO: Check whether it is refrenced in rule/subrule/attribute mapping
+		List<String> attributes=modelAdminProcessor.fetchAttributesByName(modelId);
+		List<String> subrulesReferred=modelAdminProcessor.fetchSubrulesByName(modelId);
+		List<String> rulesReferred=modelAdminProcessor.fetchRulesByName(modelId);
 		
-		//Check whether it is refrenced in rule/subrule mapping
-		List<String> rulesReferred=new ArrayList<String>();
-		List<String> subrulesReferred=new ArrayList<String>();
-	//	/rulesReferred=operatorAdminProcessor.getOprRuleRef(operatorId);
-	//	subrulesReferred=operatorAdminProcessor.getOprSubruleRef(operatorId);
 
-		if(rulesReferred.size()>0 || subrulesReferred.size()>0){
+		if((null!=attributes && attributes.size()>0) || (null!=rulesReferred && rulesReferred.size()>0) || (null!=subrulesReferred && subrulesReferred.size()>0)){
 			log.debug("Could not delete operator");
+			model.addAttribute("attributesReferred",attributes);
 			model.addAttribute("rulesReferred",rulesReferred);
 			model.addAttribute("subrulesReferred",subrulesReferred);
 			model.addAttribute("error","Model Could not be deleted Successfully");
