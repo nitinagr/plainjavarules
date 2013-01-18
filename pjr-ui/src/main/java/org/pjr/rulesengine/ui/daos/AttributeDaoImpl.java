@@ -284,7 +284,7 @@ public class AttributeDaoImpl implements AttributeDao {
 					o.setId(rs.getString("ATTR_ID"));
 					o.setName(rs.getString("ATTR_NAME"));
 					o.setValue(rs.getString("ATTR_VALUE"));
-					o.setModelId(rs.getString("MODEL_ID"));
+					//o.setModelId(rs.getString("MODEL_ID"));
 
 					attributeList.add(o);
 				}
