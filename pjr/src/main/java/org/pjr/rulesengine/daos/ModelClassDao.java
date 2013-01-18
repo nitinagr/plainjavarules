@@ -28,4 +28,7 @@ public interface ModelClassDao {
 	public int[] deleteFromModel(List<String> modelIds) throws DataLayerException;
 	public Model fetchModel(String modelId) throws DataLayerException;
 	public Model isModelNameAlreadyExists(String name)throws DataLayerException;
+	public List<String> fetchAttributeNames(String modelId)throws DataLayerException;
+	public List<String> fetchSubruleNames(String modelId)throws DataLayerException;
+	public List<String> fetchRuleNames(String modelId)throws DataLayerException;
 }

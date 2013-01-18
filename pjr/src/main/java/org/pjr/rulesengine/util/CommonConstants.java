@@ -83,5 +83,8 @@ public class CommonConstants {
 	public static final String QUERY_DELETE_MODEL ="RE_DELETEMODEL_DELETE";
 	public static final String QUERY_UPDATE_MODEL="RE_UPDATEMODEL_UPDATE";
 	public static final String QUERY_FETCH_MODEL_BYNAME="RE_FETCHMODELBYNAME_SELECT";
+	public static final String QUERY_FETCH_ATTR_NAMES="RE_FETCH_ATTR_NAMES";
+	public static final String QUERY_FETCH_SUBRULE_NAMES="RE_FETCH_SUBRULE_NAMES";
+	public static final String QUERY_FETCH_RULE_NAMES="RE_FETCH_RULE_NAMES";
 	/** Rules Engine queies Ends */
 }

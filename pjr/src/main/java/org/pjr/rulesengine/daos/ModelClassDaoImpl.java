@@ -244,4 +244,79 @@ public class ModelClassDaoImpl implements ModelClassDao {
 		return stub;
 	}
 
+	@Override
+	public List<String> fetchAttributeNames(String modelId) throws DataLayerException {
+		log.debug("Entering fetchAttributeNames..");
+		List<String> attrNames=null;
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCH_ATTR_NAMES);
+		try{
+			attrNames=jdbcTemplate.query(sql, new Object[]{modelId}, new ResultSetExtractor<List<String>>(){
+
+				@Override
+				public List<String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<String> names=new ArrayList<String>();
+					while(rs.next()){
+						names.add(rs.getString("ATTR_NAME"));
+					}
+					return names;
+				}
+				
+			});
+		}catch(Exception e) {
+			log.error("Error in fetchModel",e);
+			throw new DataLayerException(e);
+		}
+		return attrNames;
+	}
+
+	@Override
+	public List<String> fetchSubruleNames(String modelId) throws DataLayerException {
+		log.debug("Entering fetchSubruleNames..");
+		List<String> subruleNames=null;
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCH_SUBRULE_NAMES);
+		try{
+			subruleNames=jdbcTemplate.query(sql, new Object[]{modelId}, new ResultSetExtractor<List<String>>(){
+
+				@Override
+				public List<String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<String> names=new ArrayList<String>();
+					while(rs.next()){
+						names.add(rs.getString("SUBRULE_NAME"));
+					}
+					return names;
+				}
+				
+			});
+		}catch(Exception e) {
+			log.error("Error in fetchModel",e);
+			throw new DataLayerException(e);
+		}
+		return subruleNames;
+	}
+
+	@Override
+	public List<String> fetchRuleNames(String modelId) throws DataLayerException {
+		log.debug("Entering fetchRuleNames..");
+		List<String> ruleNames=null;
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCH_RULE_NAMES);
+		try{
+			ruleNames=jdbcTemplate.query(sql, new Object[]{modelId}, new ResultSetExtractor<List<String>>(){
+
+				@Override
+				public List<String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<String> names=new ArrayList<String>();
+					while(rs.next()){
+						names.add(rs.getString("RULE_NAME"));
+					}
+					return names;
+				}
+				
+			});
+		}catch(Exception e) {
+			log.error("Error in fetchModel",e);
+			throw new DataLayerException(e);
+		}
+		return ruleNames;
+	}
+
 }
