@@ -34,6 +34,8 @@ public interface RuleDao {
 
 	public List<Rule> fetchAllRules() throws DataLayerException;
 
+	public List<Rule> fetchAllRulesByModel(String modelId) throws DataLayerException;
+	
 	public List<Rule> fetchAllRulesBYExecutionOrder() throws DataLayerException;
 
 	public Rule fetchRule(String ruleId) throws DataLayerException;
