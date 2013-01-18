@@ -89,7 +89,7 @@ public class EditRuleValidator implements Validator{
 			if(!oldExecutionOrder.equalsIgnoreCase(ruleDto.getExecutionOrder()) ){
 				boolean executionOrder = false;
 				try {
-					executionOrder = ruleDao.isExecutionOrderExists(Integer.parseInt(ruleDto.getExecutionOrder()) );
+					executionOrder = ruleDao.isExecutionOrderExists(Integer.parseInt(ruleDto.getExecutionOrder()),ruleDto.getModelId() );
 				} catch (DataLayerException e) {
 					log.error("", e);
 				}

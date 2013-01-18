@@ -131,11 +131,13 @@ public class RuleAdminController {
 		String view = "create_rule_definition";
 
 		ruleValidator.validate(rule, errors);
-
+		List<ModelDto> modelClasses = null;
 		if(errors.hasFieldErrors()){
 			view = "create_rule_definition";
 			model.addAttribute("errors",errors.getFieldErrors());
 			model.addAttribute("rule", rule);
+			modelClasses=modelAdminProcessor.fetchAllModels();
+			model.addAttribute("modelClasses", modelClasses);		
 			return view;
 		}
 
@@ -143,16 +145,16 @@ public class RuleAdminController {
 			rulesProcessor.createRuleDefinition(rule);
 		} catch (RuleAlreadyExistException e) {
 			model.addAttribute("error", "One or more required fields are empty");
+			modelClasses=modelAdminProcessor.fetchAllModels();
+			model.addAttribute("modelClasses", modelClasses);
 			view = "create_rule_definition";
 			return view;
 		}
 
 		RuleDto ruleDtoSaved = rulesProcessor.fetchRuleByRuleName(rule.getRuleName());
 		model.addAttribute("rule", ruleDtoSaved);
+		model.addAttribute("message","Successfully Added Rule");
 		
-
-		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
-		model.addAttribute("modelClasses", modelClasses);		
 		view = "view_rule";
 		return view;
 	}

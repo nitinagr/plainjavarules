@@ -67,7 +67,7 @@ public class RuleValidator implements Validator{
 		if(isNumberValid){
 			boolean executionOrder = false;
 			try {
-				executionOrder = ruleDao.isExecutionOrderExists(Integer.parseInt(ruleDto.getExecutionOrder()) );
+				executionOrder = ruleDao.isExecutionOrderExists(Integer.parseInt(ruleDto.getExecutionOrder()),ruleDto.getModelId() );
 			} catch (DataLayerException e) {
 				log.error("", e);
 			}
