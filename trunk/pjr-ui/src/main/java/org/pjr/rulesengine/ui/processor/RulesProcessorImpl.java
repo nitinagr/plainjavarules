@@ -139,6 +139,19 @@ public class RulesProcessorImpl implements RulesProcessor{
 
 	}
 
+	@Override
+	public List<RuleDto> fetchAllRulesByModel(String modelId) throws TechnicalException {
+		List<RuleDto> ruleDtoList = new ArrayList<RuleDto>();
+		try {
+			List<Rule> rulesList = ruleDao.fetchAllRulesByModel(modelId);
+			ruleDtoList = DataTransformer.convertToUI(rulesList);
+		} catch (Exception e) {
+			throw new TechnicalException(e);
+		}
+
+		return ruleDtoList;
+	}
+
 
 
 }

@@ -17,7 +17,9 @@ import org.pjr.rulesengine.ui.uidto.RuleLogicUi;
 public interface RulesProcessor {
 
 	public List<RuleDto> fetchAllRules() throws TechnicalException;
-
+	
+	public List<RuleDto> fetchAllRulesByModel(String modelId) throws TechnicalException;
+	
 	public RuleDto fetchRule(String ruleId) throws TechnicalException;
 
 	public void updateRule (RuleDto ruleDto) throws TechnicalException;

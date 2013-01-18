@@ -74,7 +74,7 @@ public class RulesController {
 			ruleList = rulesProcessor.fetchAllRules();
 		} else {
 			model.addAttribute("model",modelId);
-			ruleList = rulesProcessor.fetchAllRules();
+			ruleList = rulesProcessor.fetchAllRulesByModel(modelId);
 		}
 		model.addAttribute("rules",ruleList);
 		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
