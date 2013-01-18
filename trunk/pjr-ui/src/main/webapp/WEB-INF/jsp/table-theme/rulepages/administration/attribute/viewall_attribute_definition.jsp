@@ -89,7 +89,6 @@ $(document).ready(function() {
 				<c:out value="${attribute.value}"/>
 			</td>	
 			<td class="ruletabletd">
-			${attribute.modelId }  
 				<c:forEach items="${modelClasses}" var="modelClass">
 					<c:choose>
 						<c:when test="${modelClass.model_id == attribute.modelId }">

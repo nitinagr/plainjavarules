@@ -67,4 +67,10 @@ public interface ModelAdminProcessor {
 	public ModelDto fetchModel(String string) throws TechnicalException;
 
 	public ModelDto isModelAlreadyExists(String name) throws TechnicalException;
+	
+	public List<String> fetchAttributesByName(String modelId) throws TechnicalException;
+	
+	public List<String> fetchSubrulesByName(String modelId) throws TechnicalException;
+	
+	public List<String> fetchRulesByName(String modelId) throws TechnicalException;
 }

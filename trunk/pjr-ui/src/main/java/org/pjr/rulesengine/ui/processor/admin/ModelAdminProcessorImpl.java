@@ -136,4 +136,22 @@ public class ModelAdminProcessorImpl implements ModelAdminProcessor {
 		return null;
 	}
 
+	@Override
+	public List<String> fetchAttributesByName(String modelId) throws TechnicalException  {
+		List<String> attrNames=modelDao.fetchAttributeNames(modelId);
+		return attrNames;
+	}
+
+	@Override
+	public List<String> fetchSubrulesByName(String modelId) throws TechnicalException {
+		List<String> subNames=modelDao.fetchSubruleNames(modelId);
+		return subNames;
+	}
+
+	@Override
+	public List<String> fetchRulesByName(String modelId) throws TechnicalException {
+		List<String> ruleNames=modelDao.fetchRuleNames(modelId);
+		return ruleNames;
+	}
+
 }
