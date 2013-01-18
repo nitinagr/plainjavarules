@@ -46,4 +46,5 @@ public interface RuleDao {
 
 	public boolean isExecutionOrderExists(int executionOrder) throws DataLayerException;
 
+	public boolean isExecutionOrderExists(int executionOrder,String modelId) throws DataLayerException;
 }

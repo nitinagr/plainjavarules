@@ -736,6 +736,30 @@ public class RuleDaoImpl implements RuleDao{
 		return ruleList;
 	}
 
+	@Override
+	public boolean isExecutionOrderExists(int executionOrder, String modelId) throws DataLayerException {
+		String sql =accessProps.getFromProps(CommonConstants.QUERY_ISEXECUTIONORDEREXISTS_MODEL_SELECT);
+		//String sql ="Select RULE_ID from FSMMGR.PAC_RE_RULES where EXE_ORDER = ?";
+
+		boolean result = false;
+
+		String ruleId = jdbcTemplate.query(sql, new Object[]{executionOrder,modelId}, new ResultSetExtractor<String>() {
+
+			@Override
+			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+				String ruleId = null;
+				while(rs.next()){
+					ruleId = rs.getString("RULE_ID");
+				}
+				return ruleId;
+			}
+		});
+
+		if(null != ruleId) result = true;
+		log.debug("Completed isExecutionOrderExists method ");
+		return result;
+	}
+
 }
 
 
