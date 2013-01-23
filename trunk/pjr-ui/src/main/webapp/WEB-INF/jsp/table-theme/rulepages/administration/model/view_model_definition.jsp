@@ -19,6 +19,10 @@
 		<input type="hidden" name="model_class_name" id="model_class_name" value="${modelDto.model_class_name }"></input>
 				
 	</tr>
+	<tr>
+	<td class="ruletabletd"><a href='<c:url value="/admin/attribute/view/all?modelId=${modelDto.model_id}"></c:url>'>View attributes</a>
+	</td>
+	</tr>
 </table>
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
