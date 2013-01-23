@@ -2,6 +2,7 @@ package org.pjr.rulesengine.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -55,6 +56,17 @@ public class RuleDaoTest {
 		Rule rule = ruleDao.fetchRule("2007");
 		System.out.println("Rule :"+ rule);
 	}
+	
+	@Test
+	public void fetchRuleByModel() throws Exception{		
+		String modelName="org.ui.me";
+		List<Rule> rules = ruleDao.fetchAllRulesBYExecutionOrder(modelName);
+		
+		for(Rule rule:rules){
+			System.out.println("Rule :"+ rule);
+		}
+	}
+	
 	
 	@After
 	public void cleanUp(){

@@ -23,15 +23,12 @@ public class RuleDao {
 	
 	private DataSource dataSource;
 	
-	
 	public RuleDao(DataSource dataSource){
 		this.dataSource = dataSource;
 	}
 	
 	public Rule fetchRule(final String ruleId) throws Exception{
 		
-
-
 		String sql=PropertyLoader.getProperty(CommonConstants.QUERY_FETCHRULE_SELECTRULE);
 		
 		QueryRunner qr = new QueryRunner(dataSource);		
@@ -141,5 +138,70 @@ public class RuleDao {
 			rule.setLogic(new TreeSet<RuleLogic>(logic));
 		}
 		return rule;
+	}
+	public List<Rule> fetchAllRulesBYExecutionOrder(){
+		String sql=PropertyLoader.getProperty(CommonConstants.QUERY_FETCHALLRULES_SELECT);
+		QueryRunner logicQr = new QueryRunner(dataSource);
+		List<Rule> ruleList=null;
+		try {
+			ruleList = logicQr.query(sql, new ResultSetHandler<List<Rule>>() {
+
+				@Override
+				public List<Rule> handle(ResultSet rs) throws SQLException {
+					List<Rule> ruleList = new ArrayList<Rule>();
+
+					while(rs.next()){
+						Rule rule = new Rule();
+
+						rule.setId(rs.getString("RULE_ID"));
+						rule.setRuleName(rs.getString("RULE_NAME"));
+						rule.setRuleDescription(rs.getString("RULE_DESCRIPTION"));
+						rule.setActive(rs.getBoolean("ACTIVE"));
+						rule.setReturnValue(rs.getString("RETURN_VALUE"));
+						rule.setExecutionOrder(rs.getInt("EXE_ORDER"));
+						ruleList.add(rule);
+					}
+
+					return ruleList;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ruleList;
+	}
+	public List<Rule> fetchAllRulesBYExecutionOrder(String modelName){
+		List<Rule> ruleList=null;
+		if (null!=modelName && !modelName.isEmpty()) {
+			String sql = PropertyLoader.getProperty(CommonConstants.QUERY_FETCHALLRULES_SELECT_BYMODEL);
+			QueryRunner logicQr = new QueryRunner(dataSource);
+			try {
+				ruleList = logicQr.query(sql, new ResultSetHandler<List<Rule>>() {
+
+					@Override
+					public List<Rule> handle(ResultSet rs) throws SQLException {
+						List<Rule> ruleList = new ArrayList<Rule>();
+
+						while (rs.next()) {
+							Rule rule = new Rule();
+
+							rule.setId(rs.getString("RULE_ID"));
+							rule.setRuleName(rs.getString("RULE_NAME"));
+							rule.setRuleDescription(rs.getString("RULE_DESCRIPTION"));
+							rule.setActive(rs.getBoolean("ACTIVE"));
+							rule.setReturnValue(rs.getString("RETURN_VALUE"));
+							rule.setExecutionOrder(rs.getInt("EXE_ORDER"));
+							ruleList.add(rule);
+						}
+
+						return ruleList;
+					}
+				}, new Object[] { modelName });
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ruleList;
 	}
 }

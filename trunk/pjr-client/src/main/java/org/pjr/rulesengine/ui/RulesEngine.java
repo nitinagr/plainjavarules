@@ -4,10 +4,8 @@ public interface RulesEngine {
 
 	enum ExecutionMode{
 		ELSEIF_MODE,
-		EVAULATE_ALL_MODE,
-		SINGLEDECISIONMODE
+		EVAULATE_ALL_MODE
 	}
-	
 	
 	public Object process(final ExecutionMode executionMode ,final  String fullyQualifiedClassName, final Object object);
 	
