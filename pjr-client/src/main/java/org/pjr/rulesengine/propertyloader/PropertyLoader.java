@@ -7,10 +7,13 @@ import java.util.Properties;
 
 /**
  * The Class PropertyLoader.
+ *
+ * @author Sudhakar
  */
 public class PropertyLoader {
 	
-	private static final String PROPERTY_FILE_NAME ="errorgui.properties";
+	/** The Constant PROPERTY_FILE_NAME. */
+	private static final String PROPERTY_FILE_NAME ="sql_queries.properties";
 
 	/** The properties. */
 	private static Properties properties;
