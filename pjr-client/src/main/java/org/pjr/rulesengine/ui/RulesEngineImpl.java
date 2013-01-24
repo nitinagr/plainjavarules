@@ -70,7 +70,18 @@ public class RulesEngineImpl implements RulesEngine{
 
 	@Override
 	public Object processSingleRule(String fullyQualifiedClassName, Object object, String ruleId) {
-		// TODO Auto-generated method stub
+		try {
+			Rule rule=ruleDao.fetchRule(ruleId);
+			String strExpression =  rule.toMvelExpression();
+			Serializable serializableExpr = MVEL.compileExpression(strExpression);
+			Boolean result = (Boolean) MVEL.executeExpression(serializableExpr, object);
+			if(null != result && result){
+				return rule;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
