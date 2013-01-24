@@ -5,7 +5,7 @@ package org.pjr.rulesengine;
  *
  * @author Sudhakar
  */
-public class TechnicalException extends Exception{
+public class TechnicalException extends Exception {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5874673386778538603L;

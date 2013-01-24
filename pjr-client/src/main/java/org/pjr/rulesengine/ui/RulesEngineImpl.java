@@ -9,31 +9,66 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mvel2.MVEL;
+import org.pjr.rulesengine.NonTechnicalException;
+import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.dao.ModelDao;
 import org.pjr.rulesengine.dao.RuleDao;
+import org.pjr.rulesengine.dbmodel.Model;
 import org.pjr.rulesengine.dbmodel.Rule;
 
+/**
+ * The Class RulesEngineImpl.
+ *
+ * @author Sudhakar
+ */
 public class RulesEngineImpl implements RulesEngine{
+
+	/** The Constant log. */
+	private static final Log log = LogFactory.getLog(RulesEngineImpl.class);
 	
+	/** The rule dao. */
 	private RuleDao ruleDao;
 	
+	/** The model dao. */
+	private ModelDao modelDao;
+	
+	/**
+	 * Instantiates a new rules engine impl.
+	 *
+	 * @param dataSource the data source
+	 * @author  Sudhakar
+	 */
 	public RulesEngineImpl(DataSource dataSource){
 		ruleDao=new RuleDao(dataSource);
+		modelDao = new ModelDao(dataSource);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pjr.rulesengine.ui.RulesEngine#process(org.pjr.rulesengine.ui.RulesEngine.ExecutionMode, java.lang.String, java.lang.Object)
+	 */
 	@Override
-	public Object process(ExecutionMode executionMode, String fullyQualifiedClassName, Object object) {
+	public List<Rule> process(ExecutionMode executionMode, String fullyQualifiedClassName, Object object)  throws TechnicalException , NonTechnicalException{
+		
+		log.info("rules processing for "+fullyQualifiedClassName);
+		
 		String ruleId = "0";
 		Rule rule = null;
-		List<Rule> rules=null;
+		List<Rule> rules=new ArrayList<Rule>();
+		
+		//Business Validation
+		Model model = modelDao.isModelNameAlreadyExists(fullyQualifiedClassName);
+		if(null == model) throw new NonTechnicalException(fullyQualifiedClassName + " is not available in DB ");
 		
 		try {
 			Map<Rule,Serializable > expressions;
 			{
-				System.out.println("Preparing Rules Engine and Generating Expressions for Processing .....");
+				log.info("Preparing Rules Engine and Generating Expressions for Processing .....");
 				long start = System.currentTimeMillis();
 				expressions = getCompiledExpressions(fullyQualifiedClassName);
-				System.out.println("Rules Engine preparation Completed in(ms) :"+(System.currentTimeMillis() - start));
+				log.info("Rules Engine preparation Completed in(ms) :"+(System.currentTimeMillis() - start));
 			}
 			
 			Iterator<Rule> iterate = expressions.keySet().iterator();
@@ -46,45 +81,55 @@ public class RulesEngineImpl implements RulesEngine{
 			    if(null != result && result){			    	
 			    	rule = tempRule;
 			    	if(executionMode.equals(ExecutionMode.ELSEIF_MODE)){
+			    		rules.add(rule);
 			    		break;
-			    	}else if(executionMode.equals(ExecutionMode.EVAULATE_ALL_MODE)){
-			    		if(null==rules){
-			    			rules=new ArrayList<Rule>();
-			    			rules.add(rule);
-			    		} else {
-			    			rules.add(rule);
-			    		}
+			    	}else if(executionMode.equals(ExecutionMode.EVAULATE_ALL_MODE)){			  
+			    		rules.add(rule);		  
 			    	}
 			    }
 			}
 		} catch (Exception e) {
-			System.out.println("Error processing RuleId :"+ruleId);
-		}
+			log.error("Error processing RuleId :"+ruleId);
+			throw new TechnicalException(e);
+		}		
 		
-		if(null!=rules){
-			return rules;
-		}else {
-			return rule;
-		}
+		return rules;
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pjr.rulesengine.ui.RulesEngine#processSingleRule(java.lang.String, java.lang.Object, java.lang.String)
+	 */
 	@Override
-	public Object processSingleRule(String fullyQualifiedClassName, Object object, String ruleId) {
+	public Object processSingleRule(String fullyQualifiedClassName, Object object, String ruleId)  throws TechnicalException , NonTechnicalException{		
+
+		//Business Validation
+		Model model = modelDao.isModelNameAlreadyExists(fullyQualifiedClassName);
+		if(null == model) throw new NonTechnicalException(fullyQualifiedClassName + " is not available in DB ");
+		
+		Rule tempRule = null;
+	   	Boolean result;
 		try {
-			Rule rule=ruleDao.fetchRule(ruleId);
-			String strExpression =  rule.toMvelExpression();
+			tempRule = ruleDao.fetchRule(ruleId);
+			String strExpression =  tempRule.toMvelExpression();
 			Serializable serializableExpr = MVEL.compileExpression(strExpression);
-			Boolean result = (Boolean) MVEL.executeExpression(serializableExpr, object);
-			if(null != result && result){
-				return rule;
-			}
+			result = (Boolean) MVEL.executeExpression(serializableExpr, object);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("", e);
+			throw new TechnicalException(e);
 		}
-		return null;
+
+		if(!result) tempRule = null;
+		
+		return tempRule;
 	}
-	
+
+	/**
+	 * Gets the compiled expressions.
+	 *
+	 * @param modelClass the model class
+	 * @return the compiled expressions
+	 */
 	public LinkedHashMap<Rule,Serializable > getCompiledExpressions(String modelClass){
 		LinkedHashMap<Rule,Serializable > expressions = new LinkedHashMap<Rule, Serializable>();
 		try {
@@ -102,6 +147,7 @@ public class RulesEngineImpl implements RulesEngine{
 			}
 
 		} catch (Exception e) {
+			log.error("", e);
 			e.printStackTrace();
 		}
 		return expressions;
