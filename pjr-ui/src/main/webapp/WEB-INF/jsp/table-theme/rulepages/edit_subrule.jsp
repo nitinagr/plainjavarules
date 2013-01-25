@@ -13,7 +13,7 @@ table.conditiontable {
 }
 
 </style>
-
+<script type="text/javascript" src="<c:url value="/static/js/checkLogic.js" />"></script>
 <script type="text/javascript" >
 $(function () {
 	
@@ -169,24 +169,33 @@ var isGenerateButtonClicked = true;
 			});
 			
 			$("#loadingmsg").hide();
+			$("#braceError").hide();
 			$("#logicErrorDiv").hide();
 			$("#disableSubRuleDiv").hide();
 			
 			//Form submit actions
 			$("#submitButton").click(function(){
 				var logicText=document.getElementById('updatedLogicText').value;//contains the value of the logic
+				var generatedLogicText=document.getElementById('subRulesLogic').value;
+				
 				var frstVal=$("select:first option:selected").text();
 				var lastVal=$("select:last option:selected").text();
 				var braceError=true;
+				var invalidBrace=true;
 				var generateError=true;
 				var formSubmit=false;
 				
 				$("#logicError").show();
 				$("#notgenerateError").show();
+				$("#braceError").show();
 				
 				if(frstVal=='(' && lastVal==')'){
 					$("#logicError").hide();
 					braceError=false;
+					if(checkParenthesis(generatedLogicText)){
+						$("#braceError").hide();
+						invalidBrace=false;
+					}
 				}
 				if(isGenerateButtonClicked){
 					$("#notgenerateError").hide();
@@ -217,7 +226,7 @@ var isGenerateButtonClicked = true;
 				}else {
 					//SubRule has logic
 					//Check other validations
-					if(braceError || generateError){
+					if(braceError || generateError || invalidBrace){
 						//show the dialog
 						$("#logicErrorDiv").dialog({
 		 						resizable: false,
@@ -432,6 +441,14 @@ var isGenerateButtonClicked = true;
 	<tr>
 		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
 		</td>
+		<td class="ruletabletd">			
+				<c:forEach items="${modelClasses}" var="modelClass" >
+					<c:choose>							
+						<c:when test="${modelClass.model_id == subrule.modelId }">
+							${modelClass.model_class_name }							
+						</c:when>
+					</c:choose>					
+				</c:forEach>
 		<td class="ruletabletd">	
 				
 			<c:forEach items="${modelClasses}" var="modelClass" >
@@ -597,6 +614,7 @@ var isGenerateButtonClicked = true;
 		<div id="logicErrorDiv" title="Logic Formation Error(s)" align="left">
 			<ul >
 				<li id="logicError">The logic should always start with "(" and end with a ")".</li>
+				<li id="braceError">Check for any brace "(" or ")" mismatch in Logic.</li>
 				<li id="notgenerateError">Generate logic before you submit your changes</li>
 			</ul>
 		</div>
