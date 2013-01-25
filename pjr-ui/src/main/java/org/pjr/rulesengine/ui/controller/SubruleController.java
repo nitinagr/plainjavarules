@@ -148,6 +148,11 @@ public class SubruleController {
 		String view="edit_subrule";
 
 		SubruleDto subFromDb=subruleProcessor.fetchSubrule(subruleDto.getId());
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		model.addAttribute("subrulename", subruleDto.getName());
+		
+		ModelDto modelDto = modelAdminProcessor.fetchModel(subruleDto.getModelId());
 
 		if(null!=subFromDb){
 			editSubruleValidator.setOldName(subFromDb.getName());
@@ -183,7 +188,10 @@ public class SubruleController {
 		SubruleDto srDto=subruleProcessor.fetchSubrule(subruleDto.getId());
 
 		Subrule subruleDb=subruleDao.fetchSubrule(subruleDto.getId());
-		String errorMessage = rulesEngine.isExpressionValid(subruleDb);
+		
+		
+		/*
+		String errorMessage = rulesEngine.isExpressionValid(subruleDb,modelDto.getModel_class_name());
 
 		if(null != errorMessage){
 
@@ -211,6 +219,7 @@ public class SubruleController {
 			model.addAttribute("subrule", srDto1);
 			return view;
 		}
+		*/
 
 
 

@@ -80,22 +80,24 @@ var isGenerateButtonClicked = true;
 
 		
 			var divCount = 0;
-	
-			$('#addNewCondition').click(function(){
-				divCount = divCount +1 ;
-				var selectId = "select"+ divCount;
-
-				isGenerateButtonClicked = false;
+			$('div.insertBelowClass').click(function(){
 				
-				var $originalSelect = $('select').first();
-				var $clonedSelect = $originalSelect.clone();
+				
+				divCount = divCount +1; 
+				var selectId = "select"+ divCount;					
+				var selectToCopy ="#"+ $(this).attr("insertvalue");					
+				var $clonedSelect = $(this).clone();
+				alert('selectToCopy  :'+selectToCopy);
 				$clonedSelect.attr('id',selectId);
-				$clonedSelect.attr('name',selectId);
+				$clonedSelect.attr('name',selectId);				
+				$clonedSelect.removeAttr('disabled');
 				
 				$clonedSelect.each(function(index, item) {
 				     //set new select to value of old select
 				     $(item).val( $originalSelect.eq(index).val() );
 				});
+
+
 
 				var removeAnchorId = "anchor "+ divCount;
 				var $removeAnchor = $('#removeSelect');
@@ -106,17 +108,50 @@ var isGenerateButtonClicked = true;
 				$clonedremoveAnchor.removeAttr('onclick');		
 				$clonedremoveAnchor.attr('removevalue',selectId);
 
-				
-				    
-				$clonedSelect.appendTo('#extraCondition');
-				$clonedremoveAnchor.appendTo('#extraCondition');
-				$('#extraCondition').append('<br/>');
-
 				$clonedremoveAnchor.click(function(){
 				    $clonedSelect.remove();
+				    $clonedInsertremoveAnchor.remove();
 				    $clonedremoveAnchor.remove();
 				});
 
+				var insertbelowblockAnchorId = "insertbelowcontentblock"+ divCount;
+				var $insertbelowblockAnchor = $('#insertbelowcontentblock');
+				var $clonedInsertbockremoveAnchor = $insertbelowblockAnchor.clone();
+				$clonedInsertbockremoveAnchor.attr("id",insertbelowblockAnchorId);
+				$clonedInsertbockremoveAnchor.attr("name",insertbelowblockAnchorId);
+				$clonedInsertbockremoveAnchor.css({ 'visibility': 'visible'});
+				$clonedInsertbockremoveAnchor.removeAttr('onclick');		
+				$clonedInsertbockremoveAnchor.attr('insertvalue',selectId);
+					
+				
+				var insertbelowAnchorId = "insertbelow"+ divCount;
+				var $insertbelowAnchor = $('#insertbelow');
+				var $clonedInsertremoveAnchor = $insertbelowAnchor.clone();
+				$clonedInsertremoveAnchor.attr("id",removeAnchorId);
+				$clonedInsertremoveAnchor.attr("name",removeAnchorId);
+				$clonedInsertremoveAnchor.css({ 'visibility': 'visible'});
+				$clonedInsertremoveAnchor.removeAttr('onclick');		
+				$clonedInsertremoveAnchor.attr('insertvalue',selectId);		
+				$clonedInsertremoveAnchor.attr('appendvalue',insertbelowblockAnchorId);		
+				
+				
+
+				var appendToElement ="#"+ $(this).attr("appendvalue");	
+				
+				  
+				$clonedSelect.appendTo(appendToElement);
+				$clonedremoveAnchor.appendTo(appendToElement);
+				$(appendToElement).append('&nbsp;');
+				$clonedInsertremoveAnchor.appendTo(appendToElement);
+				$(appendToElement).append('<br/>');
+				$clonedInsertbockremoveAnchor.appendTo(appendToElement);
+									
+
+				$clonedremoveAnchor.click(function(){
+				    $clonedSelect.remove();
+				    $clonedInsertremoveAnchor.remove();
+				    $clonedremoveAnchor.remove();
+				});
 
 				$clonedremoveAnchor.hover(function () {
 					var removeValue ="#"+ $(this).attr("removevalue");
@@ -128,11 +163,10 @@ var isGenerateButtonClicked = true;
 					$(this).animate({ backgroundColor: "white" }, 10);
 					$(removeValue).animate({ backgroundColor: "white" }, 10);
 				});	
-				
-				$clonedSelect.jec();
-								
-			});
+				//$clonedSelect.appendTo(selectToCopy);		
 
+											
+			});
 			
 			$("#loadingmsg").hide();
 			$("#logicErrorDiv").hide();
@@ -398,20 +432,17 @@ var isGenerateButtonClicked = true;
 	<tr>
 		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
 		</td>
-		<td class="ruletabletd">		
-			<select name="modelId" >
-				<option id="" value="" ></option>					
-				<c:forEach items="${modelClasses}" var="modelClass" >
-					<c:choose>							
-						<c:when test="${modelClass.model_id == subrule.modelId }">
-							<option id="${modelClass.model_id}" value="${modelClass.model_class_name }" selected="selected">${modelClass.model_class_name }</option>							
-						</c:when>
-						<c:otherwise>
-							<option id="${modelClass.model_id}" value="${modelClass.model_class_name }">${modelClass.model_class_name }</option>
-						</c:otherwise>
-					</c:choose>					
-				</c:forEach>
-			</select>
+		<td class="ruletabletd">	
+				
+			<c:forEach items="${modelClasses}" var="modelClass" >
+				<c:choose>							
+					<c:when test="${modelClass.model_id == subrule.modelId }">
+						${modelClass.model_class_name }
+						<input type="hidden" value="${modelClass.model_id }" name="modelId" />							
+					</c:when>
+				</c:choose>					
+			</c:forEach>
+
 		</td>		
 	</tr>	
 
@@ -461,15 +492,26 @@ var isGenerateButtonClicked = true;
 													</c:choose>																
 										
 										</select>	
-										<c:choose><c:when test="${!loop.first}"><div  id="removeSelectGen" removevalue="ops${loop.index}" class="makemelink" style="float:right;" onclick="javascript:removeSelect('ops${loop.index}',this)">Remove</div>	</c:when></c:choose>
+										<c:choose><c:when test="${!loop.first}">
+											<div  id="removeSelectGen" removevalue="ops${loop.index}" class="makemelink" style="float:right;" onclick="javascript:removeSelect('ops${loop.index}',this)">Remove</div>
+										    <div style="visibility: visible; float: right; margin-right: 10px;" class="makemelink insertBelowClass" id="insertbelow1" name="insertbelow${loop.index}" insertvalue="select${loop.index}" appendvalue="insertbelowcontentblock1">Insert below</div><br><div style="visibility: visible; margin-right: 10px;" class="makemelink" id="insertbelowcontentblock${loop.index}" name="insertbelowcontentblock${loop.index}" insertvalue="select${loop.index}"></div>
+										    <div  id="insertbelowcontentblock${loop.index}" style="visibility:hidden;margin-right:10px;"></div>	
+										</c:when></c:choose>
 										<br/>				
 									</c:forEach>				
 								
 							</c:when>				
 							<c:otherwise>
-								<select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;">
+								<select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;" disabled="disabled">
 									<c:forEach items="${srlItems}" var="srlItem">
-										<option value="${srlItem.attrMapIdOrOprMapId}" ><c:out value="${srlItem.name}"/></option>						
+										<c:choose>
+												<c:when test="${srlItem.name == '(' }">
+													<option value="${srlItem.attrMapIdOrOprMapId}" selected="selected"><c:out value="${srlItem.name}"/></option>
+												</c:when>											
+												<c:otherwise>
+													<option value="${srlItem.attrMapIdOrOprMapId}" ><c:out value="${srlItem.name}"/></option>
+												</c:otherwise>												
+										</c:choose>																
 									</c:forEach>				
 								</select>
 										
@@ -478,8 +520,26 @@ var isGenerateButtonClicked = true;
 						</c:choose>	
 						
 						<div  id="removeSelect" class="makemelink" style="visibility:hidden;float:right;">Remove</div>
+						<div  id="insertbelow" class="makemelink" style="visibility:hidden;float:right;margin-right:10px;">Insert below</div>
+						<div  id="insertbelowcontentblock" class="makemelink" style="visibility:hidden;margin-right:10px;"></div>
 						<div id="extraCondition"></div>				
 					</div>
+						<c:choose>
+							<c:when test="${empty  subrule.logic}">	
+								<select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;" disabled="disabled">
+									<c:forEach items="${srlItems}" var="srlItem">
+										<c:choose>
+												<c:when test="${srlItem.name == ')' }">
+													<option value="${srlItem.attrMapIdOrOprMapId}" selected="selected"><c:out value="${srlItem.name}"/></option>
+												</c:when>											
+												<c:otherwise>
+													<option value="${srlItem.attrMapIdOrOprMapId}" ><c:out value="${srlItem.name}"/></option>
+												</c:otherwise>												
+										</c:choose>																
+									</c:forEach>				
+								</select>
+							</c:when>
+						</c:choose>					
 			</div>
 			
 			
