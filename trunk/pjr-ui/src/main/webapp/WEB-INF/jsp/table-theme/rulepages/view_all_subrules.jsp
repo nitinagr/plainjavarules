@@ -54,7 +54,7 @@ $(document).ready(function() {
 });
 </script>
 <c:url value="/subrule/view/all" var="submitUrl"/>
-<form:form commandName="subrule" name="viewAllForm1" id="viewAllForm1" acceptCharset="UTF-8" method="get" action="${submitUrl}" >
+<form:form commandName="attribute" name="viewAllForm1" id="viewAllForm1" acceptCharset="UTF-8" method="get" action="${submitUrl}" >
 	<table cellspacing="0" width="100%" class="ruletable">
 		<tr>
 		<td>
