@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.mvel2.MVEL;
 import org.pjr.rulesengine.TechnicalException;
 import org.pjr.rulesengine.daos.RuleDao;
+import org.pjr.rulesengine.dbmodel.Model;
 import org.pjr.rulesengine.dbmodel.Rule;
 import org.pjr.rulesengine.dbmodel.Subrule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,6 @@ public class RulesEngineImpl implements RulesEngine{
 	@Autowired
 	private RuleDao ruleDao;
 
-	@Value("rule.engine.model.class")
-	private String classType;
 	
 	public RuleDao getRuleDao() {
 		return ruleDao;
@@ -45,16 +44,6 @@ public class RulesEngineImpl implements RulesEngine{
 
 	public void setRuleDao(RuleDao ruleDao) {
 		this.ruleDao = ruleDao;
-	}
-
-
-	public String getClassType() {
-		return classType;
-	}
-
-
-	public void setClassType(String classType) {
-		this.classType = classType;
 	}
 
 
@@ -146,18 +135,4 @@ public class RulesEngineImpl implements RulesEngine{
 	}
 
 
-	@Override
-	public String isExpressionValid(Subrule subruleDb) {
-		String errorResult = null;
-				
-		try {	
-			Object object = Class.forName(classType);
-			String mvelExpression = subruleDb.toMvelExpression();
-			Object result = MVEL.eval(mvelExpression,(Object)object) ;
-		} catch (Exception e) {
-			errorResult = e.getMessage();
-		}		
-		
-		return errorResult;
-	}
 }

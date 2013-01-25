@@ -53,7 +53,7 @@ public class RulesDaoTest {
 	@Test
 	public void testIsValidExpression() throws DataLayerException{
 		Subrule subrule = subruleDao.fetchSubrule("23");
-		rulesEngine.isExpressionValid(subrule);
+		//rulesEngine.isExpressionValid(subrule);
 		
 		List<Operator> operatorList = new ArrayList<Operator>();
 		
