@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.dbmodel.Model;
 import org.pjr.rulesengine.dbmodel.Rule;
 import org.pjr.rulesengine.dbmodel.Subrule;
 
@@ -29,7 +30,7 @@ public interface RulesEngine {
 	 */
 	public Object processRule(Object object , String ruleId) throws TechnicalException ;
 
-	public String isExpressionValid(Subrule subruleDb);
+
 	
 	public LinkedHashMap<Rule,Serializable > getCompiledExpressions() throws TechnicalException;
 
