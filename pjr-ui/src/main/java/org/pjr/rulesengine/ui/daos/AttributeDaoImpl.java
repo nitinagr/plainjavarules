@@ -112,7 +112,7 @@ public class AttributeDaoImpl implements AttributeDao {
 					//Setting the values to the prepared statement
 					ps.setString(1, attributeList.get(count).getName());
 					ps.setString(2, attributeList.get(count).getValue());
-					ps.setString(3,String.valueOf(attributeList.get(count).getId()));					
+					ps.setString(3, attributeList.get(count).getId());					
 
 				}
 
