@@ -78,6 +78,10 @@ public class SubruleAdminController {
 	public void setSubruleAdminProcessor(SubruleAdminProcessor subruleAdminProcessor) {
 		this.subruleAdminProcessor = subruleAdminProcessor;
 	}
+	
+
+	
+	
 
 	@RequestMapping(value="create" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
