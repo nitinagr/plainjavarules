@@ -13,7 +13,7 @@ table.conditiontable {
 }
 
 </style>
-<script type="text/javascript" src="<c:url value="/static/js/checkLogic.js" />"></script>
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js" />"></script>
 <script type="text/javascript" >
 $(function () {
 	
@@ -21,9 +21,10 @@ $(function () {
 });
 </script>
 <script>
-var isGenerateButtonClicked = true;
+
 	
 	$(document).ready(function(){
+		
 		
 		$('#desCount').html(1000-$('#description').val().length); //To show first time how many chars left
 
@@ -155,6 +156,7 @@ var isGenerateButtonClicked = true;
 					braceError=false;
 					if(checkParenthesis(generatedLogicText)){
 						$("#braceError").hide();
+						//alert('brace is fine');
 						invalidBrace=false;
 					}
 				}
@@ -187,6 +189,7 @@ var isGenerateButtonClicked = true;
 				}else {
 					//SubRule has logic
 					//Check other validations
+					//alert(braceError+generateError+invalidBrace);
 					if(braceError || generateError || invalidBrace){
 						//show the dialog
 						$("#logicErrorDiv").dialog({
@@ -444,6 +447,8 @@ var isGenerateButtonClicked = true;
 						<input type="hidden" name="index" id="index" value="" />
 						<input type="hidden" name="removeindex" id="removeindex" value="" />
 						<input type="hidden" name="logicChange" id="logicChange" value="" />
+						<input type="hidden" name="ischanged" id="ischanged" value="${ischanged}" />
+						
 						
 							<c:choose>
 								<c:when test="${empty  subrule.logic}">	
@@ -534,4 +539,7 @@ var isGenerateButtonClicked = true;
 
 
 </form:form>
+<script>
+var isGenerateButtonClicked = document.getElementById('ischanged').value == "true";
+</script>
 

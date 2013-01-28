@@ -14,16 +14,8 @@ table.conditiontable {
 }
 
 </style>
-<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js.js" />"></script>
-<script type="text/javascript" >
-$(function () {
-	
-	$('select').jec();
-});
-</script>
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js" />"></script>
 <script>
-var isGenerateButtonClicked = true;
-
 	$(document).ready(function(){	
 		
 		$('#desCount').html(1000-$('#ruleDes').val().length); //To show first time how many chars left
@@ -108,6 +100,8 @@ var isGenerateButtonClicked = true;
 						
 			});
 			$('div.removeSelectGen').click(function(){
+				
+				//alert(isGenerateButtonClicked);
 				var subruleid ="#"+ $(this).attr("ruleid");
 				var index = $(this).attr("index");
 				document.getElementById('removeindex').value= index;
@@ -396,12 +390,7 @@ var isGenerateButtonClicked = true;
 																<option value="${lo.subRuleMapIdOrOprMapId}" ><c:out value="${lo.name}"/></option>										
 															</c:otherwise>								
 														</c:choose>
-													</c:forEach>
-													<c:choose>
-														<c:when test="${!contains}">
-															<option value="${rlItem.subRuleMapIdOrOprMapId}"  selected="selected"><c:out value="${rlItem.name}"/></option>
-														</c:when>
-													</c:choose>																
+													</c:forEach>																				
 										
 										</select>	
 										<c:choose><c:when test="${!loop.first}">											
@@ -429,6 +418,7 @@ var isGenerateButtonClicked = true;
 						<input type="hidden" name="index" id="index" value="" />
 						<input type="hidden" name="removeindex" id="removeindex" value="" />
 						<input type="hidden" name="logicChange" id="logicChange" value="" />
+						<input type="hidden" name="ischanged" id="ischanged" value="${ischanged}" />
 									
 			<div class="makemelink"  style="font-size:15px" id="generateCondition" onclick="javascript:generate();">Generate Logic</div>
 			<div class="makemelink" style="font-size:15px" id="clearlogic" onclick="javascript:clearConditonBox();">Clear Logic</div>
@@ -480,4 +470,7 @@ var isGenerateButtonClicked = true;
 </center>			
 		<div class="button" href="#" onclick="javascript:window.location='<c:url value="/rule/view/${rule.ruleId}"/>';" >Cancel</div>
 		<div class="button" id="submitButton" href="#">Save</div>
-</form:form>	
+</form:form>
+<script>
+var isGenerateButtonClicked = document.getElementById('ischanged').value == "true";
+</script>	

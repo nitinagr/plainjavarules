@@ -156,6 +156,7 @@ public class SubruleController {
 		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
 		model.addAttribute("modelClasses", modelClasses);
 		model.addAttribute("subrulename", subruleDto.getName());
+		model.addAttribute("ischanged", false);
 		
 		
 		String index = request.getParameter("index");
