@@ -19,7 +19,7 @@
 	}	
 
 </script>
-
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js" />"></script>
 <b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Assign Operator Definition for <font color="blue">Rule : <a href="<c:url value="/rule/view/${rule.ruleId }" />">${rule.ruleName}</a></font></b>
 <br/>
 <form:form modelAttribute="operators" name="editForm" id="editForm" acceptCharset="UTF-8" method="post">
@@ -40,6 +40,8 @@
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
 	<br/><br/>
+	<A href="#" onclick="selectAll('operatorsToAssign');">Select All</A>
+	<A href="#" onclick="clearAll('operatorsToAssign');">Clear All</A>
 	<A class="button" href="<c:url value="/rule/view/all" />">Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>
 </center>

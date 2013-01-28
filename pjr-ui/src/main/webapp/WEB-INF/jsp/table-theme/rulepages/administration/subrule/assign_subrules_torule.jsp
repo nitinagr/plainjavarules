@@ -14,7 +14,7 @@
 	font-size:12px Arial;
 }
 </style>
-
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js" />"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#loadingmsg").hide();
@@ -71,6 +71,8 @@ function submitFormPage(){
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
 	<br/><br/>
+	<A href="#" onclick="selectAll('subRuleIdsToAssign');">Select All</A>
+	<A href="#" onclick="clearAll('subRuleIdsToAssign');">Clear All</A>
 	<A class="button" href="<c:url value="/rule/view/all" />">Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>
 </center>

@@ -18,7 +18,7 @@
 	}	
 
 </script>
-
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js" />"></script>
 <b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Assign Operator Definition for <font color="blue">Subrule :<A href="<c:url value="/subrule/view/${subrule.id}"/>" > ${subrule.name}</A></font></b>
 <br/>
 <form:form modelAttribute="attributes" name="editForm" id="editForm" acceptCharset="UTF-8" method="post">
@@ -37,6 +37,8 @@
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>	
 	<br/><br/>
+	<A href="#" onclick="selectAll('attributesToAssignFromRequest');">Select All</A>
+	<A href="#" onclick="clearAll('attributesToAssignFromRequest');">Clear All</A>
 	<A class="button" href="#" onclick="javascript:window.location='<c:url value="/subrule/view/all" />';" >Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>	
 </center>

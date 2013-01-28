@@ -38,3 +38,27 @@ function checkParenthesis(text){
 	//alert(expressionValid);
 	return expressionValid;
 }
+/**
+ * This method is used to select all checkboxes with given name
+ */
+function selectAll(name){
+	//alert(name);
+	var checkBoxes=document.getElementsByName(name);
+	//alert(checkBoxes+'---'+checkBoxes.length);
+	for (var i = 0; i < checkBoxes.length; i++) {
+		checkBoxes[i].checked = true;
+	   }
+	//$("#operatorsToAssignFromRequest").attr("checked", "true");
+}
+/**
+ * This method is used to uncheck all checkboxes with given name
+ */
+function clearAll(name){
+	//alert(name);
+	var checkBoxes=document.getElementsByName(name);
+	//alert(checkBoxes+'---'+checkBoxes.length);
+	for (var i = 0; i < checkBoxes.length; i++) {
+		checkBoxes[i].checked = false;
+	   }
+	//$("#operatorsToAssignFromRequest").attr("checked", "false");
+}
