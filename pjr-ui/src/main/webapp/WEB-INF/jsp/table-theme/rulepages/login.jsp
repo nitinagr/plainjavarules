@@ -2,6 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<script type="text/javascript">
+function checkKey(evt){
+	var e=evt || event;
+    var charCode = e.which || e.keyCode;
+    if(charCode == 13){
+    	document.getElementById('loginForm').submit();
+    }
+}
+</script>
 <style>
 .error{
 	color: red;
@@ -28,11 +37,11 @@
 	</tr>
 	<tr>
 		<td class="ruletabletd">User Name</td>
-		<td class="ruletabletd"><input  type="text" name="j_username" id="userName" size="30"></input></td>		
+		<td class="ruletabletd"><input  type="text" name="j_username" id="userName" size="30" onkeypress="checkKey(event);"></input></td>		
 	</tr>
 	<tr>
 		<td class="ruletabletd">Password</td>
-		<td class="ruletabletd"><input type="password" name="j_password" id="password" size="30"></input></td>
+		<td class="ruletabletd"><input type="password" name="j_password" id="password" size="30" onkeypress="checkKey(event);"></input></td>
 	</tr>
 	<!-- 
 	<tr>
