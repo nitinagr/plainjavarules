@@ -71,19 +71,21 @@ function submitFormPage(){
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
 	<br/><br/>
-	<A href="#" onclick="selectAll('subRuleIdsToAssign');">Select All</A>
-	<A href="#" onclick="clearAll('subRuleIdsToAssign');">Clear All</A>
 	<A class="button" href="<c:url value="/rule/view/all" />">Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>
 </center>
 
-<table width="100%" cellspacing="0" class="ruletable">
+<table width="100%" id="table" cellspacing="0" class="ruletable">
 
 	<tr>		
 		
 		<th style="width:300px;">SubRule Name</th>
 		<th style="width:300px;">Status</th>
-		<th style="width:200px;">Is Assigned</th>
+		<th style="width:200px;">Is Assigned(
+		<A href="#table" style="color:white;" onclick="selectAll('subRuleIdsToAssign');">Select All</A>
+		|
+		<A href="#table" style="color:white;" onclick="clearAll('subRuleIdsToAssign');">Clear All</A>
+		)</th>
 	</tr>	
 	
 	<!--  Only prints assigned -->
