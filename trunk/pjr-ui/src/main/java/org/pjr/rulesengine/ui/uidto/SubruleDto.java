@@ -138,6 +138,7 @@ public class SubruleDto {
 		setMappingLogicTextFromDB(logic);
 		this.logic = logic;
 	}
+		
 
 	@Override
 	public String toString() {

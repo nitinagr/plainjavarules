@@ -4,7 +4,9 @@
 package org.pjr.rulesengine.ui.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,6 +68,7 @@ public class SubruleController {
 	@Autowired
 	private ModelAdminProcessor modelAdminProcessor;
 
+	
 
 	@RequestMapping (value="/view/all" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
@@ -112,10 +115,11 @@ public class SubruleController {
 		log.info("Exiting controller:viewSubRule");
 		return view;
 	}
+	
 
 	@RequestMapping (value="/edit/{id}" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String editSubRule(Model model,@PathVariable String id) throws TechnicalException{
+	public String editSubRule(Model model,@PathVariable String id ) throws TechnicalException{
 		log.info("Entered controller:editSubRule");
 		String view=null;
 		SubruleDto subruleDto=subruleProcessor.fetchSubrule(id);
@@ -140,10 +144,14 @@ public class SubruleController {
 		log.info("Exiting controller:editSubRule");
 		return view;
 	}
+	
+	
+	
 
-	@RequestMapping (value="/edit/save" , method=RequestMethod.POST)
+
+	@RequestMapping (value="/save/{subruleid}" , method=RequestMethod.POST)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=TechnicalException.class)
-	public String saveSubRule(Model model,@ModelAttribute("subrule") SubruleDto subruleDto,Errors errors) throws TechnicalException{
+	public String saveSubRule(Model model,@ModelAttribute("subrule") SubruleDto subruleDto,Errors errors, HttpServletRequest request) throws TechnicalException{
 		log.info("Entered controller:editsaveSubRule");
 		String view="edit_subrule";
 
@@ -151,6 +159,54 @@ public class SubruleController {
 		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
 		model.addAttribute("modelClasses", modelClasses);
 		model.addAttribute("subrulename", subruleDto.getName());
+		
+		
+		String index = request.getParameter("index");
+		String removeIndex = request.getParameter("removeindex");
+		String logicChange = request.getParameter("logicChange");
+	
+		
+		if( StringUtils.isNotBlank(logicChange) ){
+			String[] logicItems = logicChange.split("@");
+			
+			List<SubRuleLogicItem> srlItems = subruleProcessor.getAllSubRuleLogicItems(subruleDto.getId());
+			
+			log.debug("srlItems size : "+ srlItems.size());
+			List<SubRuleLogicItem> items = new ArrayList<SubRuleLogicItem>();
+			for(String l : logicItems){
+				for(SubRuleLogicItem srlItem : srlItems){
+					if(l.equalsIgnoreCase(srlItem.getAttrMapIdOrOprMapId())){
+						SubRuleLogicItem item = new SubRuleLogicItem();
+						item.setAttrMapIdOrOprMapId(srlItem.getAttrMapIdOrOprMapId().replace(SubRuleLogicItem.OPERATOR_ID_PREFIX, "")
+								.replace(SubRuleLogicItem.PREFIX_SEPERATOR, ""));
+						item.setName(srlItem.getName());
+						item.setSubRuleLogicId(srlItem.getSubRuleLogicId());
+						item.setAttribute(srlItem.isAttribute());
+						item.setOperator(srlItem.isOperator());
+						items.add(item);						
+					}
+				}
+			}		
+			
+			if(StringUtils.isNotBlank(index)){
+				int insertindex = Integer.parseInt(index);
+				items.add(insertindex +1 , srlItems.get( 0 ));	
+			}else if(StringUtils.isNotBlank(removeIndex)){
+				int remove = Integer.parseInt(removeIndex);
+				items.remove(remove);
+			}
+
+			subruleDto.setLogic(items);
+			view="edit_subrule";			
+			model.addAttribute("subrule", subruleDto);
+			model.addAttribute("modelClasses", modelClasses);
+			model.addAttribute("subrulename", subruleDto.getName());			;
+			model.addAttribute("srlItems", srlItems);
+			
+			return view;
+		}
+		
+		
 		
 		ModelDto modelDto = modelAdminProcessor.fetchModel(subruleDto.getModelId());
 
@@ -177,6 +233,7 @@ public class SubruleController {
 
 			model.addAttribute("errors",errors.getFieldErrors());
 			model.addAttribute("subrule", srDto);
+			
 			return view;
 		}
 
@@ -188,6 +245,8 @@ public class SubruleController {
 		SubruleDto srDto=subruleProcessor.fetchSubrule(subruleDto.getId());
 
 		Subrule subruleDb=subruleDao.fetchSubrule(subruleDto.getId());
+		
+		
 		
 		
 		/*
