@@ -45,21 +45,28 @@ var isGenerateButtonClicked = true;
 			
 			/**
 			For Highlighting the corresponding select to remove		
-			*/
-
-
-		
+			*/		
 		jQuery("div[id=removeSelectGen]").hover(function () {
-			var removeValue ="#"+ $(this).attr("removevalue");
+			var removeValue = '#'+$(this).attr("removevalue");			
 			$(this).animate({ backgroundColor: "yellow" }, 10);
 			$(removeValue).animate({ backgroundColor: "yellow" }, 10);
-
 		},function () {
-			var removeValue ="#"+ $(this).attr("removevalue");
+			var removeValue ='#'+ $(this).attr("removevalue");			
 			$(this).animate({ backgroundColor: "white" }, 10);
 			$(removeValue).animate({ backgroundColor: "white" }, 10);
 		});	
-	
+
+		jQuery("div[id=insertbelow]").hover(function () {
+			var removeValue = '#'+$(this).attr("belowvalue");			
+			$(this).animate({ backgroundColor: "yellow" }, 10);
+			$(removeValue).animate({ backgroundColor: "yellow" }, 10);
+		},function () {
+			var removeValue ='#'+ $(this).attr("belowvalue");			
+			$(this).animate({ backgroundColor: "white" }, 10);
+			$(removeValue).animate({ backgroundColor: "white" }, 10);
+		});			
+
+		
 		/**
 		For Highlighting the corresponding select to remove	- END		
 	*/
@@ -392,7 +399,7 @@ var isGenerateButtonClicked = true;
 									
 									
 										<!-- <select id="ops${loop.index}" name="ops${loop.index}" onChange="javascript:isGenerateButtonClicked=false;"> -->
-										 <select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;"> 
+										 <select id="ops${loop.index}" name="ops" onChange="javascript:isGenerateButtonClicked=false;"> 
 													<c:set var="contains" value="false" />
 													<c:forEach items="${srlItems}" var="srlItem" >
 														<c:choose>
@@ -427,7 +434,7 @@ var isGenerateButtonClicked = true;
 										<c:choose><c:when test="${!loop.first}">
 											<div  id="removeSelectGen" removevalue="ops${loop.index}" class="makemelink removeSelectGen" style="float:right; margin-right: 10px;" subruleid="${subrule.id }" index="${loop.index}" >Remove</div>
 										</c:when></c:choose>
-										<div style="visibility: visible; float: right; margin-right: 10px;" class="makemelink insertBelowClass" id="insertbelow1" name="insertbelow${loop.index}"  subruleid="${subrule.id }" index="${loop.index}" >Insert below</div>
+										<div style="visibility: visible; float: right; margin-right: 10px;" class="makemelink insertBelowClass" id="insertbelow" belowvalue="ops${loop.index}" name="insertbelow${loop.index}"  subruleid="${subrule.id }" index="${loop.index}" >Insert below</div>
 										<br/>				
 									</c:forEach>				
 								
@@ -440,7 +447,7 @@ var isGenerateButtonClicked = true;
 						
 							<c:choose>
 								<c:when test="${empty  subrule.logic}">	
-									<select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;">
+									<select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;" >
 										<c:forEach items="${srlItems}" var="srlItem">
 											<c:choose>
 													<c:when test="${srlItem.name == ')' }">
