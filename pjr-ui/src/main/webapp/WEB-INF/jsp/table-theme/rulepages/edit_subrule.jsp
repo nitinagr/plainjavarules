@@ -441,14 +441,6 @@ var isGenerateButtonClicked = true;
 	<tr>
 		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
 		</td>
-		<td class="ruletabletd">			
-				<c:forEach items="${modelClasses}" var="modelClass" >
-					<c:choose>							
-						<c:when test="${modelClass.model_id == subrule.modelId }">
-							${modelClass.model_class_name }							
-						</c:when>
-					</c:choose>					
-				</c:forEach>
 		<td class="ruletabletd">	
 				
 			<c:forEach items="${modelClasses}" var="modelClass" >
