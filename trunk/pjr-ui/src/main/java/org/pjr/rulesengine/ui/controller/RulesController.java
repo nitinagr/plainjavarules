@@ -159,7 +159,8 @@ public class RulesController {
 	public String saveRule(Model model, @ModelAttribute("rule") RuleDto ruleDto, final Errors errors ,  HttpServletRequest request) throws TechnicalException{
 		String view = "view_rule" ;
 		model.addAttribute("rule",ruleDto);
-
+		model.addAttribute("ischanged", false);
+		
 		RuleDto currentRuleInDB = rulesProcessor.fetchRule(ruleDto.getRuleId());
 		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();
 
