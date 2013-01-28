@@ -37,17 +37,21 @@
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>	
 	<br/><br/>
-	<A href="#" onclick="selectAll('attributesToAssignFromRequest');">Select All</A>
-	<A href="#" onclick="clearAll('attributesToAssignFromRequest');">Clear All</A>
 	<A class="button" href="#" onclick="javascript:window.location='<c:url value="/subrule/view/all" />';" >Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>	
 </center>
-<table width="100%" class="ruletable" cellspacing="0">
+<table width="100%" id="table" class="ruletable" cellspacing="0">
 
 	<tr>		
 		<th style="width:300px;"><b>Attribute Name</b></th>
 		<th style="width:300px;"><b>Attribute Value </b></th>
-		<th style="width:200px;">Is Assigned</th>		
+		<th style="width:200px;">Is Assigned
+		(
+		<A href="#table" style="color:white;" onclick="selectAll('attributesToAssignFromRequest');">Select All</A>
+		|
+		<A href="#table" style="color:white;" onclick="clearAll('attributesToAssignFromRequest');">Clear All</A>
+		)
+		</th>		
 	</tr>	
 	
 	<!--  Only colors the assigned -->

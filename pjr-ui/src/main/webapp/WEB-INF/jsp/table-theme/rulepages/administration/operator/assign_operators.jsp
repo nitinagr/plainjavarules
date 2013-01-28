@@ -40,18 +40,21 @@
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
 	<br/><br/>
-	<A href="#" onclick="selectAll('operatorsToAssign');">Select All</A>
-	<A href="#" onclick="clearAll('operatorsToAssign');">Clear All</A>
 	<A class="button" href="<c:url value="/rule/view/all" />">Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>
 </center>
 
-<table width="100%" class="ruletable" cellspacing="0">
+<table width="100%" id="table" class="ruletable" cellspacing="0">
 
 	<tr>
 		<th style="width:300px;">Operator Name</th>
 		<th style="width:300px;">Operator Value</th>
-		<th style="width:200px;">Is Assigned</th>			
+		<th style="width:200px;">Is Assigned(
+		<A href="#table" style="color:white;" onclick="selectAll('operatorsToAssign');">Select All</A>
+		|
+		<A href="#table" style="color:white;" onclick="clearAll('operatorsToAssign');">Clear All</A>
+		)
+		</th>			
 	</tr>	
 	
 	<!--  Only prints assigned -->
