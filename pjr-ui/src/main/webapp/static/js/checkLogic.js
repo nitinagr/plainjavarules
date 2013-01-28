@@ -35,6 +35,6 @@ function checkParenthesis(text){
 			}
 		}
 	}
-	alert(expressionValid);
+	//alert(expressionValid);
 	return expressionValid;
 }
