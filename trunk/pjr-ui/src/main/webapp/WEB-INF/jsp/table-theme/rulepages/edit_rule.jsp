@@ -14,7 +14,7 @@ table.conditiontable {
 }
 
 </style>
-<script type="text/javascript" src="<c:url value="/static/js/checkLogic.js" />"></script>
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js.js" />"></script>
 <script type="text/javascript" >
 $(function () {
 	

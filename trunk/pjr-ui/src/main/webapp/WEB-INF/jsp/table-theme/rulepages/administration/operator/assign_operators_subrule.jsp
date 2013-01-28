@@ -16,9 +16,8 @@
 			$("#editForm").submit();
 			},250);
 	}	
-
 </script>
-
+<script type="text/javascript" src="<c:url value="/static/js/pjr_common.js" />"></script>
 <b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Assign Operator Definition for <font color="blue">Subrule : <A href="<c:url value="/subrule/view/${subrule.id}"/>" > ${subrule.name}</A></font></b>
 <br/>
 
@@ -38,6 +37,8 @@
 <center>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>	
 	<br/><br/>
+	<A href="#" onclick="selectAll('operatorsToAssignFromRequest');">Select All</A>
+	<A href="#" onclick="clearAll('operatorsToAssignFromRequest');">Clear All</A>
 	<A class="button" href="<c:url value="/subrule/view/all" />">Cancel</A>
 	<A class="button" href="#" onclick="javascript:submitFormPage();" >Save</A>
 </center>
