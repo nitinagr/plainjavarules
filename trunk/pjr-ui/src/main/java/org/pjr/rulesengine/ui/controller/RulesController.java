@@ -4,6 +4,7 @@ package org.pjr.rulesengine.ui.controller;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -155,11 +156,12 @@ public class RulesController {
 	 */
 	@RequestMapping(value="/edit/save" , method=RequestMethod.POST)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=TechnicalException.class)
-	public String saveRule(Model model, @ModelAttribute("rule") RuleDto ruleDto, final Errors errors) throws TechnicalException{
+	public String saveRule(Model model, @ModelAttribute("rule") RuleDto ruleDto, final Errors errors ,  HttpServletRequest request) throws TechnicalException{
 		String view = "view_rule" ;
 		model.addAttribute("rule",ruleDto);
 
 		RuleDto currentRuleInDB = rulesProcessor.fetchRule(ruleDto.getRuleId());
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();
 
 		if(null!=currentRuleInDB){
 			editRuleValidator.setOldExecutionOrder(currentRuleInDB.getExecutionOrder());
@@ -168,6 +170,51 @@ public class RulesController {
 			model.addAttribute("message","Rule doesnt exist.Someone might have deleted the Rule");
 			return "error";
 		}
+		
+		
+		String index = request.getParameter("index");
+		String removeIndex = request.getParameter("removeindex");		
+		String logicChange = request.getParameter("logicChange");
+
+		
+		if( StringUtils.isNotBlank(logicChange) ){
+			String[] logicItems = logicChange.split("@");
+			
+			List<RuleLogicUi> rlItems = rulesProcessor.getAllRuleLogicItems(ruleDto.getRuleId());
+			List<RuleLogicUi> items = new ArrayList<RuleLogicUi>();
+			for(String l : logicItems){
+				for(RuleLogicUi rlItem : rlItems){
+					if(l.equalsIgnoreCase(rlItem.getSubRuleMapIdOrOprMapId())){
+						RuleLogicUi item = new RuleLogicUi();
+						item.setSubRuleMapIdOrOprMapId(rlItem.getSubRuleMapIdOrOprMapId().replaceAll(RuleLogicUi.SUBRULE_ID_PREFIX, "")
+								.replaceAll(RuleLogicUi.OPERATOR_ID_PREFIX, "").replaceAll(RuleLogicUi.PREFIX_SEPERATOR, ""));
+						item.setName(rlItem.getName());
+						item.setRuleLogicId(rlItem.getRuleLogicId());						
+						item.setOperator(rlItem.isOperator());
+						item.setSubRule(rlItem.isSubRule());
+						items.add(item);						
+					}
+				}
+			}		
+			
+			if(StringUtils.isNotBlank(index)){
+				int insertindex = Integer.parseInt(index);
+				items.add(insertindex +1 , rlItems.get( 0 ));	
+			}else if(StringUtils.isNotBlank(removeIndex)){
+				int remove = Integer.parseInt(removeIndex);
+				items.remove(remove);
+			}
+
+			ruleDto.setLogic(items);
+			view="edit_rule";			
+			model.addAttribute("rule", ruleDto);
+			model.addAttribute("modelClasses", modelClasses);			
+			model.addAttribute("rlItems", rlItems);			
+			return view;
+		}
+				
+		
+		
 
 		editRuleValidator.validate(ruleDto, errors);
 		if(errors.hasFieldErrors()){
@@ -197,7 +244,7 @@ public class RulesController {
 		RuleDto rule = rulesProcessor.fetchRule(ruleDto.getRuleId());
 		
 
-		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+				
 		model.addAttribute("modelClasses", modelClasses);
 		
 		//Updated

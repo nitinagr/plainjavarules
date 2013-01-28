@@ -4,9 +4,7 @@
 package org.pjr.rulesengine.ui.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -171,14 +168,13 @@ public class SubruleController {
 			
 			List<SubRuleLogicItem> srlItems = subruleProcessor.getAllSubRuleLogicItems(subruleDto.getId());
 			
-			log.debug("srlItems size : "+ srlItems.size());
 			List<SubRuleLogicItem> items = new ArrayList<SubRuleLogicItem>();
 			for(String l : logicItems){
 				for(SubRuleLogicItem srlItem : srlItems){
 					if(l.equalsIgnoreCase(srlItem.getAttrMapIdOrOprMapId())){
 						SubRuleLogicItem item = new SubRuleLogicItem();
-						item.setAttrMapIdOrOprMapId(srlItem.getAttrMapIdOrOprMapId().replace(SubRuleLogicItem.OPERATOR_ID_PREFIX, "")
-								.replace(SubRuleLogicItem.PREFIX_SEPERATOR, ""));
+						item.setAttrMapIdOrOprMapId(srlItem.getAttrMapIdOrOprMapId().replaceAll(SubRuleLogicItem.OPERATOR_ID_PREFIX, "").replaceAll(SubRuleLogicItem.ATTRIBUTE_ID_PREFIX, "")
+								.replaceAll(SubRuleLogicItem.PREFIX_SEPERATOR, ""));
 						item.setName(srlItem.getName());
 						item.setSubRuleLogicId(srlItem.getSubRuleLogicId());
 						item.setAttribute(srlItem.isAttribute());

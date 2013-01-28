@@ -43,25 +43,35 @@ var isGenerateButtonClicked = true;
 			}
 	        $('#desCount').html(limit-text.length);
 		});
-		/**
-			For Highlighting the corresponding select to remove		
-		*/
-		
-		
-		jQuery("div[id=removeSelectGen]").hover(function () {
-			var removeValue ="#"+ $(this).attr("removevalue");
-			$(this).animate({ backgroundColor: "yellow" }, 10);
-			$(removeValue).animate({ backgroundColor: "yellow" }, 10);
 
-		},function () {
-			var removeValue ="#"+ $(this).attr("removevalue");
-			$(this).animate({ backgroundColor: "white" }, 10);
-			$(removeValue).animate({ backgroundColor: "white" }, 10);
-		});
-		
+
 		/**
-		For Highlighting the corresponding select to remove	- END		
-	*/
+		For Highlighting the corresponding select to remove		
+		*/		
+	jQuery("div[id=removeSelectGen]").hover(function () {
+		var removeValue = '#'+$(this).attr("removevalue");			
+		$(this).animate({ backgroundColor: "yellow" }, 10);
+		$(removeValue).animate({ backgroundColor: "yellow" }, 10);
+	},function () {
+		var removeValue ='#'+ $(this).attr("removevalue");			
+		$(this).animate({ backgroundColor: "white" }, 10);
+		$(removeValue).animate({ backgroundColor: "white" }, 10);
+	});	
+
+	jQuery("div[id=insertbelow]").hover(function () {
+		var removeValue = '#'+$(this).attr("belowvalue");			
+		$(this).animate({ backgroundColor: "yellow" }, 10);
+		$(removeValue).animate({ backgroundColor: "yellow" }, 10);
+	},function () {
+		var removeValue ='#'+ $(this).attr("belowvalue");			
+		$(this).animate({ backgroundColor: "white" }, 10);
+		$(removeValue).animate({ backgroundColor: "white" }, 10);
+	});			
+
+	
+	/**
+	For Highlighting the corresponding select to remove	- END		
+*/
 
 				
 			/*
@@ -76,85 +86,45 @@ var isGenerateButtonClicked = true;
 
 			});			
 
-		
-			var divCount = 0;
-	
-			$('#addNewCondition').click(function(){
-				isGenerateButtonClicked = false;
-				
-				divCount = divCount +1 ;
-				var selectId = "select"+ divCount;
-				
-				var $originalSelect = $('select').first();
-				var $clonedSelect = $originalSelect.clone();
-				$clonedSelect.attr("id",selectId);
-				$clonedSelect.attr("name",selectId);
-				
-				$clonedSelect.each(function(index, item) {
-				     //set new select to value of old select
-				     $(item).val( $originalSelect.eq(index).val() );
-				});
 
-				var removeAnchorId = "anchor "+ divCount;
-				var $removeAnchor = $('#removeSelect');
+			$('div.insertBelowClass').click(function(){
+				var subruleid ="#"+ $(this).attr("ruleid");
+				var index = $(this).attr("index");				
+				$('#index').attr('value',index);
 
-				var $clonedremoveAnchor = $removeAnchor.clone();
-				$clonedremoveAnchor.attr("id",removeAnchorId);
-				$clonedremoveAnchor.attr("name",removeAnchorId);				
-				$clonedremoveAnchor.attr("value",selectId);
-				$clonedremoveAnchor.css({ 'visibility': 'visible'});
-				$clonedremoveAnchor.removeAttr('onclick');
-				$clonedremoveAnchor.attr('removevalue',selectId);
+				var divEl = document.getElementById('allConditionDiv');
+				var selectCons = divEl.getElementsByTagName('select');
+
 				
-				    
-				$clonedSelect.appendTo('#extraCondition');
-				$clonedremoveAnchor.appendTo('#extraCondition');
-				$('#extraCondition').append('<br/>');
-				
-			
-				$clonedremoveAnchor.click(function(){
-				    $clonedSelect.remove();
-				    $clonedremoveAnchor.remove();
-				});
-
-				$clonedremoveAnchor.hover(function () {
-					var removeValue ="#"+ $(this).attr("removevalue");
-					$(this).animate({ backgroundColor: "yellow" }, 10);
-					$(removeValue).animate({ backgroundColor: "yellow" }, 10);
-
-				},function () {
-					var removeValue ="#"+ $(this).attr("removevalue");
-					$(this).animate({ backgroundColor: "white" }, 10);
-					$(removeValue).animate({ backgroundColor: "white" }, 10);
-				});		
-				
-
-				$clonedSelect.jec();
-								
+				var objectText = "";
+				var textAr = document.getElementById('subRulesLogic');
+				for (var i = selectCons.length-1; i >= 0; i--) { 
+						var selectCon = selectCons[i] ;
+						objectText =selectCon.options[selectCon.selectedIndex].value + "@" + objectText ;				 
+				}
+					
+				document.getElementById('logicChange').value= objectText;								
+				document.getElementById('editForm').submit();
+						
 			});
+			$('div.removeSelectGen').click(function(){
+				var subruleid ="#"+ $(this).attr("ruleid");
+				var index = $(this).attr("index");
+				document.getElementById('removeindex').value= index;
 
-			/*
-			$('#addNewCondition').click(function(){
-				divCount = divCount +1 ;
-				var divId = "div "+ divCount;
-				
-				var $orginalDiv = $('#conditionDiv');
-				var $clonedDiv = $orginalDiv.clone();
-				$clonedDiv.attr("id",divId);
-				
-				//get original selects into a jq object
-				var $originalSelects = $orginalDiv.find('select');
-				
-				$clonedDiv.find('select').each(function(index, item) {
-				
-				     //set new select to value of old select
-				     $(item).val( $originalSelects.eq(index).val() );
-				
-				});
-				    
-				$clonedDiv.appendTo('#extraCondition');
-			});
-			*/
+				var divEl = document.getElementById('allConditionDiv');
+				var selectCons = divEl.getElementsByTagName('select');
+				var objectText = "";
+				var textAr = document.getElementById('subRulesLogic');
+				for (var i = selectCons.length-1; i >= 0; i--) { 
+						var selectCon = selectCons[i] ;
+						objectText =selectCon.options[selectCon.selectedIndex].value + "@" + objectText ;				 
+				}
+					
+				document.getElementById('logicChange').value= objectText;								
+				document.getElementById('editForm').submit();				
+			});			
+
 			
 			$("#loadingmsg").hide();
 			$("#logicErrorDiv").hide();
@@ -251,44 +221,6 @@ var isGenerateButtonClicked = true;
 </script>
 
 <script>
-/*function submitForm( frm ){
-
-	var selectCons = frm.getElementsByTagName('select');
-	
-	var firstSelectBox = selectCons[0];
-	var lastSelectBox =  selectCons[selectCons.length-1];
-
-	var toSubmit = true; 
-
-	var firstSelectValue =firstSelectBox.options[firstSelectBox.selectedIndex].text;
-	var lastSelectValue =firstSelectBox.options[lastSelectBox.selectedIndex].text; 
-	
-	if( !(  firstSelectValue == "(" && lastSelectValue ==")" ) ) {
-		alert('The logic should always start with "(" and end with a ")" .');
-		toSubmit = false;
-	}
-
-	if(!isGenerateButtonClicked){
-		alert('Generate logic before you submit your changes');
-		toSubmit = false;
-	}
-	
-	if(toSubmit) frm.submit();
-
-}*/
-
-
-	function removeSelect(id,link){
-			var removeVal = link.getAttribute('value');
-			if(null != removeVal) {				
-				id = removeVal;
-			}
-				
-			 		
-			var select = document.getElementById(id);
-			select.parentNode.removeChild(select);
-			link.parentNode.removeChild(link);
-		}
 
 	function generate(){
 	
@@ -472,30 +404,34 @@ var isGenerateButtonClicked = true;
 													</c:choose>																
 										
 										</select>	
-										<c:choose><c:when test="${!loop.first}"><div  id="removeSelectGen" removevalue="ops${loop.index}"  class="makemelink" style="float:right;"  onclick="javascript:removeSelect('ops${loop.index}',this)">Remove</div>	</c:when></c:choose>
+										<c:choose><c:when test="${!loop.first}">											
+											<div  id="removeSelectGen" removevalue="ops${loop.index}" class="makemelink removeSelectGen" style="float:right; margin-right: 10px;" ruleid="${rule.ruleId }" index="${loop.index}" >Remove</div>										
+										</c:when></c:choose>
+											<div style="visibility: visible; float: right; margin-right: 10px;" class="makemelink insertBelowClass" id="insertbelow" belowvalue="ops${loop.index}" name="insertbelow${loop.index}"  ruleid="${rule.ruleId }" index="${loop.index}" >Insert below</div>
 										<br/>				
-									</c:forEach>				
-								
-							</c:when>				
+									</c:forEach>
+							</c:when>			
 							<c:otherwise>
 								<select id="ops" name="ops" onChange="javascript:isGenerateButtonClicked=false;">
 									<c:forEach items="${rlItems}" var="rlItem">
 										<option value="${rlItem.subRuleMapIdOrOprMapId}" ><c:out value="${rlItem.name}"/></option>						
 									</c:forEach>				
 								</select>
+								<div style="visibility: visible; float: right; margin-right: 10px;" class="makemelink insertBelowClass" id="insertbelow1" name="insertbelow0"  ruleid="${rule.ruleId }" index="0" >Insert below</div>
 								<br/>
 							</c:otherwise>
-						</c:choose>	
-						
-						<div  id="removeSelect" class="makemelink" style="visibility:hidden;float:right;">Remove</div>
+						</c:choose>
 						<div id="extraCondition"></div>				
 					</div>
 			</div>
 			
-			<br/><br/>	
-			<div class="makemelink" id="addNewCondition" style="font-size:15px">Add New SubRule/Operator</div>	
-			<br/>
+			<br/><br/>
+						<input type="hidden" name="index" id="index" value="" />
+						<input type="hidden" name="removeindex" id="removeindex" value="" />
+						<input type="hidden" name="logicChange" id="logicChange" value="" />
+									
 			<div class="makemelink"  style="font-size:15px" id="generateCondition" onclick="javascript:generate();">Generate Logic</div>
+			<div class="makemelink" style="font-size:15px" id="clearlogic" onclick="javascript:clearConditonBox();">Clear Logic</div>
 			
 			<input type="hidden" value="${rule.mappingLogicTextFromDB }" name="updatedLogicText" id="updatedLogicText"/>
 				
