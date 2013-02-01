@@ -163,11 +163,9 @@ public class RulesController {
 		
 		RuleDto currentRuleInDB = rulesProcessor.fetchRule(ruleDto.getRuleId());
 		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();
-
-		if(null!=currentRuleInDB){
-			editRuleValidator.setOldExecutionOrder(currentRuleInDB.getExecutionOrder());
-			editRuleValidator.setOldRuleName(currentRuleInDB.getRuleName());
-		} else {
+		model.addAttribute("modelClasses", modelClasses);
+		
+		if(null == currentRuleInDB){
 			model.addAttribute("message","Rule doesnt exist.Someone might have deleted the Rule");
 			return "error";
 		}
@@ -205,19 +203,15 @@ public class RulesController {
 				int remove = Integer.parseInt(removeIndex);
 				items.remove(remove);
 			}
-
 			ruleDto.setLogic(items);
 			view="edit_rule";			
-			model.addAttribute("rule", ruleDto);
-			model.addAttribute("modelClasses", modelClasses);			
+			model.addAttribute("rule", ruleDto);					
 			model.addAttribute("rlItems", rlItems);			
 			return view;
 		}
 				
-		
-		
 
-		editRuleValidator.validate(ruleDto, errors);
+		editRuleValidator.validate(ruleDto, errors, currentRuleInDB);
 		if(errors.hasFieldErrors()){
 
 			RuleDto rule = rulesProcessor.fetchRule(ruleDto.getRuleId());
@@ -228,8 +222,6 @@ public class RulesController {
 			rule.setExecutionOrder(ruleDto.getExecutionOrder());
 			rule.setActive(ruleDto.isActive());
 			rule.setReturnValue(ruleDto.getReturnValue());
-
-
 
 			model.addAttribute("errors",errors.getFieldErrors());
 			model.addAttribute("rule",rule);
@@ -244,9 +236,6 @@ public class RulesController {
 		rulesProcessor.updateRule(ruleDto);
 		RuleDto rule = rulesProcessor.fetchRule(ruleDto.getRuleId());
 		
-
-				
-		model.addAttribute("modelClasses", modelClasses);
 		
 		//Updated
 		model.addAttribute("rule",rule);
