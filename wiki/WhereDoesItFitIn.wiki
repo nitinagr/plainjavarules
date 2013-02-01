@@ -7,10 +7,13 @@
  * No commercial obligation
  * No DSL language used   
  * Ability to administer and define custom DSL
+ * Simple to configure and use ,hence can be handed over to business people to manage.
+
+
+I wanted a simple rules engine which gives me all the flexibility to adapt , yet not complex  and UI to manage  , eventually hand it over to business to manage simple rules and not come back to developers for every small change in business logic , i couldnt find one , hence i created one.
 
 
 Here is a list of rules engines evaluated before creating the *plainjavarules*
-
 
 ==Drools==
 Drools is from Jboss.
