@@ -73,7 +73,7 @@ $(document).ready(function(){
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Subrule Default value</b>
-		<td class="ruletabletd"><form:checkbox path="defaultValue"/>Default</td>
+		<td class="ruletabletd"><form:checkbox path="defaultValue"/>true/false based on the check box.</td>
 	</tr>
 	
 	<tr>

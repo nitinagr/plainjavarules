@@ -38,18 +38,19 @@ $(document).ready(function(){
 <table width="100%" class="ruletable" cellspacing="0">
 
 	<tr>
-		<td class="ruletabletd"><b>Attribute Name / Object Name: </b><span class="mandatory" > * </span>
+		<td class="ruletabletd"><b>Attribute Name: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
 			<input type="text" name="attributeName" id="attributeName" value="${attribute.attributeName}"></input>
-			<!--<form:errors path="attributeName" cssClass="error" />
-		--></td>		
+			Display Name for the Attribute
+		</td>		
 	</tr>	
 	<tr>
 		<td class="ruletabletd"><b>Mvel / Object value: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
 			<input type="text" name="value" id="value" value="${attribute.value}"></input>	
+			This should match with the variable name in the Java Object.
 		</td>		
 	</tr>
 	<tr>
@@ -69,6 +70,7 @@ $(document).ready(function(){
 					</c:choose>					
 				</c:forEach>
 			</select>
+			Select the Model class this attribute will be available in.
 		</td>		
 	</tr>	
 	

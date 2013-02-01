@@ -336,13 +336,16 @@ table.conditiontable {
 			<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
 			</td>
 			<td class="ruletabletd">
+			
 					<c:forEach items="${modelClasses}" var="modelClass" >
-						<c:choose>
+						<c:choose>							
 							<c:when test="${modelClass.model_id == rule.modelId }">
 								${modelClass.model_class_name }
+								<input type="hidden" value="${modelClass.model_id }" name="modelId" />							
 							</c:when>
 						</c:choose>					
-					</c:forEach>
+					</c:forEach>		
+			
 			</td>		
 		</tr>	
 		<tr>
