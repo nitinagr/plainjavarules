@@ -57,9 +57,9 @@ $(document).ready(function(){
 		<td class="ruletabletd"><b>Model Class Name / Object Name: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
-			<!-- <input type="text" name="model_class_name" id="model_class_name" value="${modelDto.model_class_name}"></input> -->
 			 <span id="desCount"></span> characters left<br />
-			 <textarea id="model_class_name" name="model_class_name" rows="20" cols="40"><c:out value="${modelDto.model_class_name}"/></textarea>
+			 <textarea id="model_class_name" name="model_class_name" rows="20" cols="40"><c:out value="${modelDto.model_class_name}"/></textarea>						
+			Provide fully classified java class name.
 		</td>		
 	</tr>	
 </table>
