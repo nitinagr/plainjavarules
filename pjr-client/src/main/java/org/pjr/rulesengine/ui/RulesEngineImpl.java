@@ -14,8 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.mvel2.MVEL;
 import org.pjr.rulesengine.NonTechnicalException;
 import org.pjr.rulesengine.TechnicalException;
-import org.pjr.rulesengine.dao.ModelDao;
-import org.pjr.rulesengine.dao.RuleDao;
 import org.pjr.rulesengine.dbmodel.Model;
 import org.pjr.rulesengine.dbmodel.Rule;
 
@@ -28,13 +26,9 @@ public class RulesEngineImpl implements RulesEngine{
 
 	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(RulesEngineImpl.class);
+
 	
-	/** The rule dao. */
-	private RuleDao ruleDao;
-	
-	/** The model dao. */
-	private ModelDao modelDao;
-	
+	RulesProcessorImpl rulesProcessor;
 	/**
 	 * Instantiates a new rules engine impl.
 	 *
@@ -42,8 +36,7 @@ public class RulesEngineImpl implements RulesEngine{
 	 * @author  Sudhakar
 	 */
 	public RulesEngineImpl(DataSource dataSource){
-		ruleDao=new RuleDao(dataSource);
-		modelDao = new ModelDao(dataSource);
+		rulesProcessor = RulesProcessorImpl.getInstance(dataSource);		
 	}
 	
 	/* (non-Javadoc)
@@ -59,7 +52,7 @@ public class RulesEngineImpl implements RulesEngine{
 		List<Rule> rules=new ArrayList<Rule>();
 		
 		//Business Validation
-		Model model = modelDao.isModelNameAlreadyExists(fullyQualifiedClassName);
+		Model model = rulesProcessor.isModelNameAlreadyExists(fullyQualifiedClassName);
 		if(null == model) throw new NonTechnicalException(fullyQualifiedClassName + " is not available in DB ");
 		
 		try {
@@ -104,13 +97,13 @@ public class RulesEngineImpl implements RulesEngine{
 	public Object processSingleRule(String fullyQualifiedClassName, Object object, String ruleId)  throws TechnicalException , NonTechnicalException{		
 
 		//Business Validation
-		Model model = modelDao.isModelNameAlreadyExists(fullyQualifiedClassName);
+		Model model = rulesProcessor.isModelNameAlreadyExists(fullyQualifiedClassName);
 		if(null == model) throw new NonTechnicalException(fullyQualifiedClassName + " is not available in DB ");
 		
 		Rule tempRule = null;
 	   	Boolean result;
 		try {
-			tempRule = ruleDao.fetchRule(ruleId);
+			tempRule = rulesProcessor.fetchRule(ruleId);
 			String strExpression =  tempRule.toMvelExpression();
 			Serializable serializableExpr = MVEL.compileExpression(strExpression);
 			result = (Boolean) MVEL.executeExpression(serializableExpr, object);
@@ -135,12 +128,12 @@ public class RulesEngineImpl implements RulesEngine{
 		try {
 			List<Rule> rules;
 			if(null!=modelClass && !modelClass.isEmpty()){
-				rules = ruleDao.fetchAllRulesBYExecutionOrder();
+				rules = rulesProcessor.fetchAllRulesBYExecutionOrder();
 			} else {
-				rules = ruleDao.fetchAllRulesBYExecutionOrder(modelClass);
+				rules = rulesProcessor.fetchAllRulesBYExecutionOrder(modelClass);
 			}
 			for(Rule rule : rules){
-				Rule tempRule = ruleDao.fetchRule(rule.getId());
+				Rule tempRule = rulesProcessor.fetchRule(rule.getId());
 				String strExpression =  tempRule.toMvelExpression();
 				Serializable serializableExpr = MVEL.compileExpression(strExpression);
 				expressions.put(tempRule, serializableExpr);
