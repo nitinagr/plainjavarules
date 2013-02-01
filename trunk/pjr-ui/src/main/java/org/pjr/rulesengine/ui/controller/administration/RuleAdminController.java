@@ -151,6 +151,9 @@ public class RuleAdminController {
 			return view;
 		}
 
+		// Assign ( ) AND NOT 
+		rulesProcessor.assignMandatoryOperatorsToRule(rule.getRuleName());
+		
 		RuleDto ruleDtoSaved = rulesProcessor.fetchRuleByRuleName(rule.getRuleName());
 		model.addAttribute("rule", ruleDtoSaved);
 		model.addAttribute("message","Successfully Added Rule");

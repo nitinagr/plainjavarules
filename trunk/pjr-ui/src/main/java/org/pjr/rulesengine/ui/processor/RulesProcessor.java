@@ -33,4 +33,6 @@ public interface RulesProcessor {
 	public RuleDto fetchRuleByRuleName(String ruleName) throws TechnicalException ;
 
 	public void duplicateRuleDefinition(RuleDto ruleDto,String ruleIdToCopy) throws TechnicalException,NonTechnicalException;
+	
+	public void assignMandatoryOperatorsToRule(String rulename) throws TechnicalException;
 }
