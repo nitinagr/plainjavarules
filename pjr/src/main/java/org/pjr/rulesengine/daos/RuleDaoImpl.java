@@ -109,7 +109,7 @@ public class RuleDaoImpl implements RuleDao{
 
 		try {
 				String sql=accessProps.getFromProps(CommonConstants.QUERY_INSERTINTORULES_INSERT);
-				//String sql ="INSERT into FSMMGR.PAC_RE_RULES (RULE_ID, RULE_NAME, RULE_DESCRIPTION, ACTIVE, EXE_ORDER,RETURN_VALUE) VALUES(FSMMGR.PAC_RE_RULES_PK_SQ.NEXTVAL,?,?,?,?,?)";
+				//String sql ="INSERT into FSMMGR.RE_RULES (RULE_ID, RULE_NAME, RULE_DESCRIPTION, ACTIVE, EXE_ORDER,RETURN_VALUE) VALUES(FSMMGR.RE_RULES_PK_SQ.NEXTVAL,?,?,?,?,?)";
 
 				jdbcTemplate.update(sql, new PreparedStatementSetter() {
 
@@ -144,7 +144,7 @@ public class RuleDaoImpl implements RuleDao{
 
 	/**
 	 * Method Name : updateRule
-	 *  Method Description : This method is used to update PAC_RE_RULES
+	 *  Method Description : This method is used to update RE_RULES
 	 *
 	 * @param List
 	 *            <Rule>
@@ -159,7 +159,7 @@ public class RuleDaoImpl implements RuleDao{
 
 		boolean dataUpdated = false;
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_UPDATERULE_UPDATE);
-		//String sql ="UPDATE FSMMGR.PAC_RE_RULES SET RULE_NAME=?,RULE_DESCRIPTION=?,ACTIVE=?,RETURN_VALUE=?,EXE_ORDER=? WHERE RULE_ID=?";
+		//String sql ="UPDATE FSMMGR.RE_RULES SET RULE_NAME=?,RULE_DESCRIPTION=?,ACTIVE=?,RETURN_VALUE=?,EXE_ORDER=? WHERE RULE_ID=?";
 
 		int[] batchUpdatedRows = jdbcTemplate.batchUpdate(sql,
 				new BatchPreparedStatementSetter() {
@@ -204,7 +204,7 @@ public class RuleDaoImpl implements RuleDao{
 
 	/**
 	 * Method Name			: deleteFromRules
-	 * Method Description	: This method is used to delete record from PAC_RE_RULES
+	 * Method Description	: This method is used to delete record from RE_RULES
 	 * @param Long rulesId
 	 * @return boolean
 	 * @throws DataLayerException
@@ -220,7 +220,7 @@ public class RuleDaoImpl implements RuleDao{
 
 			dataDeleted = false;
 			String sql=accessProps.getFromProps(CommonConstants.QUERY_DELETEFROMRULES_DELETE);
-			//String sql ="DELETE FROM FSMMGR.PAC_RE_RULES WHERE RULE_ID=?" ;
+			//String sql ="DELETE FROM FSMMGR.RE_RULES WHERE RULE_ID=?" ;
 			int rowsDeleted = jdbcTemplate.update(sql, new PreparedStatementSetter()  {
 				public void setValues(PreparedStatement ps) throws SQLException {
 					ps.setString(1,rulesId);
@@ -241,7 +241,7 @@ public class RuleDaoImpl implements RuleDao{
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
 	public List<Rule> fetchAllRules() throws DataLayerException {
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLRULES_SELECT);
-		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.PAC_RE_RULES order by EXE_ORDER";
+		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.RE_RULES order by EXE_ORDER";
 
 		List<Rule> ruleList;
 		try {
@@ -279,7 +279,7 @@ public class RuleDaoImpl implements RuleDao{
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
 	public List<Rule> fetchAllRulesBYExecutionOrder() throws DataLayerException {
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLRULES_SELECT);
-		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.PAC_RE_RULES order by EXE_ORDER";
+		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.RE_RULES order by EXE_ORDER";
 
 		List<Rule> ruleList;
 		try {
@@ -316,7 +316,7 @@ public class RuleDaoImpl implements RuleDao{
 	public Rule fetchRule(final String ruleId) throws DataLayerException {
 
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHRULE_SELECTRULE);
-		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.PAC_RE_RULES where RULE_ID =?";
+		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.RE_RULES where RULE_ID =?";
 
 		Rule rule = null;
 
@@ -348,11 +348,11 @@ public class RuleDaoImpl implements RuleDao{
 					+ "sr.SUBRULE_NAME,sr.SUBRULE_DESCRIPTION,sr.DEFAULT_VALUE , " + "opr.OPERATOR_NAME,opr.OPERATOR_VALUE , "
 					+ " sr.SUBRULE_ID "
 					+ "FROM   "
-					+ "FSMMGR.PAC_RE_RULE_LOGIC rl left outer join FSMMGR.PAC_RE_RULES r on rl.RULE_ID = r.RULE_ID "
-					+ "left outer join FSMMGR.PAC_RE_RULES_SUBRULE_MAPPING rulesSrm on rl.RULE_SUBRULE_MAP_ID = rulesSrm.RULE_SUBRULE_ID "
-					+ "left outer join FSMMGR.PAC_RE_RULES_OPR_MAPPING rulesOprm on rl.RULE_OPERATOR_MAP_ID = rulesOprm.RULES_OPERATOR_ID  "
-					+ "left outer join FSMMGR.PAC_RE_SUBRULE sr on rulesSrm.SUBRULE_ID = sr.SUBRULE_ID  "
-					+ "left outer join FSMMGR.PAC_RE_OPERATOR opr on  rulesOprm.OPERATOR_ID = opr.OPERATOR_ID "
+					+ "FSMMGR.RE_RULE_LOGIC rl left outer join FSMMGR.RE_RULES r on rl.RULE_ID = r.RULE_ID "
+					+ "left outer join FSMMGR.RE_RULES_SUBRULE_MAPPING rulesSrm on rl.RULE_SUBRULE_MAP_ID = rulesSrm.RULE_SUBRULE_ID "
+					+ "left outer join FSMMGR.RE_RULES_OPR_MAPPING rulesOprm on rl.RULE_OPERATOR_MAP_ID = rulesOprm.RULES_OPERATOR_ID  "
+					+ "left outer join FSMMGR.RE_SUBRULE sr on rulesSrm.SUBRULE_ID = sr.SUBRULE_ID  "
+					+ "left outer join FSMMGR.RE_OPERATOR opr on  rulesOprm.OPERATOR_ID = opr.OPERATOR_ID "
 					+ "where r.RULE_ID=? order by rl.ORDER_NO ";*/
 			List<RuleLogic> logic = jdbcTemplate.query(ruleLogicSql, new Object[] { ruleId }, new ResultSetExtractor<List<RuleLogic>>() {
 
@@ -438,7 +438,7 @@ public class RuleDaoImpl implements RuleDao{
 	@TriggersRemove(cacheName={"RulesEngineImpl.getCompiledExpressions"} ,when = When.AFTER_METHOD_INVOCATION, removeAll = true)
 	public void insertRuleLogic(String ruleId,final List<RuleLogic> ruleLogics) throws DataLayerException {
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_INSERTRULELOGIC_INSERT);
-		/*String sql="insert into FSMMGR.PAC_RE_RULE_LOGIC (RULE_LOGIC_ID,RULE_ID,RULE_SUBRULE_MAP_ID,RULE_OPERATOR_MAP_ID,ORDER_NO) " +
+		/*String sql="insert into FSMMGR.RE_RULE_LOGIC (RULE_LOGIC_ID,RULE_ID,RULE_SUBRULE_MAP_ID,RULE_OPERATOR_MAP_ID,ORDER_NO) " +
 				"values(FSMMGR.RULE_LOGIC_PK_SQ.NEXTVAL,?,?,?,?)";*/
 
 		try {
@@ -475,7 +475,7 @@ public class RuleDaoImpl implements RuleDao{
 	@TriggersRemove(cacheName={"RulesEngineImpl.getCompiledExpressions"} ,when = When.AFTER_METHOD_INVOCATION, removeAll = true)
 	public void deleteRuleLogic(String ruleId) throws DataLayerException {
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_DELETERULELOGIC_DELETE);
-		//String sql ="Delete from FSMMGR.PAC_RE_RULE_LOGIC where RULE_ID= ?";
+		//String sql ="Delete from FSMMGR.RE_RULE_LOGIC where RULE_ID= ?";
 		try {
 			jdbcTemplate.update(sql, new Object[] { ruleId });
 		} catch (Exception e) {
@@ -488,7 +488,7 @@ public class RuleDaoImpl implements RuleDao{
 	public Rule fetchRuleByName(String ruleName) throws DataLayerException {
 
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHRULEBYNAME_SELECT);
-		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.PAC_RE_RULES where RULE_NAME =?";
+		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.RE_RULES where RULE_NAME =?";
 
 		Rule rule = null;
 
@@ -519,11 +519,11 @@ public class RuleDaoImpl implements RuleDao{
 			String ruleLogicSql =accessProps.getFromProps(CommonConstants.QUERY_FETCHRULEBYNAME_SELECTRULELOGIC);
 			/*String ruleLogicSql = "SELECT rl.RULE_LOGIC_ID,rl.RULE_SUBRULE_MAP_ID,rl.RULE_OPERATOR_MAP_ID,rl.ORDER_NO, "
 					+ "sr.SUBRULE_NAME,sr.SUBRULE_DESCRIPTION,sr.DEFAULT_VALUE , " + "opr.OPERATOR_NAME,opr.OPERATOR_VALUE  " + "FROM   "
-					+ "FSMMGR.PAC_RE_RULE_LOGIC rl left outer join FSMMGR.PAC_RE_RULES r on rl.RULE_ID = r.RULE_ID "
-					+ "left outer join FSMMGR.PAC_RE_RULES_SUBRULE_MAPPING rulesSrm on rl.RULE_SUBRULE_MAP_ID = rulesSrm.RULE_SUBRULE_ID "
-					+ "left outer join FSMMGR.PAC_RE_RULES_OPR_MAPPING rulesOprm on rl.RULE_OPERATOR_MAP_ID = rulesOprm.RULES_OPERATOR_ID  "
-					+ "left outer join FSMMGR.PAC_RE_SUBRULE sr on rulesSrm.SUBRULE_ID = sr.SUBRULE_ID  "
-					+ "left outer join FSMMGR.PAC_RE_OPERATOR opr on  rulesOprm.OPERATOR_ID = opr.OPERATOR_ID "
+					+ "FSMMGR.RE_RULE_LOGIC rl left outer join FSMMGR.RE_RULES r on rl.RULE_ID = r.RULE_ID "
+					+ "left outer join FSMMGR.RE_RULES_SUBRULE_MAPPING rulesSrm on rl.RULE_SUBRULE_MAP_ID = rulesSrm.RULE_SUBRULE_ID "
+					+ "left outer join FSMMGR.RE_RULES_OPR_MAPPING rulesOprm on rl.RULE_OPERATOR_MAP_ID = rulesOprm.RULES_OPERATOR_ID  "
+					+ "left outer join FSMMGR.RE_SUBRULE sr on rulesSrm.SUBRULE_ID = sr.SUBRULE_ID  "
+					+ "left outer join FSMMGR.RE_OPERATOR opr on  rulesOprm.OPERATOR_ID = opr.OPERATOR_ID "
 					+ "where r.RULE_ID=? order by rl.ORDER_NO ";*/
 			List<RuleLogic> logic = jdbcTemplate.query(ruleLogicSql, new Object[] { ruleId }, new ResultSetExtractor<List<RuleLogic>>() {
 
@@ -589,7 +589,7 @@ public class RuleDaoImpl implements RuleDao{
 	public boolean isExecutionOrderExists(int executionOrder) throws DataLayerException {
 
 		String sql =accessProps.getFromProps(CommonConstants.QUERY_ISEXECUTIONORDEREXISTS_SELECT);
-		//String sql ="Select RULE_ID from FSMMGR.PAC_RE_RULES where EXE_ORDER = ?";
+		//String sql ="Select RULE_ID from FSMMGR.RE_RULES where EXE_ORDER = ?";
 
 		boolean result = false;
 
@@ -635,11 +635,7 @@ public class RuleDaoImpl implements RuleDao{
 			operatorDao.saveAssignOperatorsToRule(ruleInserted.getId(), operatorIdToAssign, null);
 			subruleDao.saveAssignSubRulesToRule(subruleidListToAssign, null, ruleInserted.getId());
 
-			String ruleLogicCopy = "Select RSM.SUBRULE_ID,OPM.OPERATOR_ID,RL.ORDER_NO "+
-				" FROM PACMGR.PAC_RE_RULE_LOGIC RL  "+
-				" LEFT OUTER join PACMGR.PAC_RE_RULES_SUBRULE_MAPPING RSM ON RL.RULE_SUBRULE_MAP_ID = RSM.RULE_SUBRULE_ID "+
-				" LEFT OUTER JOIN PACMGR.PAC_RE_RULES_OPR_MAPPING OPM ON RL.RULE_OPERATOR_MAP_ID = OPM.RULES_OPERATOR_ID "+
-				" WHERE RL.RULE_ID=?";
+			String ruleLogicCopy =accessProps.getFromProps(CommonConstants.QUERY_ISEXECUTIONORDEREXISTS_SELECT);	
 
 			List<RuleLogic> logicToCopyFrom = jdbcTemplate.query(ruleLogicCopy,new Object[]{ruleIdToCopy}, new ResultSetExtractor<List<RuleLogic>>() {
 
@@ -703,7 +699,7 @@ public class RuleDaoImpl implements RuleDao{
 	@Override
 	public List<Rule> fetchAllRulesByModel(String modelId) throws DataLayerException {
 		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHALLRULES_BYMODEL_SELECT);
-		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.PAC_RE_RULES order by EXE_ORDER";
+		//String sql="select RULE_ID,RULE_NAME,RULE_DESCRIPTION,ACTIVE,RETURN_VALUE,EXE_ORDER from FSMMGR.RE_RULES order by EXE_ORDER";
 
 		List<Rule> ruleList;
 		try {
@@ -739,8 +735,6 @@ public class RuleDaoImpl implements RuleDao{
 	@Override
 	public boolean isExecutionOrderExists(int executionOrder, String modelId) throws DataLayerException {
 		String sql =accessProps.getFromProps(CommonConstants.QUERY_ISEXECUTIONORDEREXISTS_MODEL_SELECT);
-		//String sql ="Select RULE_ID from FSMMGR.PAC_RE_RULES where EXE_ORDER = ?";
-
 		boolean result = false;
 
 		String ruleId = jdbcTemplate.query(sql, new Object[]{executionOrder,modelId}, new ResultSetExtractor<String>() {
