@@ -648,7 +648,7 @@ public class OperatorDaoImpl implements OperatorDao {
 		if(StringUtils.isBlank(subruleId)) throw new DataLayerException("Subrule Id is null");
 		final List<Operator> operators =fetchAllOperators();
 		//insert
-		String insertMappingSql=accessProps.getFromProps(CommonConstants.QUERY_ASSIGNALLOPERATORSTOSUBRULE_INSERT);
+		String insertMappingSql=accessProps.getFromProps(CommonConstants.QUERY_SAVEASSIGNOPERATORSTOSUBRULE_INSERT);
 		if(null!=operators && operators.size()>0){
 			log.debug("Inserting row in subrule_operator mapping");
 			int[] i=null;
@@ -676,6 +676,65 @@ public class OperatorDaoImpl implements OperatorDao {
 			else log.debug("Operator subrule mapping saved successfully");
 		}
 		return result;
+	}
+
+	@Override
+	public List<String> fetchMandatoryOperatorsForRule() throws DataLayerException {
+		//String sql="select OPERATOR_ID from RE_OPERATOR where OPERATOR_value in ('(',')','&&','||')";
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHMANDATORY_OPERATORS_SELECT);
+		List<String> operators=null;
+		
+		try {
+			operators=jdbcTemplate.query(sql, new ResultSetExtractor<List<String>>(){
+				@Override
+				public List<String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<String> operators = new ArrayList<String>();
+
+					while (rs.next()) {
+						operators.add(rs.getString("OPERATOR_ID"));
+					}
+					return operators;
+				}
+
+			});
+		} catch (Exception e) {
+			log.error(e);
+			throw new DataLayerException("Error while Fetching Mandatory operator to rule");
+		}
+		return operators;
+	}
+
+	@Override
+	public void assignMandatoryOperatorsToRule(final String id,final List<String> opids) throws DataLayerException {
+		boolean result=true;
+		// TODO Auto-generated method stub
+		if(null!=opids && opids.size()>0){
+			String sql=accessProps.getFromProps(CommonConstants.QUERY_SAVEASSIGNOPERATORSTORULE_INSERT);
+			int[] i=null;
+			try {
+				i = jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+
+					@Override
+					public void setValues(PreparedStatement ps, int index) throws SQLException {
+						String oprid = opids.get(index);
+
+						ps.setString(1, id);
+						ps.setString(2, oprid);
+					}
+
+					@Override
+					public int getBatchSize() {
+						return opids.size();
+					}
+				});
+			} catch (DataAccessException e) {
+				log.error(e);
+				throw new DataLayerException("Error while Assigining Mandatory operators to rule");
+			}
+			
+			if(null==i) result=false;
+			else log.debug("Operator rule mapping saved successfully");
+		}
 	}
 }
 

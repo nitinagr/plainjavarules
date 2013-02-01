@@ -185,4 +185,8 @@ public interface OperatorDao {
 	
 	public boolean assignAllOperatorsToSubrule(String subruleId) throws DataLayerException;
 
+	public List<String> fetchMandatoryOperatorsForRule()throws DataLayerException;
+
+	public void assignMandatoryOperatorsToRule(String id,List<String> opids) throws DataLayerException;
+
 }
