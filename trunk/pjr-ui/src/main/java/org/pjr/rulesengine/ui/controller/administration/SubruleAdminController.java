@@ -117,9 +117,11 @@ public class SubruleAdminController {
 		List<SubruleDto> subruleDtoList=new ArrayList<SubruleDto>();
 		subruleDtoList.add(subruleDto);
 		int i=subruleAdminProcessor.createsubruleDefinition(subruleDtoList);
-		
+				
 		if(i>0){
 			model.addAttribute("message","New Subrule Saved Successfully");
+			
+			subruleAdminProcessor.saveAssignAllOperatorsToSubrule(subruleDto.getName());
 			List<SubruleDto> subruleList=subruleProcessor.fetchAllSubrules();
 			model.addAttribute("subrules",subruleList);
 			view="view_all_subrules";

@@ -6,9 +6,11 @@ package org.pjr.rulesengine.ui.processor.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.daos.OperatorDao;
 import org.pjr.rulesengine.daos.SubruleDao;
 import org.pjr.rulesengine.dbmodel.Subrule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,8 @@ public class SubruleAdminProcessorImpl implements SubruleAdminProcessor {
 
 	@Autowired
 	private SubruleDao subruleDao;
-
+	@Autowired
+	private OperatorDao operatorDao;
 
 
 	/**
@@ -105,4 +108,11 @@ public class SubruleAdminProcessorImpl implements SubruleAdminProcessor {
 
 	}
 
+	@Override
+	public void saveAssignAllOperatorsToSubrule(String subruleName) throws TechnicalException {
+		if(!StringUtils.isBlank(subruleName)){
+			Subrule subrule=subruleDao.fetchSubruleByName(subruleName);
+			operatorDao.assignAllOperatorsToSubrule(subrule.getId());
+		}
+	}
 }

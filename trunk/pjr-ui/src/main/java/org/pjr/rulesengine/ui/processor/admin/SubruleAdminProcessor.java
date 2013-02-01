@@ -21,6 +21,6 @@ public interface SubruleAdminProcessor {
 
 	public void unassignSubRulesFromRule (List<String> subruleidList , String ruleId) throws TechnicalException;
 	public void saveAssignSubRulesToRule(List<String> subruleidListToAssign, List<String> subruleidListToUnAssign , String ruleId) throws TechnicalException;
-
+	public void saveAssignAllOperatorsToSubrule(String subruleName) throws TechnicalException;
 	public List<String>  subRulesUsedInRulesLogic (List<String> subRuleIdsToUnAssign,String ruleId)  throws TechnicalException;
 }
