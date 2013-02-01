@@ -1,0 +1,18 @@
+#labels introduction,Featured
+= Introduction =
+
+==What is plainjavarules?==
+A simple customizable component to externalize Application business logic.
+For more details visit [WhereDoesItFitIn].
+
+ PlainJavRules aka PJR is a logical processing engine built on MVEL scripts.
+ At a granular level, the logical conditions are stored as MVEL scripts which are formed using the Data Model Object Attributes (i.e the object model passed to MVEL engine) and MVEL operators.
+
+= Architecture =
+https://plainjavarules.googlecode.com/svn/wiki/rulesengine.png
+
+
+
+
+
+
