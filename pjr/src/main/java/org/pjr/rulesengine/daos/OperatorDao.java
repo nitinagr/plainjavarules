@@ -182,5 +182,7 @@ public interface OperatorDao {
 	 * Created: Sep 11, 2012
 	 */
 	public List<String> getSubrulesForOperator(String operatorId);
+	
+	public boolean assignAllOperatorsToSubrule(String subruleId) throws DataLayerException;
 
 }

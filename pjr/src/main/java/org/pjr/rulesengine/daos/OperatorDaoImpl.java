@@ -52,7 +52,7 @@ public class OperatorDaoImpl implements OperatorDao {
 
 	/** The named jdbc template pac. */
 	@Autowired
-    @Qualifier("pjrNamedJdbcTemplatePac")
+	@Qualifier("pjrNamedJdbcTemplatePac")
 	private NamedParameterJdbcTemplate namedJdbcTemplatePac;
 
 	/** The access props. */
@@ -200,9 +200,9 @@ public class OperatorDaoImpl implements OperatorDao {
 			if(null==operatorList) throw new DataLayerException("Some error while fetching operator details");
 			log.info("Successfully fetched operator details.");
 		}catch(Exception e) {
-        	log.error("Error in fetchAllOperators",e);
-        	throw new DataLayerException(e);
-        }
+			log.error("Error in fetchAllOperators",e);
+			throw new DataLayerException(e);
+		}
 		log.info("Exit: fetchAllOperators");
 		return operatorList;
 	}
@@ -638,5 +638,44 @@ public class OperatorDaoImpl implements OperatorDao {
 		return operatorNames;
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED,rollbackFor=DataLayerException.class)
+	@TriggersRemove(cacheName={"RulesEngineImpl.getCompiledExpressions"} ,when = When.AFTER_METHOD_INVOCATION, removeAll = true)
+	public boolean assignAllOperatorsToSubrule(final String subruleId) throws DataLayerException {
+		// TODO Auto-generated method stub
+		log.info("Saving Operator Subrule mapping");
+		boolean result=true;
+		if(StringUtils.isBlank(subruleId)) throw new DataLayerException("Subrule Id is null");
+		final List<Operator> operators =fetchAllOperators();
+		//insert
+		String insertMappingSql=accessProps.getFromProps(CommonConstants.QUERY_ASSIGNALLOPERATORSTOSUBRULE_INSERT);
+		if(null!=operators && operators.size()>0){
+			log.debug("Inserting row in subrule_operator mapping");
+			int[] i=null;
+			try {
+				i = jdbcTemplate.batchUpdate(insertMappingSql, new BatchPreparedStatementSetter() {
+
+					@Override
+					public void setValues(PreparedStatement ps, int index) throws SQLException {
+						String oprid = operators.get(index).getId();
+
+						ps.setString(1, subruleId);
+						ps.setString(2, oprid);
+					}
+
+					@Override
+					public int getBatchSize() {
+						return operators.size();
+					}
+				});
+			} catch (DataAccessException e) {
+				log.error(e);
+				throw new DataLayerException("Error while Assigining operator to Subrule");
+			}
+			if(null==i) result=false;
+			else log.debug("Operator subrule mapping saved successfully");
+		}
+		return result;
+	}
 }
 
