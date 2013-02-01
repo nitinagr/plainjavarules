@@ -86,6 +86,26 @@ $(document).ready(function(){
 			<td class="ruletabletd"><b>Execution Order</b><span class="mandatory" > * </span>
 			</td>		
 			<td class="ruletabletd"><input type="text" name="executionOrder" value="${rule.executionOrder}" /></td>
+		</tr>			
+		
+		<tr>
+			<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
+			</td>
+			<td class="ruletabletd">		
+				<select name="modelId" >
+				<option id="" value=""></option>					
+					<c:forEach items="${modelClasses}" var="modelClass" >					
+						<c:choose>
+							<c:when test="${modelClass.model_id == rule.modelId }">
+								<option id="${modelClass.model_id}" value="${modelClass.model_id }" selected="selected">${modelClass.model_class_name }</option>							
+							</c:when>
+							<c:otherwise>
+								<option id="${modelClass.model_id}" value="${modelClass.model_id }">${modelClass.model_class_name }</option>
+							</c:otherwise>
+						</c:choose>					
+					</c:forEach>
+				</select>
+			</td>		
 		</tr>				
 		
 </table>

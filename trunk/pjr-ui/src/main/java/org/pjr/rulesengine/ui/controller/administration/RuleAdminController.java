@@ -49,12 +49,17 @@ public class RuleAdminController {
 
 	@RequestMapping(value="duplicate" , method=RequestMethod.GET)
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
-	public String duplicate(Model model ,@RequestParam(value="ruleIdToCopy" , required=true) String ruleIdToCopy ){
+	public String duplicate(Model model ,@RequestParam(value="ruleIdToCopy" , required=true) String ruleIdToCopy ) throws TechnicalException{
 		String view = "duplicate_rule";
 		RuleDto rule = new RuleDto();
 
 		model.addAttribute("rule", rule);
 		model.addAttribute("ruleIdToCopy", ruleIdToCopy);
+		
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
 		return view;
 	}
 
@@ -62,7 +67,11 @@ public class RuleAdminController {
 	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
 	public String duplicateRule(Model model , @RequestParam(value="ruleIdToCopy" , required=true) String ruleIdToCopy ,@ModelAttribute("rule") RuleDto rule, Errors errors) throws TechnicalException, NonTechnicalException{
 		String view = "duplicate_rule";
-		model.addAttribute("ruleIdToCopy", ruleIdToCopy);
+		model.addAttribute("ruleIdToCopy", ruleIdToCopy);	
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);		
+		
+		
 		ruleValidator.validate(rule, errors);
 
 		if(errors.hasFieldErrors()){
@@ -83,8 +92,6 @@ public class RuleAdminController {
 		RuleDto ruleDtoSaved = rulesProcessor.fetchRuleByRuleName(rule.getRuleName());
 		
 
-		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
-		model.addAttribute("modelClasses", modelClasses);		
 		model.addAttribute("rule", ruleDtoSaved);
 		view = "view_rule";
 		return view;
