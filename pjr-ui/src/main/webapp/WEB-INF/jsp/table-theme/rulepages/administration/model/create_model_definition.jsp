@@ -7,6 +7,24 @@
 <br/>
 <script>
 $(document).ready(function(){
+	$('#desCount').html(200-$('#model_class_name').val().length); //To show first time how many chars left
+
+	/**
+	For textArea validation
+	*/
+	$('#model_class_name').keyup(function () {
+		var t = $(this);
+        var text = t.val();
+        var limit = 200;
+        
+      //if textarea text is greater than maxlength limit, truncate and re-set text
+        if (text.length >= limit) {
+            text = text.substring(0, limit);
+            t.val(text);
+		}
+        $('#desCount').html(limit-text.length);
+	});
+	
 	$("#loadingmsg").hide();
 	$("#saveButton").click(function(){
 		$("#loadingmsg").show();
@@ -39,7 +57,9 @@ $(document).ready(function(){
 		<td class="ruletabletd"><b>Model Class Name / Object Name: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
-			<input type="text" name="model_class_name" id="model_class_name" value="${modelDto.model_class_name}"></input>
+			<!-- <input type="text" name="model_class_name" id="model_class_name" value="${modelDto.model_class_name}"></input> -->
+			 <span id="desCount"></span> characters left<br />
+			 <textarea id="model_class_name" name="model_class_name" rows="20" cols="40"><c:out value="${modelDto.model_class_name}"/></textarea>
 		</td>		
 	</tr>	
 </table>
