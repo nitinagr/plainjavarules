@@ -3,11 +3,14 @@ package org.pjr.rulesengine.ui.processor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.pjr.rulesengine.DataLayerException;
 import org.pjr.rulesengine.NonTechnicalException;
 import org.pjr.rulesengine.TechnicalException;
 import org.pjr.rulesengine.daos.OperatorDao;
 import org.pjr.rulesengine.daos.RuleDao;
 import org.pjr.rulesengine.daos.SubruleDao;
+import org.pjr.rulesengine.dbmodel.Operator;
 import org.pjr.rulesengine.dbmodel.Rule;
 import org.pjr.rulesengine.dbmodel.RuleLogic;
 import org.pjr.rulesengine.dbmodel.RuleOperatorMapping;
@@ -150,6 +153,20 @@ public class RulesProcessorImpl implements RulesProcessor{
 		}
 
 		return ruleDtoList;
+	}
+
+	@Override
+	public void assignMandatoryOperatorsToRule(String rulename)throws TechnicalException  {
+		// TODO Auto-generated method stub
+		if(!StringUtils.isBlank(rulename)){
+			try {
+				Rule rl=ruleDao.fetchRuleByName(rulename);
+				List<String> opIds= operatorDao.fetchMandatoryOperatorsForRule();
+				operatorDao.assignMandatoryOperatorsToRule(rl.getId(),opIds);
+			} catch (Exception e) {
+				throw new TechnicalException(e);
+			}
+		}
 	}
 
 
