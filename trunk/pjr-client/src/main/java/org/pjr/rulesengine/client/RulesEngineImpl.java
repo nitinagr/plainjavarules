@@ -1,4 +1,4 @@
-package org.pjr.rulesengine.ui;
+package org.pjr.rulesengine.client;
 
 import java.io.Serializable;
 import java.util.ArrayList;

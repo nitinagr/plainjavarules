@@ -1,4 +1,4 @@
-package org.pjr.rulesengine.ui;
+package org.pjr.rulesengine.client;
 
 import org.pjr.rulesengine.NonTechnicalException;
 import org.pjr.rulesengine.TechnicalException;
