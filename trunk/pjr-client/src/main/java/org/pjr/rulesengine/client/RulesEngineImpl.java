@@ -105,6 +105,8 @@ public class RulesEngineImpl implements RulesEngine{
 		try {
 			tempRule = rulesProcessor.fetchRule(ruleId);
 			String strExpression =  tempRule.toMvelExpression();
+			
+			log.debug("strExpression  :"+strExpression);
 			Serializable serializableExpr = MVEL.compileExpression(strExpression);
 			result = (Boolean) MVEL.executeExpression(serializableExpr, object);
 		} catch (Exception e) {

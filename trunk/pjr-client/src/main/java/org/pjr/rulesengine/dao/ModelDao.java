@@ -46,8 +46,9 @@ public class ModelDao {
 		
 		QueryRunner qr = new QueryRunner(dataSource);
 		
+		Model model = null;
 		try {
-			qr.query(sql, new ResultSetHandler<Model>() {
+			model= qr.query(sql, new ResultSetHandler<Model>() {
 
 				@Override
 				public Model handle(ResultSet rs) throws SQLException {
@@ -66,7 +67,7 @@ public class ModelDao {
 		}
 		
 		
-		return null;		
+		return model;		
 	}
 
 }

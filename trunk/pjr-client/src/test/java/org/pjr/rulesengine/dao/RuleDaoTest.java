@@ -116,8 +116,8 @@ public class RuleDaoTest {
 	 */
 	@Test
 	public void fetchRule() throws Exception{		
-		Rule rule = ruleDao.fetchRule("2007");
-		log.debug("Rule :"+ rule);
+		Rule rule = ruleDao.fetchRule("2010");
+		log.debug("Rule 2010:"+ rule);
 		Assert.assertNotNull("Rule is not available in DB ", rule);
 	}
 	
