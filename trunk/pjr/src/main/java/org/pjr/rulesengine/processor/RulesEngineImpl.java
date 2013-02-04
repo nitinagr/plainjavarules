@@ -11,11 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.mvel2.MVEL;
 import org.pjr.rulesengine.TechnicalException;
 import org.pjr.rulesengine.daos.RuleDao;
-import org.pjr.rulesengine.dbmodel.Model;
 import org.pjr.rulesengine.dbmodel.Rule;
-import org.pjr.rulesengine.dbmodel.Subrule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
