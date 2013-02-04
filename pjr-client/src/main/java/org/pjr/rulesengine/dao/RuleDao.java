@@ -156,14 +156,7 @@ public class RuleDao {
 					}}, params);
 							
 				
-				
-				//log.debug("Rule logic size :" + logic.size());
-				final Set<String> subRuleIds = new TreeSet<String>();
-				for (RuleLogic rl : logic) {
-					if (null != rl.getRuleSubRuleMappingId())
-						subRuleIds.add(rl.getRuleSubRuleMappingId());
-				}
-				rule.setLogic(new TreeSet<RuleLogic>(logic));
+				rule.setLogic(logic);
 			}
 		} catch (Exception e) {
 			throw new DataLayerException(e);

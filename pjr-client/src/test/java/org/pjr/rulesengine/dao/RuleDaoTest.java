@@ -15,8 +15,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.pjr.rulesengine.CommonConstants;
+import org.pjr.rulesengine.DataLayerException;
 import org.pjr.rulesengine.dbmodel.Model;
 import org.pjr.rulesengine.dbmodel.Rule;
+import org.pjr.rulesengine.dbmodel.Subrule;
 import org.pjr.rulesengine.propertyloader.PropertyLoader;
 
 /**
@@ -35,6 +37,8 @@ public class RuleDaoTest {
 	
 	/** The model dao. */
 	private ModelDao modelDao ;
+	
+	private SubRuleDao subRuleDao;
 	
 	
 	/**
@@ -67,6 +71,8 @@ public class RuleDaoTest {
 		dataSource = setupDataSource("jdbc:oracle:thin:@//10.81.162.44:1521/FIELDSERVICESMOBILITY", "oracle.jdbc.driver.OracleDriver", "plainjavarules_usr", "plainjavarules_pwd");		
 		ruleDao = new RuleDao(dataSource);
 		modelDao = new ModelDao(dataSource);
+		subRuleDao = new SubRuleDao(dataSource);
+		
 	}
 	
 	/**
@@ -106,6 +112,20 @@ public class RuleDaoTest {
 	public void testPropertyLoader(){
 		String sql=PropertyLoader.getProperty(CommonConstants.QUERY_FETCHRULE_SELECTRULE);
 		Assert.assertNotNull("Sql is null ", sql);
+	}
+	
+	@Test
+	public void fetchSubRule(){
+		try {
+			Subrule subRule = subRuleDao.fetchSubrule("2015");
+			System.out.println("subRule "+ subRule);
+			
+			
+		} catch (DataLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
