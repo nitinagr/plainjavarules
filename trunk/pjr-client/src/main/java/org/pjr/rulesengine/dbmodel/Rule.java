@@ -1,7 +1,9 @@
 package org.pjr.rulesengine.dbmodel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -42,7 +44,7 @@ public class Rule implements Serializable{
 
 	//only for fetching
 	/** The logic. */
-	Set<RuleLogic> logic = new TreeSet<RuleLogic>();
+	List<RuleLogic> logic = new ArrayList<RuleLogic>();
 
 
 	private String modelId;
@@ -166,22 +168,14 @@ public class Rule implements Serializable{
 
 
 
-	/**
-	 * Gets the logic.
-	 *
-	 * @return the logic
-	 */
-	public Set<RuleLogic> getLogic() {
+
+
+	public List<RuleLogic> getLogic() {
 		return logic;
 	}
 
 
-	/**
-	 * Sets the logic.
-	 *
-	 * @param logic the new logic
-	 */
-	public void setLogic(Set<RuleLogic> logic) {
+	public void setLogic(List<RuleLogic> logic) {
 		this.logic = logic;
 	}
 

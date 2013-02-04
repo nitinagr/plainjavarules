@@ -2,6 +2,8 @@ package org.pjr.rulesengine.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -11,7 +13,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.CommonConstants;
 import org.pjr.rulesengine.DataLayerException;
+import org.pjr.rulesengine.dbmodel.Attribute;
+import org.pjr.rulesengine.dbmodel.Operator;
 import org.pjr.rulesengine.dbmodel.Subrule;
+import org.pjr.rulesengine.dbmodel.SubruleLogic;
 import org.pjr.rulesengine.propertyloader.PropertyLoader;
 
 /**
@@ -69,6 +74,60 @@ public class SubRuleDao {
 					return subrule;
 				}
 			},new Object[]{id});
+			
+			
+
+			if(null != subrule){
+				String subrulelogicsql=PropertyLoader.getProperty(CommonConstants.QUERY_FETCHSUBRULE_SELECTLOGIC);
+				
+				List<SubruleLogic> logic =  qr.query(subrulelogicsql, new ResultSetHandler<List<SubruleLogic>> (){
+
+					@Override
+					public List<SubruleLogic> handle(ResultSet rs) throws SQLException {
+						List<SubruleLogic> subRuleLogic = new ArrayList<SubruleLogic>();
+
+						while(rs.next()){
+							SubruleLogic srl = new SubruleLogic();
+
+							srl.setId(rs.getString(1));
+							srl.setSubRuleId(rs.getString(2));
+							srl.setOperatorMapId(rs.getString(3));
+							srl.setAttributeMapId(rs.getString(4));
+							srl.setOrderno(rs.getString(5));
+
+
+							Attribute attr = null;
+							if(null != rs.getString(6)){
+								attr = new Attribute();
+								attr.setId(rs.getString(6));
+								attr.setName(rs.getString(7));
+								attr.setValue(rs.getString(8));
+
+							}
+
+
+							Operator opr = null;
+							if(null != rs.getString(9)){
+								opr = new Operator();
+								opr.setId(rs.getString(9));
+								opr.setName(rs.getString(10));
+								opr.setValue(rs.getString(11));
+							}
+
+							srl.setAttribute(attr);
+							srl.setOperator(opr);
+
+							subRuleLogic.add(srl);
+						}
+
+						return subRuleLogic;
+					}
+					
+				},new Object[]{id});
+				subrule.setLogic(logic);
+			}			
+			
+			
 		} catch (SQLException e) {
 			log.error("", e);
 			throw new DataLayerException(e);
