@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; View Attribute Definition </b>&gt;&gt; <b>${attribute.attributeName} </b>
+<b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; View Attribute Definition </b>&gt;&gt; <b><c:out value="${attribute.attributeName}"/> </b>
 <br/>
 
 <form:form modelAttribute="attribute" name="viewForm" id="viewForm" acceptCharset="UTF-8" method="post">
@@ -12,12 +12,12 @@
 	<tr>
 			<td class="ruletabletd"><b>Attribute Id:</b></td>
 			<td class="ruletabletd"><b><c:out value="${attribute.attributeId}"/></b></td>
-			<input type="hidden" name="attributeId" id="attributeId" value="${attribute.attributeId}"></input>
+			<input type="hidden" name="attributeId" id="attributeId" value="<c:out value="${attribute.attributeId}"/>" ></input>
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Attribute Name / Object Name:</b></td>
 		<td class="ruletabletd"><b><c:out value="${attribute.attributeName }"/></b></td>
-		<input type="hidden" name="attributeName" id="attributeName" value="${attribute.attributeName }"></input>		
+		<input type="hidden" name="attributeName" id="attributeName" value="<c:out value="${attribute.attributeName }"/>" ></input>		
 	</tr>	
 	<tr>
 		<td class="ruletabletd"><b>Mvel / Object value:</b></td>

@@ -56,7 +56,7 @@ $(document).ready(function(){
 		<tr>
 			<td class="ruletabletd"><b>Rule Name</b><span class="mandatory" > * </span>
 			</td>
-			<td class="ruletabletd"><input type="text" name="ruleName"	value="${rule.ruleName}" maxlength="30"/>
+			<td class="ruletabletd"><input type="text" name="ruleName"	value=" <c:out value="${rule.ruleName}"/> " maxlength="30"/>
 				<!--<form:errors path="ruleName" cssClass="error" />-->
 			</td>
 		</tr>
@@ -78,13 +78,13 @@ $(document).ready(function(){
 		<tr>
 			<td class="ruletabletd"><b>Return Value</b><span class="mandatory" > * </span>
 			</td>		
-			<td class="ruletabletd"><input type="text" name="returnValue" value="${rule.returnValue}" /></td>
+			<td class="ruletabletd"><input type="text" name="returnValue" value=" <c:out value="${rule.returnValue}"/> " /></td>
 		</tr>
 		
 		<tr>
 			<td class="ruletabletd"><b>Execution Order</b><span class="mandatory" > * </span>
 			</td>		
-			<td class="ruletabletd"><input type="text" name="executionOrder" value="${rule.executionOrder}" /></td>
+			<td class="ruletabletd"><input type="text" name="executionOrder" value=" <c:out value="${rule.executionOrder}"/> " /></td>
 		</tr>				
 	<tr>
 		<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>

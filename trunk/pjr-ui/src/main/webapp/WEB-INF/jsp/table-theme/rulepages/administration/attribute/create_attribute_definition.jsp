@@ -41,7 +41,7 @@ $(document).ready(function(){
 		<td class="ruletabletd"><b>Attribute Name: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
-			<input type="text" name="attributeName" id="attributeName" value="${attribute.attributeName}"></input>
+			<input type="text" name="attributeName" id="attributeName" value="<c:out value="${attribute.attributeName}"/>" ></input>
 			Display Name for the Attribute
 		</td>		
 	</tr>	
@@ -49,7 +49,7 @@ $(document).ready(function(){
 		<td class="ruletabletd"><b>Mvel / Object value: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
-			<input type="text" name="value" id="value" value="${attribute.value}"></input>	
+			<input type="text" name="value" id="value" value="<c:out value="${attribute.value}"/>">	
 			This should match with the variable name in the Java Object.
 		</td>		
 	</tr>

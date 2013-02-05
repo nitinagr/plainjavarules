@@ -11,12 +11,12 @@
 	<tr>
 			<td class="ruletabletd"><b>Model Id:</b></td>
 			<td class="ruletabletd"><b><c:out value="${modelDto.model_id}"/></b></td>
-			<input type="hidden" name="model_id" id="model_id" value="${modelDto.model_id}"></input>
+			<input type="hidden" name="model_id" id="model_id" value="<c:out value="${modelDto.model_id}"/>" ></input>
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Model Name / Object Name:</b></td>
 		<td class="ruletabletd"><b><c:out value="${modelDto.model_class_name}"/></b></td>
-		<input type="hidden" name="model_class_name" id="model_class_name" value="${modelDto.model_class_name }"></input>
+		<input type="hidden" name="model_class_name" id="model_class_name" value="<c:out value="${modelDto.model_class_name }"/> " ></input>
 				
 	</tr>
 	<tr>

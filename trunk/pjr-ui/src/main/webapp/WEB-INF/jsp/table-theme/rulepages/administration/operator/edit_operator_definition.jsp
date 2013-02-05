@@ -49,13 +49,13 @@
 		<tr>
 			<td class="ruletabletd"><b>Operator name:</b><span class="mandatory" > * </span>
 			</td>
-			<td class="ruletabletd"><input type="text" name="operatorName" id="operatorName" value="${operator.operatorName}"></input></td>
+			<td class="ruletabletd"><input type="text" name="operatorName" id="operatorName" value="<c:out value="${operator.operatorName}"/> "></input></td>
 		</tr>		
 		
 		<tr>
 			<td class="ruletabletd"><b>Operator Description</b><span class="mandatory" > * </span>
 			</td>
-			<td class="ruletabletd"><input type="text" name="value" id="value" value="${operator.value}"></input></td>
+			<td class="ruletabletd"><input type="text" name="value" id="value" value="<c:out value="${operator.value}"/> "></input></td>
 		</tr>			
 </table>
 

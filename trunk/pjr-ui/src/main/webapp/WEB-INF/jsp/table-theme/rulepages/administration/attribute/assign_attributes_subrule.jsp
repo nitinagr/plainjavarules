@@ -24,7 +24,7 @@
 <form:form modelAttribute="attributes" name="editForm" id="editForm" acceptCharset="UTF-8" method="post">
 <c:choose>
 	<c:when test="${not empty  attributesReferred}">
-	<div class="error" >Following Attributes are still used in Subrule--> " ${subrule.name} " . Remove them from SubruleLogic before you unassign.			
+	<div class="error" >Following Attributes are still used in Subrule--> " <c:out value="${subrule.name}"/> " . Remove them from SubruleLogic before you unassign.			
 			<ul>
 			<c:forEach items="${attributesReferred }" var="sr">
 			    <li>${sr}</li>	
@@ -80,9 +80,9 @@
 					<td class="ruletabletd">
 					<a href="<c:url value="/admin/attribute/view/${attribute.attributeId}" />" ><c:out value="${attribute.attributeName}"/></a>
 					</td>		
-					<td class="ruletabletd">${attribute.value}</td>								
+					<td class="ruletabletd"><c:out value="${attribute.value}"/></td>								
 					<td class="ruletabletd">
-						<input type="checkbox" name="attributesToAssignFromRequest" id="attributesToAssignFromRequest"  value="${attribute.attributeId}" />
+						<input type="checkbox" name="attributesToAssignFromRequest" id="attributesToAssignFromRequest"  value="<c:out value="${attribute.attributeId}"/>" />
 					</td>
 				</c:otherwise>
 			</c:choose>		
