@@ -273,7 +273,7 @@ $(function () {
 <a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Edit Subrule &gt;&gt; <b>${subrulename} </b>
 </font>
 <br/>
-<form:form commandName="subrule" name="editForm" id="editForm" method="post" action="../save/${subrule.id}"  acceptCharset="UTF-8">
+<form:form commandName="subrule" name="editForm" id="editForm" method="post" action="../save/${subrule.id}"  acceptCharset="UTF-8" >
 
 <c:choose>
 <c:when test="${not empty  errors  || not empty logicerrors}">
@@ -355,7 +355,7 @@ $(function () {
 		<td class="ruletabletd"><b>Subrule Name</b><span class="mandatory" > * </span>
 		<br/>(Note:System will replace all empty spaces with an "_")
 		</td>
-		<td class="ruletabletd"><input type="text" name="name" value="${subrule.name}" size="30" maxlength="100"/></td>
+		<td class="ruletabletd"><input type="text" name="name" value=" <c:out value="${subrule.name}"/> " size="30" maxlength="100"/></td>
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Subrule Description</b></td>
@@ -540,6 +540,6 @@ $(function () {
 
 </form:form>
 <script>
-var isGenerateButtonClicked = document.getElementById('ischanged').value == "true";
+var isGenerateButtonClicked = document.getElementById('ischanged').value == "false";
 </script>
 
