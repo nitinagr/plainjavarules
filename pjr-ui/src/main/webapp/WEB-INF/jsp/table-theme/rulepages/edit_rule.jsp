@@ -248,7 +248,7 @@ table.conditiontable {
 
 <!-- <h2>Custom Rules Engine Using MVEL</h2> -->
 <font color="#151B54">
-<a href="<c:url value="/rule/view/all"/>"> Home </a> &gt;&gt; Edit Rule  &gt;&gt; <b>${rule.ruleName}</b>
+<a href="<c:url value="/rule/view/all"/>"> Home </a> &gt;&gt; Edit Rule  &gt;&gt; <b> <c:out value="${rule.ruleName}"/> </b>
 </font>   
 <br/>
 <form:form commandName="rule" name="editForm" id="editForm" acceptCharset="UTF-8"
@@ -296,7 +296,7 @@ table.conditiontable {
 			</td>
 			<td class="ruletabletd">
 				<c:out value="${rule.ruleId}"/>
-				<input type="hidden" name="ruleId" value="${rule.ruleId}" />
+				<input type="hidden" name="ruleId" value=" <c:out value="${rule.ruleId}"/> " />
 			</td>
 			
 		</tr>	
@@ -304,7 +304,7 @@ table.conditiontable {
 			<td class="ruletabletd"><b>Rule Name</b><span class="mandatory" > * </span>
 			<br/>(Note:System will replace all empty spaces with an "_")
 			</td>
-			<td class="ruletabletd"><input type="text" name="ruleName"	value="${rule.ruleName}" maxlength="30"/>
+			<td class="ruletabletd"><input type="text" name="ruleName"	value=" <c:out value="${rule.ruleName}"/> " maxlength="30"/>
 			<form:errors path="ruleName" cssClass="error" />
 			</td>
 		</tr>
@@ -325,12 +325,12 @@ table.conditiontable {
 		
 		<tr>
 			<td class="ruletabletd"><b>Return Value</b><span class="mandatory" > * </span></td>		
-			<td class="ruletabletd"><input type="text" name="returnValue" value="${rule.returnValue}" /></td>
+			<td class="ruletabletd"><input type="text" name="returnValue" value=" <c:out value="${rule.returnValue}"/> " /></td>
 		</tr>
 		
 		<tr>
 			<td class="ruletabletd"><b>Execution Order</b><span class="mandatory" > * </span></td>		
-			<td class="ruletabletd"><input type="text" name="executionOrder" value="${rule.executionOrder}" /></td>
+			<td class="ruletabletd"><input type="text" name="executionOrder" value=" <c:out value="${rule.executionOrder}"/> " /></td>
 		</tr>				
 		<tr>
 			<td class="ruletabletd"><b>Model Class: </b><span class="mandatory" > * </span>
@@ -351,7 +351,7 @@ table.conditiontable {
 		<tr>
 			<td class="ruletabletd" ><b>Current Logic in DB</b></td>
 			<td class="ruletabletd">
-				<textarea rows="20" columns="40"  disabled="disabled">${rule.logicText}</textarea>
+				<textarea rows="20" columns="40"  disabled="disabled"> <c:out value="${rule.logicText}"/> </textarea>
 			</td>
 		</tr>		
 		
@@ -475,5 +475,5 @@ table.conditiontable {
 		<div class="button" id="submitButton" href="#">Save</div>
 </form:form>
 <script>
-var isGenerateButtonClicked = document.getElementById('ischanged').value == "true";
+var isGenerateButtonClicked = document.getElementById('ischanged').value == "false";
 </script>	

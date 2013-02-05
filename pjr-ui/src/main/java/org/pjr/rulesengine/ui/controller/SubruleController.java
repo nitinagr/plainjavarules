@@ -128,7 +128,7 @@ public class SubruleController {
 			return "error";
 		}
 
-
+		model.addAttribute("ischanged", false);
 		List<SubRuleLogicItem> srlItems = subruleProcessor.getAllSubRuleLogicItems(id);
 		
 

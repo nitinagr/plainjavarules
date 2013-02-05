@@ -132,7 +132,7 @@ public class RulesController {
 			model.addAttribute("message","Rule doesnt exist. Please check the Rule Id in the URL");
 			return "error";
 		}
-
+		model.addAttribute("ischanged", false);
 		List<RuleLogicUi> rlItems = rulesProcessor.getAllRuleLogicItems(ruleId);
 		log.info("Rule Fetched :"+ rule);
 
