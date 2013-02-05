@@ -11,18 +11,18 @@
 	<tr>
 			<td class="ruletabletd"><b>Operator Id:</b></td>
 			<td class="ruletabletd"><b><c:out value="${operator.operatorId}"/></b></td>
-			<input type="hidden" name="operatorId" id="operatorId" value="${operator.operatorId}"></input>
+			<input type="hidden" name="operatorId" id="operatorId" value="<c:out value="${operator.operatorId}"/> "></input>
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Operator Name / Object Name:</b></td>
 		<td class="ruletabletd"><b><c:out value="${operator.operatorName}"/></b></td>
-		<input type="hidden" name="operatorName" id="operatorName" value="${operator.operatorName }"></input>
+		<input type="hidden" name="operatorName" id="operatorName" value=" <c:out value="${operator.operatorName }"/> "></input>
 				
 	</tr>	
 	<tr>
 		<td class="ruletabletd"><b>Mvel / Object value:</b></td>
 		<td class="ruletabletd"><b><c:out value="${operator.value}"/></b></td>
-		<input type="hidden" name="value" id="value" value="${operator.value }"></input>	
+		<input type="hidden" name="value" id="value" value=" <c:out value="${operator.value }"/> "></input>	
 	</tr>
 </table>
 <center>

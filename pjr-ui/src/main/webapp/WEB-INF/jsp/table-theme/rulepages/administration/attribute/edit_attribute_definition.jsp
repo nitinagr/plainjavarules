@@ -22,7 +22,7 @@
 </script>		
 
 
-<b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Edit Attribute Definition</b>&gt;&gt;${attribute.attributeName}
+<b><a href="<c:url value="/rule/view/all" />"> Home </a> &gt;&gt; Edit Attribute Definition</b>&gt;&gt;<c:out value="${attribute.attributeName}"/>
 <br/>
 <form:form commandName="attribute" name="editForm" id="editForm" acceptCharset="UTF-8" method="post" action="save">
 <br/><br/>
@@ -46,13 +46,13 @@
 		<tr>
 			<td class="ruletabletd"><b>Attribute Id:</b></td>
 			<td class="ruletabletd"><b><c:out value="${attribute.attributeId}"/></b></td>
-			<input type="hidden" name="attributeId" id="attributeId" value="${attribute.attributeId}"></input>
+			<input type="hidden" name="attributeId" id="attributeId" value="<c:out value="${attribute.attributeId}"/>" ></input>
 		</tr>
 		
 		<tr>
 			<td class="ruletabletd"><b>Attribute name:</b><span class="mandatory" > * </span>
 			</td>
-			<td class="ruletabletd"><input type="text" name="attributeName" id="attributeName" value="${attribute.attributeName}"></input>
+			<td class="ruletabletd"><input type="text" name="attributeName" id="attributeName" value="<c:out value="${attribute.attributeName}"/>" ></input>
 			<form:errors path="attributeName" cssClass="error" />
 			</td>
 		</tr>		
@@ -60,7 +60,7 @@
 		<tr>
 			<td class="ruletabletd"><b>Attribute Value</b><span class="mandatory" > * </span>
 			</td>
-			<td class="ruletabletd"><input type="text" name="value" id="value" value="${attribute.value}"></input>
+			<td class="ruletabletd"><input type="text" name="value" id="value" value="<c:out value="${attribute.value}"/>" ></input>
 			<form:errors path="attributeName" cssClass="error" />
 			</td>
 		</tr>		

@@ -39,11 +39,11 @@ $(document).ready(function(){
 		<td class="ruletabletd"><b>Operator Name / Object Name: </b><span class="mandatory" > * </span>
 		</td>
 		<td class="ruletabletd">
-			<input type="text" name="operatorName" id="operatorName" value="${operator.operatorName}"></input>
+			<input type="text" name="operatorName" id="operatorName" value=" <c:out value="${operator.operatorName}"/> "></input>
 		</td>		
 	</tr>	
 	<tr>
-		<td class="ruletabletd"><b>Mvel / Object value: </b><span class="mandatory" value="${operator.value}"> * </span>
+		<td class="ruletabletd"><b>Mvel / Object value: </b><span class="mandatory" value=" <c:out value="${operator.value}"/> "> * </span>
 		</td>
 		<td class="ruletabletd">
 			<input type="text" name="value" id="value"></input>

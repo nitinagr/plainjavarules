@@ -57,13 +57,13 @@ $(document).ready(function(){
 <table width="100%" class="ruletable" cellspacing="0">
 	<tr>
 		<td class="ruletabletd"><b>Subrule Name</b><span class="mandatory" > * </span></td>
-		<td class="ruletabletd"><input type="text" name="name" size="30" maxlength="100" value="${subrule.name }"/></td>
+		<td class="ruletabletd"><input type="text" name="name" size="30" maxlength="100" value=" <c:out value="${subrule.name }"/> "/></td>
 	</tr>
 	<tr>
 		<td class="ruletabletd"><b>Subrule Description</b></td>
 		<td class="ruletabletd">
 		 <span id="desCount"></span> characters left<br />
-		<textarea id="description" name="description" ><c:out value="${subrule.description }"/></textarea>
+		<textarea id="description" name="description" ><c:out value=" ${subrule.description }"/></textarea>
 		</td>
 	</tr>	
 	<tr>

@@ -59,7 +59,7 @@
 		<tr>
 			<td class="ruletabletd"><b>Model Id:</b></td>
 			<td class="ruletabletd"><b>${modelDto.model_id}</b></td>
-			<input type="hidden" name="model_id" id="model_id" value="${modelDto.model_id}"/></input>
+			<input type="hidden" name="model_id" id="model_id" value="<c:out value="${modelDto.model_id}"/>" ></input>
 		</tr>
 		
 		<tr>
