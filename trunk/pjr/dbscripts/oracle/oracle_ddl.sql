@@ -1,5 +1,4 @@
   
-  
 CREATE TABLE RE_MODEL_CLASS 
     ( 
      MODEL_ID VARCHAR2 (10 BYTE)  NOT NULL , 
@@ -516,17 +515,19 @@ CREATE SEQUENCE MODEL_CLASS_PK_SQ
     MINVALUE 1 
     NOCACHE 
 ;
-
---db cLEAN UP
-DROP TABLE RE_OBECT_ATTR  cascade constraints;
-DROP TABLE RE_OPERATOR  cascade constraints;
-DROP TABLE RE_RULE_LOGIC  cascade constraints;
-DROP TABLE RE_RULES  cascade constraints;
-DROP TABLE RE_RULES_OPR_MAPPING  cascade constraints;
-DROP TABLE RE_RULES_SUBRULE_MAPPING  cascade constraints;
-DROP TABLE RE_SUBRULE  cascade constraints;
-DROP TABLE RE_SUBRULE_ATTR_MAPPING  cascade constraints;
-DROP TABLE RE_SUBRULE_LOGIC  cascade constraints;
-DROP TABLE RE_SUBRULE_OPR_MAPPING  cascade constraints;
-DROP TABLE USER_ADMIN  cascade constraints;
-DROP TABLE RE_MODEL_CLASS  cascade constraints;
+COMMIT;
+--Operator DMLs
+-- INSERTING into RE_OPERATOR
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1004','NotEqual','!=');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1002','Equals','==');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1003','Greater Than','>');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1005','Less Than','<');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1006','GreaterThanOrEqual','>=');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1007','LesserThanOrEqual','<=');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1008','Contains','contains');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1009','OR','||');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1010','NOT','!');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1011','(','(');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1012',')',')');
+Insert into RE_OPERATOR (OPERATOR_ID,OPERATOR_NAME,OPERATOR_VALUE) values ('1013','And','&&');
+COMMIT;
