@@ -47,7 +47,15 @@ public interface SubruleProcessor {
 	 * @author  Sudhakar (Infosys)
 	 */
 	public SubruleDto fetchSubrule(String subruleid) throws TechnicalException;
-
+	/**
+	 * Fetch subrule by subruleid.
+	 *
+	 * @param subruleid the id
+	 * @return the subrule dto
+	 * @throws TechnicalException the technical exception
+	 * @author  Sudhakar (Infosys)
+	 */
+	public SubruleDto fetchSubruleByRuleMappingId(String ruleMapId) throws TechnicalException;
 	/**
 	 * Fetch all subrules for a Rule Id.
 	 *

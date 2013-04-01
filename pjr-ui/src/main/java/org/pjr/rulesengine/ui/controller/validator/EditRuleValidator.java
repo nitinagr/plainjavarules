@@ -29,7 +29,7 @@ public class EditRuleValidator implements Validator{
 	private MessageSource messageSource;
 
 	@Override
-	public boolean supports(Class clazz) {
+	public boolean supports(Class<?> clazz) {
 		return RuleDto.class.isAssignableFrom(clazz);
 	}
 	

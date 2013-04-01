@@ -180,6 +180,7 @@ public class DataTransformer {
 						rl.setSubRuleMapIdOrOprMapId(rLogic.getSubRule().getId());
 						rl.setName(rLogic.getSubRule().getName());
 						rl.setSubRule(true);
+						rl.setSubRuleid(rLogic.getSubRule().getId()); // Setting subrule id for anchor tag
 					} else {
 						rl.setSubRuleMapIdOrOprMapId(rLogic.getOperator().getId());
 						rl.setName(rLogic.getOperator().getName());

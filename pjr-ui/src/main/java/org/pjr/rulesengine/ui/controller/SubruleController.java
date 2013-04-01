@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value="/subrule")
+@SuppressWarnings("unused")
 public class SubruleController {
 	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(SubruleController.class);
@@ -109,6 +110,49 @@ public class SubruleController {
 		
 		model.addAttribute("subrule", subruleDto);
 		view="view_subrule";
+		log.info("Exiting controller:viewSubRule");
+		return view;
+	}
+	
+	@RequestMapping (value="/view/map/{id}" , method=RequestMethod.GET)
+	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
+	public String viewSubRuleBasedOnRuleMapId(Model model,@PathVariable String id) throws TechnicalException{
+		log.info("Entered controller:viewSubRuleBasedOnRuleMapId");
+		String view=null;
+		SubruleDto subruleDto=subruleProcessor.fetchSubruleByRuleMappingId(id);
+
+		if(null == subruleDto) {
+			model.addAttribute("message","SubRule doesnt exist. Please check the SubRule Id in the URL");
+			return "error";
+		}
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
+		model.addAttribute("subrule", subruleDto);
+		view="view_subrule";
+		log.info("Exiting controller:viewSubRule");
+		return view;
+	}
+	
+	
+	@RequestMapping (value="/view/ajax/map/{id}" , method=RequestMethod.GET)
+	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=true)
+	public String viewSubRuleBasedOnRuleMapIdUsingAjax(Model model,@PathVariable String id) throws TechnicalException{
+		log.info("Entered controller:viewSubRuleBasedOnRuleMapId");
+		String view=null;
+		SubruleDto subruleDto=subruleProcessor.fetchSubruleByRuleMappingId(id);
+
+		if(null == subruleDto) {
+			model.addAttribute("message","SubRule doesnt exist. Please check the SubRule Id in the URL");
+			return "error";
+		}
+
+		List<ModelDto> modelClasses = modelAdminProcessor.fetchAllModels();		
+		model.addAttribute("modelClasses", modelClasses);
+		
+		model.addAttribute("subrule", subruleDto);
+		view="view_ajx_subrule";
 		log.info("Exiting controller:viewSubRule");
 		return view;
 	}

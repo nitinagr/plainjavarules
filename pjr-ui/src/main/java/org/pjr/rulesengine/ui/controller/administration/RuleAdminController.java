@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.pjr.rulesengine.NonTechnicalException;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.ui.RuleAlreadyExistException;
+import org.pjr.rulesengine.ui.controller.validator.RuleValidator;
+import org.pjr.rulesengine.ui.processor.RulesProcessor;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
+import org.pjr.rulesengine.ui.uidto.RuleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,14 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import org.pjr.rulesengine.daos.ModelClassDao;
-import org.pjr.rulesengine.ui.RuleAlreadyExistException;
-import org.pjr.rulesengine.ui.controller.validator.RuleValidator;
-import org.pjr.rulesengine.ui.processor.RulesProcessor;
-import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
-import org.pjr.rulesengine.ui.uidto.ModelDto;
-import org.pjr.rulesengine.ui.uidto.RuleDto;
 
 /**
  * The Class RuleAdminController.

@@ -43,7 +43,7 @@ public class ExceptionController implements HandlerExceptionResolver {
 		ex.printStackTrace(pw);
 
 		String entireTrace = sw.toString();
-		Map errorMap = new HashMap<String, String>();
+		Map<String, String> errorMap = new HashMap<String, String>();
 		errorMap.put("stack", entireTrace);
 
 		log.debug("printing the stack ");
