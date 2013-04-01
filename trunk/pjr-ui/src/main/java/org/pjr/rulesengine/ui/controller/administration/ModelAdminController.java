@@ -9,6 +9,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.TechnicalException;
+import org.pjr.rulesengine.ui.controller.validator.EditModelValidator;
+import org.pjr.rulesengine.ui.controller.validator.ModelValidator;
+import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
+import org.pjr.rulesengine.ui.uidto.ModelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,19 +24,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.pjr.rulesengine.ui.controller.validator.EditModelValidator;
-
-import org.pjr.rulesengine.ui.controller.validator.ModelValidator;
-import org.pjr.rulesengine.ui.uidto.ModelDto;
-
-import org.pjr.rulesengine.ui.processor.RulesProcessor;
-import org.pjr.rulesengine.ui.processor.SubruleProcessor;
-import org.pjr.rulesengine.ui.processor.admin.AttributeAdminProcessor;
-import org.pjr.rulesengine.ui.processor.admin.ModelAdminProcessor;
-import org.pjr.rulesengine.ui.uidto.AttributeDto;
-import org.pjr.rulesengine.ui.uidto.RuleDto;
-import org.pjr.rulesengine.ui.uidto.SubruleDto;
 
 /**
  * @author Anubhab(Infosys)
@@ -54,14 +45,6 @@ public class ModelAdminController {
 	@Autowired
 	@Qualifier("editModelValidator")
 	private EditModelValidator editModelValidator;
-	
-	@Autowired
-	private AttributeAdminProcessor attributeAdminProcessor;
-	@Autowired
-	private RulesProcessor rulesProcessor;
-	@Autowired
-	private SubruleProcessor subruleProcessor;
-
 
 	@RequestMapping(value="create" , method=RequestMethod.GET)
 	public String create( Model model){

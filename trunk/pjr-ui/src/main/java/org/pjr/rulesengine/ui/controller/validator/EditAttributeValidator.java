@@ -73,7 +73,7 @@ public class EditAttributeValidator implements Validator{
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
-	public boolean supports(Class clazz) {
+	public boolean supports(Class<?> clazz) {
 		return AttributeDto.class.isAssignableFrom(clazz);
 	}
 

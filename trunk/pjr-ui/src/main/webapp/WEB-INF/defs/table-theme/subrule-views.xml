@@ -15,6 +15,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/view_subrule.jsp" />
     </definition>    
     
+    <definition name="view_ajx_subrule" extends="ajax.definition">
+        <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/view_ajx_subrule.jsp" />
+    </definition>     
+    
     <definition name="edit_subrule" extends="base.definition">
         <put-attribute name="title" value="Plain Java Rules Engine" />
         <put-attribute name="flowname" value="Edit Subrule" />

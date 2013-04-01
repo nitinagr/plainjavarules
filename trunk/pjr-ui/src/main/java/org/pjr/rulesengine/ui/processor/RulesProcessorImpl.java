@@ -4,25 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.pjr.rulesengine.DataLayerException;
 import org.pjr.rulesengine.NonTechnicalException;
 import org.pjr.rulesengine.TechnicalException;
 import org.pjr.rulesengine.daos.OperatorDao;
 import org.pjr.rulesengine.daos.RuleDao;
 import org.pjr.rulesengine.daos.SubruleDao;
-import org.pjr.rulesengine.dbmodel.Operator;
 import org.pjr.rulesengine.dbmodel.Rule;
 import org.pjr.rulesengine.dbmodel.RuleLogic;
 import org.pjr.rulesengine.dbmodel.RuleOperatorMapping;
 import org.pjr.rulesengine.dbmodel.RuleSubruleMapping;
+import org.pjr.rulesengine.ui.processor.admin.DataTransformer;
+import org.pjr.rulesengine.ui.uidto.RuleDto;
+import org.pjr.rulesengine.ui.uidto.RuleLogicUi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import org.pjr.rulesengine.ui.processor.admin.DataTransformer;
-import org.pjr.rulesengine.ui.uidto.RuleDto;
-import org.pjr.rulesengine.ui.uidto.RuleLogicUi;
 
 /**
  * The Class RulesProcessorImpl.

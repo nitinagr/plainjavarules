@@ -134,6 +134,8 @@ $(function () {
 			$("#braceError").hide();
 			$("#logicErrorDiv").hide();
 			$("#disableSubRuleDiv").hide();
+			$("#notgenerateError").hide();
+			$("#conditionError").hide();
 			
 			//Form submit actions
 			$("#submitButton").click(function(){
@@ -146,10 +148,12 @@ $(function () {
 				var invalidBrace=true;
 				var generateError=true;
 				var formSubmit=false;
+				var conditionError=true;
 				
 				$("#logicError").show();
 				$("#notgenerateError").show();
 				$("#braceError").show();
+				$("#conditionError").show();
 				
 				if(frstVal=='(' && lastVal==')'){
 					$("#logicError").hide();
@@ -158,6 +162,10 @@ $(function () {
 						$("#braceError").hide();
 						//alert('brace is fine');
 						invalidBrace=false;
+						if(checkLogic(logicText)){
+							$("#conditionError").hide();
+							conditionError=false;
+						}
 					}
 				}
 				if(isGenerateButtonClicked){
@@ -190,7 +198,7 @@ $(function () {
 					//SubRule has logic
 					//Check other validations
 					//alert(braceError+generateError+invalidBrace);
-					if(braceError || generateError || invalidBrace){
+					if(braceError || generateError || invalidBrace || conditionError){
 						//show the dialog
 						$("#logicErrorDiv").dialog({
 		 						resizable: false,
@@ -529,6 +537,7 @@ $(function () {
 			<ul >
 				<li id="logicError">The logic should always start with "(" and end with a ")".</li>
 				<li id="braceError">Check for any brace "(" or ")" mismatch in Logic.</li>
+				<li id="conditionError">Check for Correct Logic Creation.</li>
 				<li id="notgenerateError">Generate logic before you submit your changes</li>
 			</ul>
 		</div>

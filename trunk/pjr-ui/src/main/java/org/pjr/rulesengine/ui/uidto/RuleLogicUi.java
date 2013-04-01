@@ -1,5 +1,6 @@
 package org.pjr.rulesengine.ui.uidto;
 
+
 public class RuleLogicUi {
 
 	public static final String SUBRULE_ID_PREFIX ="sub";
@@ -20,7 +21,16 @@ public class RuleLogicUi {
 	private boolean subRule;
 	private boolean operator;
 
+	//For anchor tag for suburle
+	private String subRuleid;
+	
 
+	public String getSubRuleid() {
+		return subRuleid;
+	}
+	public void setSubRuleid(String subRuleid) {
+		this.subRuleid = subRuleid;
+	}
 	public String getRuleLogicId() {
 		return ruleLogicId;
 	}

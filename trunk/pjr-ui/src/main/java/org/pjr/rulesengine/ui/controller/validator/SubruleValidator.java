@@ -26,6 +26,7 @@ import org.pjr.rulesengine.ui.uidto.SubruleDto;
  */
 
 @Component("subRuleValidator")
+@SuppressWarnings("unused")
 public class SubruleValidator implements Validator{
 
 	private static final Log log = LogFactory.getLog(SubruleValidator.class);

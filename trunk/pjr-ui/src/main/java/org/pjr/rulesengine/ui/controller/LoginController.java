@@ -16,9 +16,11 @@ import org.pjr.rulesengine.ui.processor.login.LoginProcessor;
  * @author Sudhakar
  */
 @Controller
+@SuppressWarnings("unused")
 public class LoginController {
 
 	/** The Constant log. */
+
 	private static final Log log = LogFactory.getLog(LoginController.class);
 
 	/** The Constant IS_AUTHENTICATED. */

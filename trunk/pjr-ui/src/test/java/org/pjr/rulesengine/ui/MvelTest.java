@@ -8,24 +8,24 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 //TODO : Sudhakar : Json Support
-
+@SuppressWarnings("unused")
 public class MvelTest {
 	
 	Logger log = Logger.getLogger(MvelTest.class);
 		
 	@Test
 	public void testMvel() throws JsonSyntaxException, ClassNotFoundException{
-		log.debug("great ");
+/*		log.debug("great ");
 		User user = new User();
 		user.setUserName("sudhakar");
 		user.setAge(25);
 		
 		Gson g = new Gson();
-		System.out.println("json format :"+g.toJson(user));
+		System.out.println("json format :"+g.toJson(user));*/
 		
 		
 		
-		Object jsonObject = g.fromJson("{\"userName\":\"sudhakar\",\"age\":25}",Class.forName("org.pjr.rulesengine.ui.Gen"));
+		/*Object jsonObject = g.fromJson("{\"userName\":\"sudhakar\",\"age\":25}",Class.forName("org.pjr.rulesengine.ui.Gen"));
 		
 		
 		
@@ -36,14 +36,14 @@ public class MvelTest {
 		Object result = MVEL.eval(mvelCondition,jsonObject) ;
 		
 		System.out.println("Result : "+result);
-		
+		*/
 		
 	}
 	
 	@Test
 	public void testCollectionString(){
 		Integer i = 10;
-		User user = new User();
+/*		User user = new User();
 		user.setUserName("sudhakar");
 		user.setAge(25);
 		
@@ -57,7 +57,7 @@ public class MvelTest {
 		
 		mvelCondition = "['1','25','4'] contains age";
 		result = MVEL.eval(mvelCondition,(Object)user) ;
-		System.out.println("Result 2 : "+result);
+		System.out.println("Result 2 : "+result);*/
 	}
 	
 }

@@ -3,6 +3,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
+
 <style type="text/css">
 table.conditiontable {
 	border-collapse: collapse;
@@ -11,14 +12,16 @@ table.conditiontable {
 .conditiontable td , .conditiontable th{
 	border: 1px solid black;
 }
-
+.logicdiv {
+	border: 1px solid black;
+}
 </style>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	//Dialog box hide
     $("#dialog").hide();
-    
+	
     //Delete confirmation starts
     $("#delete").click(function(){
     	var $input = $(this);
@@ -39,7 +42,56 @@ $(document).ready(function() {
      });
     //Delete confirmation ends
     
+    //Ajax related things Start
+    $('#imgBsy').hide();
+	$('#wrong').hide();
+	
+	$('.clickme').mouseenter(function(e){
+		var urlz=$(this).attr('name'); //Gets the URL for the link
+		var position=$(this).position();//Gets the link position
+		var name=$(this).html();//Gets the subrule name
+		//var X=position.left;
+		//var Y=position.top;
+		var X=e.clientX;
+		var Y=e.clientY;
+	 $.ajax({
+		 	beforeSend : function(jqXHR){
+	 			showDialog('Processing..',$('#imgBsy').html(),X,Y);
+	 		},
+		    url: urlz,
+		    success: function(data) {
+		    	//alert('Inside success');
+		    	if(data == null || data == ''){
+		    		//alert('insdie if');
+		    		showDialog('Error!',$('#wrong').html(),X,Y);
+		    	} else {
+		    		//alert('insdie else');
+		    	 	showDialog(name,data,X,Y);
+		    	}
+		    },
+	 		error: function(jqXHR, error, errorThrown){
+	 			//alert(textStatus+' '+errorThrown);
+	 			showDialog('Error!',$('#wrong').html(),X,Y);
+	 		}
+		  });
+	});
+	
+	function showDialog(titleText,dataToBeShown,x,y){
+		var tag =$("#pop");
+	      tag.html(dataToBeShown).dialog({ 
+	    	  resizable: false,
+			  draggable: false,
+			  modal: false,
+			  title: titleText,
+	    	  position: [x,y-175]  },
+	    	  { hide: { effect: 'slide', direction: "left" } },
+			  { show: { effect: 'slide', direction: "left" } },
+			  { closeOnEscape: true }
+	      ).dialog('open');
+	 }
+    //Ajax related things End
 });
+
 </script>
 
 <!-- <h2> View Rule : ${rule.ruleName}</h2> -->
@@ -112,14 +164,30 @@ $(document).ready(function() {
 			</td>		
 		</tr>
 	<tr>
-		<td class="ruletabletd"><b>Current Logic in DB</b></td>
-		<td class="ruletabletd">
-			<textarea rows="20" columns="40"   disabled="disabled"><c:out value="${rule.logicText}"/></textarea>
-		</td>
+	<td class="ruletabletd"><b>Current Logic in DB</b></td>
+	<td class="ruletabletd logicdiv">
+	<c:forEach items="${rule.logic}" var="logicItem" >
+		<c:choose>
+			<c:when test="${logicItem.subRule}">
+				<a class="clickme" name="<c:url value="/subrule/view/ajax/map/${logicItem.subRuleid}" />" href="<c:url value="/subrule/view/map/${logicItem.subRuleid}" />" target="_blank"><c:out value="${logicItem.name}" /></a>
+			</c:when>
+			<c:otherwise>
+				<c:out value="${logicItem.name}" />
+			</c:otherwise>
+		</c:choose>			
+	</c:forEach>
+	</td>
 	</tr>
-		
+	<div id="pop" align="left"
+		style="background-color: #99CCFF; font-size: 10px;"></div>	
 </table>
 <center>
+<div id="imgBsy" style="size: inherit;">
+		<img alt="Please Wait..Loading" src="<c:url value="/static/images/ajax-loader.gif"/> ">
+</div>
+<div id="wrong">
+<font style="font-weight: bold; color: red;">Something went wrong!!</font>
+</div>
 	<font style="font-weight: bold; color: green;"><c:out value="${message}"></c:out></font>
 	<br/><br/>
 	<A class="button" href="<c:url value="/rule/edit/${rule.ruleId}"/>" >Edit</A>
@@ -128,4 +196,5 @@ $(document).ready(function() {
 	</sec:authorize>	
 </center>
 <div id="dialog" title="Confirming Delete">Are you sure you want to Delete?</div>
+<div id="debug"></div>
 </form>

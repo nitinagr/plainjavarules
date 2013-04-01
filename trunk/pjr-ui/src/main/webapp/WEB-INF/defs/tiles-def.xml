@@ -35,4 +35,9 @@
         <put-attribute name="body" value="/WEB-INF/jsp/table-theme/rulepages/login.jsp" />
     </definition>  
  
+     <definition name="ajax.definition"
+        template="/WEB-INF/jsp/table-theme/ajaxlayout.jsp">
+        <put-attribute name="body" value="" />
+    </definition>
+ 
 </tiles-definitions>

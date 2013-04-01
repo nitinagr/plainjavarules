@@ -39,6 +39,33 @@ function checkParenthesis(text){
 	return expressionValid;
 }
 /**
+ * This method accepts the Logic text and validates 
+ * whether the given logic is valid in terms of condition formation
+ */
+function checkLogic(inputText){
+	var text=inputText;
+	text=text.substr(0,text.length-1);//One extra "@" comes at the end.removing the extra blank elemnt from String
+
+	var logicArray=text.split("@");
+	var len=logicArray.length;
+	len=len-1; 
+	
+	var minOneSub=/(sub-[0-9]*)+/;
+	var atLeastOneSubPresent=minOneSub.test(text);
+	//alert('atLeastOneSubPresent: '+atLeastOneSubPresent);
+	var patternConSubs=/(sub-[0-9]*)@(sub-[0-9]*)/g;
+	var isConsecutiveSubrulesPresent=patternConSubs.test(text); // Checks whether two consecutive subrules are there
+	//alert('isConsecutiveSubrulesPresent:'+isConsecutiveSubrulesPresent);
+		
+	if(atLeastOneSubPresent && !isConsecutiveSubrulesPresent){
+		//alert('OK');
+		return true;
+	} else {
+		//alert('NOT OK');
+		return false;
+	}
+}
+/**
  * This method is used to select all checkboxes with given name
  */
 function selectAll(name){

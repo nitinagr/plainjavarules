@@ -239,9 +239,21 @@ public class SubruleProcessorImpl implements SubruleProcessor {
 		} catch(Exception e) {
 			throw new TechnicalException(e);
 		}
-		log.info("Entered subrule processor:fetchAllSubrules");
+		log.info("Exiting subrule processor:fetchAllSubrules");
 		return subruleDtos;
 	
+	}
+
+	@Override
+	public SubruleDto fetchSubruleByRuleMappingId(String ruleMapId) throws TechnicalException {
+		log.info("Entered subrule processor:fetchSubruleByRuleMappingId");
+		SubruleDto subruleDto = null;
+		try{
+			subruleDto=DataTransformer.convertToUI(subruleDao.fetchSubruleByRuleMapId(ruleMapId));
+		} catch(Exception e) {
+			throw new TechnicalException(e);
+		}
+		return subruleDto;
 	}
 
 }
