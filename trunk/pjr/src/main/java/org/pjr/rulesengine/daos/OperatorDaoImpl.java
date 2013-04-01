@@ -704,9 +704,9 @@ public class OperatorDaoImpl implements OperatorDao {
 		return operators;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void assignMandatoryOperatorsToRule(final String id,final List<String> opids) throws DataLayerException {
-		boolean result=true;
 		// TODO Auto-generated method stub
 		if(null!=opids && opids.size()>0){
 			String sql=accessProps.getFromProps(CommonConstants.QUERY_SAVEASSIGNOPERATORSTORULE_INSERT);
@@ -731,9 +731,6 @@ public class OperatorDaoImpl implements OperatorDao {
 				log.error(e);
 				throw new DataLayerException("Error while Assigining Mandatory operators to rule");
 			}
-			
-			if(null==i) result=false;
-			else log.debug("Operator rule mapping saved successfully");
 		}
 	}
 }

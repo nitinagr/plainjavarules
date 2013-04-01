@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pjr.rulesengine.DataLayerException;
@@ -51,6 +52,12 @@ public class ModelClassDaoImpl implements ModelClassDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED,rollbackFor=DataLayerException.class)
 	public int[] insertIntoModelClass(final List<Model> models) throws DataLayerException {
+		BasicDataSource ds= new BasicDataSource();
+		ds.setDriverClassName("");
+		ds.setUrl("");
+		ds.setUsername("");
+		ds.setPassword("");
+		
 		log.debug("Entering insertIntoModelClass..");
 		int[] i=null;
 		try{

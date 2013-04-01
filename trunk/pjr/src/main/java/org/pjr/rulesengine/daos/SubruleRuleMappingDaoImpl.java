@@ -31,6 +31,7 @@ import org.pjr.rulesengine.util.CommonConstants;
  * @author Sudhakar
  */
 @Component
+@SuppressWarnings("unused")
 public class SubruleRuleMappingDaoImpl implements SubruleRuleMappingDao{
 
 	private static final Log log = LogFactory.getLog(SubruleRuleMappingDaoImpl.class);

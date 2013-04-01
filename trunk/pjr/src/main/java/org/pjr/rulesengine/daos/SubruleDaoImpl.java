@@ -9,6 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.pjr.rulesengine.DataLayerException;
+import org.pjr.rulesengine.dbmodel.Attribute;
+import org.pjr.rulesengine.dbmodel.Operator;
+import org.pjr.rulesengine.dbmodel.RuleSubruleMapping;
+import org.pjr.rulesengine.dbmodel.Subrule;
+import org.pjr.rulesengine.dbmodel.SubruleLogic;
+import org.pjr.rulesengine.util.AccessProperties;
+import org.pjr.rulesengine.util.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -22,14 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.googlecode.ehcache.annotations.When;
-import org.pjr.rulesengine.DataLayerException;
-import org.pjr.rulesengine.dbmodel.Attribute;
-import org.pjr.rulesengine.dbmodel.Operator;
-import org.pjr.rulesengine.dbmodel.RuleSubruleMapping;
-import org.pjr.rulesengine.dbmodel.Subrule;
-import org.pjr.rulesengine.dbmodel.SubruleLogic;
-import org.pjr.rulesengine.util.AccessProperties;
-import org.pjr.rulesengine.util.CommonConstants;
 
 /**
  * The Class SubruleDaoImpl.
@@ -514,7 +514,7 @@ public class SubruleDaoImpl implements SubruleDao{
 
 				@Override
 				public List<String> extractData(ResultSet rs) throws SQLException, DataAccessException {
-					List<String> subRuleToRulesTemp  = subRuleToRulesTemp = new  ArrayList<String>();
+					List<String> subRuleToRulesTemp  =  new  ArrayList<String>();
 
 					while (rs.next()) {
 
@@ -681,6 +681,99 @@ public class SubruleDaoImpl implements SubruleDao{
 		//log.debug("Exiting fetchAllSubrules method");
 		return subrules;
 			
+	}
+
+	@Override
+	public Subrule fetchSubruleByRuleMapId(String id) throws DataLayerException {
+		//String sql="select sr.SUBRULE_ID,sr.SUBRULE_NAME,sr.SUBRULE_DESCRIPTION,sr.DEFAULT_VALUE,sr.ACTIVE,sr.MODEL_ID from RE_RULES_SUBRULE_MAPPING rm,RE_SUBRULE sr where rm.SUBRULE_ID=sr.SUBRULE_ID AND rm.RULE_SUBRULE_ID=?";
+		String sql=accessProps.getFromProps(CommonConstants.QUERY_FETCHSUBRULE_BY_RULEMAPID_SELECT);
+		Subrule subrule=null;
+		try {
+			subrule=jdbcTemplate.query(sql, new Object[]{id}, new ResultSetExtractor<Subrule>(){
+
+				@Override
+				public Subrule extractData(ResultSet rs) throws SQLException, DataAccessException {
+					Subrule subrule=null;
+					while(rs.next()){
+						subrule=new Subrule();
+						
+						subrule.setId(rs.getString("SUBRULE_ID"));
+						subrule.setName(rs.getString("SUBRULE_NAME"));
+						subrule.setDescription(rs.getString("SUBRULE_DESCRIPTION"));
+						subrule.setDefaultValue(rs.getBoolean("DEFAULT_VALUE"));
+						subrule.setActive(rs.getBoolean("ACTIVE"));
+						subrule.setModelId(rs.getString("MODEL_ID"));
+
+					}
+					return subrule;
+				}
+				
+			});
+			if(null != subrule){
+				String subrulelogicsql=accessProps.getFromProps(CommonConstants.QUERY_FETCHSUBRULE_SELECTLOGIC);
+				/*String subrulelogicsql ="SELECT srl.SUBRULE_LOGIC_ID,srl.SUBRULE_ID,srl.SUBRULES_OPERATOR_ID,srl.SUBRULE_ATTR_ID,srl.ORDER_NO, " +
+										" objattr.ATTR_ID,objattr.ATTR_NAME,objattr.ATTR_VALUE, "
+										+" opr.OPERATOR_ID,opr.OPERATOR_NAME,opr.OPERATOR_VALUE "
+										+" from FSMMGR.PAC_RE_SUBRULE_LOGIC srl "
+										+" left outer join FSMMGR.PAC_RE_SUBRULE sr on srl.SUBRULE_ID = sr.SUBRULE_ID "
+										+" left outer join FSMMGR.PAC_RE_SUBRULE_ATTR_MAPPING sram on srl.SUBRULE_ATTR_ID = sram.SUBRULE_ATTR_ID "
+										+" left outer join FSMMGR.PAC_RE_SUBRULE_OPR_MAPPING soprm on srl.SUBRULES_OPERATOR_ID = soprm.SUBRULE_OPERATOR_ID "
+										+" left outer join FSMMGR.PAC_RE_OBECT_ATTR objattr on sram.ATTR_ID = objattr.ATTR_ID "
+										+" left outer join FSMMGR.PAC_RE_OPERATOR opr on soprm.OPERATOR_ID = opr.OPERATOR_ID "
+										+" where sr.SUBRULE_ID=?  order by  srl.ORDER_NO ";*/
+
+
+				List<SubruleLogic> logic =  jdbcTemplate.query(subrulelogicsql,new Object[]{subrule.getId()}, new ResultSetExtractor<List<SubruleLogic>>() {
+
+					@Override
+					public List<SubruleLogic> extractData(ResultSet rs) throws SQLException, DataAccessException {
+						List<SubruleLogic> subRuleLogic = new ArrayList<SubruleLogic>();
+
+						while(rs.next()){
+							SubruleLogic srl = new SubruleLogic();
+
+							srl.setId(rs.getString(1));
+							srl.setSubRuleId(rs.getString(2));
+							srl.setOperatorMapId(rs.getString(3));
+							srl.setAttributeMapId(rs.getString(4));
+							srl.setOrderno(rs.getString(5));
+
+
+							Attribute attr = null;
+							if(null != rs.getString(6)){
+								attr = new Attribute();
+								attr.setId(rs.getString(6));
+								attr.setName(rs.getString(7));
+								attr.setValue(rs.getString(8));
+
+							}
+
+
+							Operator opr = null;
+							if(null != rs.getString(9)){
+								opr = new Operator();
+								opr.setId(rs.getString(9));
+								opr.setName(rs.getString(10));
+								opr.setValue(rs.getString(11));
+							}
+
+							srl.setAttribute(attr);
+							srl.setOperator(opr);
+
+							subRuleLogic.add(srl);
+						}
+
+						return subRuleLogic;
+					}
+				});
+
+				subrule.setLogic(logic);
+			}
+		} catch (DataAccessException e) {
+			log.error("Error in fetchSubruleByRuleMapId for id:"+id);
+        	throw new DataLayerException(e);
+		}
+		return subrule;
 	}
 
 

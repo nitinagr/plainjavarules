@@ -65,7 +65,7 @@ public interface SubruleDao {
 	 */
 	public Subrule fetchSubrule(String id) throws DataLayerException;
 
-
+	public Subrule fetchSubruleByRuleMapId(String id) throws DataLayerException;
 
 	public List<RuleSubruleMapping> fetchRuleOperatorMappingForRule (String ruleId) throws DataLayerException;
 
