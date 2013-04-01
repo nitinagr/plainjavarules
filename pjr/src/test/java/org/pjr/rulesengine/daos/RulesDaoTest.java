@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration (locations = { "classpath:pjrContext.xml" })
 @TransactionConfiguration(defaultRollback=false)
+@SuppressWarnings("unused")
 public class RulesDaoTest {
 	
 	private Log log = LogFactory.getLog(RulesDaoTest.class);

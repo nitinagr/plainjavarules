@@ -41,6 +41,7 @@ import com.googlecode.ehcache.annotations.When;
  * @author Sudhakar
  */
 @Component
+@SuppressWarnings("unused")
 public class RuleDaoImpl implements RuleDao{
 
 	private static final Log log = LogFactory.getLog(RuleDaoImpl.class);

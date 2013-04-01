@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @author Sudhakar
  */
 @Component
+@SuppressWarnings("unused")
 public class Rule {
 
 	/** The Constant log. */
